@@ -1,0 +1,1 @@
+capsico: "bg-[#1AA6F1] hover:bg-[#1AA6F1] text-white",
