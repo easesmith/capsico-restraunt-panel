@@ -69,11 +69,9 @@ export const RegisterSchema2 =
 
 export const RegisterSchema3 =
     z.object({
-        restaurantOptions: z.array(z.string()).min(1, "Please select at least one restaurant option"),
-        cuisines: z.array(z.string()).min(1, "Please select at least one cuisine"),
-        openingTime: z.string().min(1, "Please select an opening time"),
-        closingTime: z.string().min(1, "Please select a closing time"),
-        days: z.array(z.string()).min(1, "Please select at least one day"),
+        menuImages: z.any().refine(file => file && file.length > 0, "Menu Images are required"),
+        restaurant: z.any().refine(file => file && file.length > 0, "Restaurant Images are required"),
+        foodImages: z.any().refine(file => file && file.length > 0, "Food Images are required"),
     })
 
 
