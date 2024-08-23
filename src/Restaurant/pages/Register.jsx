@@ -11,7 +11,7 @@ import RegisterSuccessModal from '../components/RegisterSuccessModal';
 import { FaCheck } from 'react-icons/fa';
 
 const Register = () => {
-    const [step, setStep] = useState(3);
+    const [step, setStep] = useState(1);
     const [isRegisterSuccessModalOpen, setIsRegisterSuccessModalOpen] = useState(false);
     const [isChecked, setIsChecked] = useState(true);
 

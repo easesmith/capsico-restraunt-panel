@@ -1,11 +1,18 @@
-import { z } from "zod"
+import { z } from "zod";
 
-export const LoginSchema =
-    z.object({
-        email: z.string().min(2, {
-            message: "Username must be at least 5 characters.",
+export const PhoneSchema = z.object({
+    phoneNumber: z.string()
+        .length(10, {
+            message: "Phone number must be exactly 10 digits",
+        })
+        .regex(/^\d{10}$/, {
+            message: "Phone number must contain exactly 10 digits",
         }),
-        password: z.string().min(2, {
-            message: "Password is invalid. It must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one digit, and one special character (!@#$%^&*).",
+});
+
+export const EmailSchema = z.object({
+    email: z.string()
+        .email({
+            message: "Invalid email address",
         }),
-    })
+});
