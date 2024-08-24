@@ -6,9 +6,9 @@ const RestaurantWrapper = ({ children }) => {
     return (
         <div>
             <Header />
-            <div className=" flex">
+            <div className="flex">
                 <Sidebar />
-                <main className=" w-[100%] flex justify-center items-center p-4">
+                <main className=" w-full bg-[#E7EBEF66]">
                     {children}
                 </main>
             </div>
