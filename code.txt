@@ -1,1 +1,10 @@
 capsico: "bg-[#1AA6F1] hover:bg-[#1AA6F1] text-white",
+
+
+<div className="flex items-center">
+                    <div className="w-[10px] h-[10px] bg-[#1AA6F1] rounded-full"></div>
+                    <div className="h-[2px] w-20 -mx-2 bg-[#1AA6F1] -rotate-[22deg] mb-8"></div>
+                  </div>
+                  <div className="flex items-center mb-[60px]">
+                    <div className="w-[10px] h-[10px] bg-[#1AA6F1] rounded-full"></div>
+                  </div>
