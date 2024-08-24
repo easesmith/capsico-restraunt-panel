@@ -4,11 +4,11 @@ import Sidebar from '../Sidebar'
 
 const RestaurantWrapper = ({ children }) => {
     return (
-        <div >
+        <div>
             <Header />
             <div className=" flex">
                 <Sidebar />
-                <main className="p-4">
+                <main className=" w-[100%] flex justify-center items-center p-4">
                     {children}
                 </main>
             </div>
