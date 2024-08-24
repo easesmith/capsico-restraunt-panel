@@ -3,7 +3,7 @@ import OrderImg from '../../assets/dish-01.png'
 
 const Sidebar = () => {
     return (
-        <section>
+        <section className=''>
             <div className='flex flex-col gap-4 w-[280px] bg-[#FFFFFF] border-[1px] border-[#E7EBEF] px-5 py-16'>
                 <div className='flex justify-start items-center gap-[14px] h-[52px] bg-[#F3F3FC] p-[14px] cursor-pointer hover:bg-[#F3F3FC]'>
                     <img src={OrderImg} alt="" className='w-[24px] h-[24px]' />

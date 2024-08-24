@@ -6,8 +6,8 @@ import ProfileImg from '../../assets/Rectangle 3.png'
 
 const Header = () => {
   return (
-    <header className='bg-[#E7EBEF]'>
-      <nav className=' flex justify-between items-center px-12 py-4'>
+    <header className='bg-[#E7EBEF] sticky top-0'>
+      <nav className=' w-[100%] h-[105px] flex justify-between items-center px-12 py-4'>
         <div className="left-nav flex flex-col justify-center items-center gap-1 w-[160px]">
             <h4 className='text-[#323F49] text-[28.8px] font-extrabold font-inter tracking-[1%]'>Capsico</h4>
             <div className='w-[160px] border-[1.6px] border-[#323F49]'></div>

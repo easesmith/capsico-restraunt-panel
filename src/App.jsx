@@ -8,6 +8,8 @@ const Register = lazy(() => import('./Restaurant/pages/Register'));
 const ABC = lazy(()=> import('./Restaurant/pages/ABC'))
 const RegisterAndLogin = lazy(() => import('./Restaurant/pages/RegisterAndLogin'));
 const Reporting = lazy(() => import('./Restaurant/pages/reporting/Reporting'));
+const Order = lazy(()=> import('./Restaurant/pages/Order'))
+const OrderHistory = lazy(()=> import('./Restaurant/pages/OrderHistory'))
 
 function App() {
 
@@ -22,6 +24,8 @@ function App() {
             <Route path='/restaurant/reporting' element={<Reporting />} />
             <Route path='*' element={<NotFound />} />
             <Route path='/abc' element={<ABC />} />
+            <Route path='/restaurant/order' element={<Order />} />
+            <Route path='/restaurant/order-history' element={<OrderHistory />} />
           </Routes>
         </Suspense>
       </Router>
