@@ -7,7 +7,7 @@ import { IoSearchOutline } from "react-icons/io5";
 const OrderHistory = () => {
   return (
     <RestaurantWrapper>
-      <section className='w-full h-full bg-[#E7EBEF] '>
+      <section className='w-full h-full'>
         <div>
           <div>
             <div className='flex items-center'>
