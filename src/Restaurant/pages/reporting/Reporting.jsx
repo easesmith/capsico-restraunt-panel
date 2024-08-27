@@ -14,11 +14,15 @@ import { Button } from '@/components/ui/button'
 import { LiaDownloadSolid } from "react-icons/lia";
 import { IoIosArrowDown } from "react-icons/io";
 import { useState } from 'react'
-import FilterModal from '@/Restaurant/components/FilterModal'
+import FilterModal from '@/Restaurant/components/filterModal/FilterModal'
 
 const Reporting = () => {
     const { pathname } = useLocation();
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+    const [selectedFilters, setSelectedFilters] = useState("");
+
+    console.log("filters", selectedFilters);
+
 
     return (
         <RestaurantWrapper>
@@ -53,6 +57,7 @@ const Reporting = () => {
                     <FilterModal
                         isFilterModalOpen={isFilterModalOpen}
                         setIsFilterModalOpen={setIsFilterModalOpen}
+                        setSelectedFilters={setSelectedFilters}
                     />
                 }
             </div>

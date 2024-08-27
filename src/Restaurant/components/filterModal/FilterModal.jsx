@@ -7,9 +7,22 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { useState } from "react"
+import Date from "./Date";
+import LegalEntity from "./LegalEntity";
+import City from "./City";
+import Zone from "./Zone";
+import SubZone from "./SubZone";
+import Chain from "./Chain";
+import Outlet from "./Outlet";
+import { Button } from "@/components/ui/button";
 
-const FilterModal = ({ isFilterModalOpen, setIsFilterModalOpen }) => {
+const FilterModal = ({ isFilterModalOpen, setIsFilterModalOpen, setSelectedFilters }) => {
     const [selceted, setSelceted] = useState("date");
+    const [filters, setFilters] = useState("");
+
+    const handleFilterApply = ()=>{
+        setSelectedFilters(filters)
+    }
 
     return (
         <Dialog open={isFilterModalOpen} onOpenChange={() => setIsFilterModalOpen(!isFilterModalOpen)}>
@@ -27,7 +40,19 @@ const FilterModal = ({ isFilterModalOpen, setIsFilterModalOpen }) => {
                             <button onClick={() => setSelceted("chain")} className={`w-full py-3 text-left px-4 font-numans font-semibold text-lg ${selceted === "chain" ? "bg-white border-r-4 border-[#1AA6F1]" : "bg-[#E7EBEF]"}`}>Chain</button>
                             <button onClick={() => setSelceted("outlet")} className={`w-full py-3 text-left px-4 font-numans font-semibold text-lg ${selceted === "outlet" ? "bg-white border-r-4 border-[#1AA6F1]" : "bg-[#E7EBEF]"}`}>Outlet</button>
                         </div>
-                        <div className="p-4">qqq</div>
+                        <div className="p-4">
+                            {selceted === "date" && <Date setFilters={setFilters} />}
+                            {selceted === "legal-entity" && <LegalEntity setFilters={setFilters} />}
+                            {selceted === "city" && <City setFilters={setFilters} />}
+                            {selceted === "zone" && <Zone setFilters={setFilters} />}
+                            {selceted === "subzone" && <SubZone setFilters={setFilters} />}
+                            {selceted === "chain" && <Chain setFilters={setFilters} />}
+                            {selceted === "outlet" && <Outlet setFilters={setFilters} />}
+                        </div>
+                    </div>
+                    <div className="flex justify-end gap-5 items-center">
+                        <Button onClick={()=> setFilters("")} variant="destructive" className="px-10 rounded font-numans font-medium text-lg">Clear all</Button>
+                        <Button onClick={handleFilterApply} variant="capsico" className="px-10 rounded font-numans font-medium text-lg">Apply</Button>
                     </div>
                 </DialogHeader>
                 <DialogDescription></DialogDescription>
