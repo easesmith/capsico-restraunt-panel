@@ -1,81 +1,80 @@
-
-
-import { TrendingUp } from "lucide-react"
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
-
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
-import {
-    ChartContainer,
-    ChartTooltip,
-    ChartTooltipContent,
-} from "@/components/ui/chart"
-const chartData = [
-    { month: "Week 27", desktop: 3, mobile: 3 },
-    { month: "Week 28", desktop: 9, mobile: 73 },
-]
+    ArcElement,
+    BarElement,
+    CategoryScale,
+    Chart as ChartJS,
+    Legend,
+    LinearScale,
+    Title,
+    Tooltip,
+    PointElement,
+    LineElement
+} from "chart.js";
+import { Line } from "react-chartjs-2";
 
-const chartConfig = {
-    desktop: {
-        label: "Desktop",
-        color: "#1AA6F1",
-    },
-    mobile: {
-        label: "Mobile",
-        color: "hsl(var(--chart-2))",
-    },
-}
+ChartJS.register(
+    ArcElement,
+    Tooltip,
+    Legend,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    PointElement,
+    LineElement
+);
 
-export function LineChartComp() {
+const options = {
+    // borderRadius: 30, // Adjust this value as needed
+    // scales: {
+    //     yAxes: [{
+    //         ticks: {
+    //             beginAtZero: true
+    //         }
+    //     }]
+    // }
+    plugins: {
+        tooltip: {
+            // position: 'nearest',
+            // callbacks: {
+            //   label: function (tooltipItem) {
+            //     return `Value: ${tooltipItem.raw}`;
+            //   },
+            // },
+            position: function (context) {
+                const chart = context.chart;
+                const { x, y } = context.tooltip.caretX && context.tooltip.caretY
+                    ? { x: context.tooltip.caretX, y: context.tooltip.caretY }
+                    : chart.getDatasetMeta(0).data[context.tooltip.dataPoints[0].index].getCenterPoint();
+                return { x: x - context.tooltip.width - 10, y };
+            },
+        },
+    },
+};
+
+const data = {
+    labels: [
+        'Week 27',
+        'Week 28',
+    ],
+    fontColor: "white",
+    datasets: [
+        {
+            label: "Impressions",
+            data: [2, 5],
+            backgroundColor: ["#1AA6F1"],
+            borderColor: ["#1AA6F1"],
+            borderWidth: 2,
+        },
+    ],
+};
+
+export function LineChartComp({ title, chartData, chartOptions }) {
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle className="font-numans font-semibold text-base">Line Chart - Dots</CardTitle>
-                {/* <CardDescription>January - June 2024</CardDescription> */}
-            </CardHeader>
-            <CardContent>
-                <ChartContainer config={chartConfig}>
-                    <LineChart
-                        accessibilityLayer
-                        data={chartData}
-                        margin={{
-                            left: 12,
-                            right: 12,
-                        }}
-                    >
-                        <CartesianGrid vertical={false} />
-                        <XAxis
-                            dataKey="month"
-                            tickLine={false}
-                            axisLine={false}
-                            tickMargin={8}
-                            tickFormatter={(value) => value.slice(0, 3)}
-                        />
-                        <ChartTooltip
-                            cursor={false}
-                            content={<ChartTooltipContent hideLabel />}
-                        />
-                        <Line
-                            dataKey="desktop"
-                            type="natural"
-                            stroke="var(--color-desktop)"
-                            strokeWidth={2}
-                            dot={{
-                                fill: "var(--color-desktop)",
-                            }}
-                            activeDot={{
-                                r: 6,
-                            }}
-                        />
-                    </LineChart>
-                </ChartContainer>
-            </CardContent>
-        </Card>
+        <div>
+            <p className="font-numans font-semibold text-base">{title}</p>
+            <Line data={chartData} options={chartOptions} />
+        </div>
     )
 }
