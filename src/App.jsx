@@ -29,7 +29,7 @@ function App() {
             <Route path='/restaurant/order' element={<Order />} />
             <Route path='/restaurant/order-history' element={<OrderHistory />} />
             <Route path='/restaurant/order-menu' element={<OrderMenu />} />
-            <Route path='/restaurant/payout' element={<Payout />} />
+            <Route path='/restaurant/*' element={<Payout />} />
           </Routes>
         </Suspense>
       </Router>

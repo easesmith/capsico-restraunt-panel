@@ -5,6 +5,8 @@ import { IoIosArrowForward } from "react-icons/io";
 import { FiPlusCircle } from "react-icons/fi";
 import { FiEdit2 } from "react-icons/fi";
 import RestaurantWrapper from "@/Restaurant/components/restaurantWrapper/RestaurantWrapper";
+import DownImg from '@/assets/down.png'
+import MaskGroupInput from '../../../assets/Mask group Input.png'
 
 const Catalog = () => {
 
@@ -23,6 +25,26 @@ const Catalog = () => {
         { name: "Chicken combo", price: 120 },
         { name: "Mutton combo", price: 220 },
       ],
+    },
+    {
+      category: "Main Course",
+      items: [],
+    },
+    {
+      category: "Main Course",
+      items: [],
+    },
+    {
+      category: "Main Course",
+      items: [],
+    },
+    {
+      category: "Main Course",
+      items: [],
+    },
+    {
+      category: "Main Course",
+      items: [],
     },
     {
       category: "Main Course",
@@ -52,7 +74,7 @@ const Catalog = () => {
       <div className="px-4 mx-auto">
         <div className="flex justify-between items-center border-b mb-4 py-4">
           <h2 className="text-[#323F49] text-xl font-normal font-numans">Culinary Catalog</h2>
-          <Button variant="outline" className="flex justify-center items-center gap-2 text-[#4A5E6D] text-[16px] font-normal"><HiOutlineAdjustmentsHorizontal className='text-[22px]' /><span>Filter</span></Button>
+          <Button variant="outline" className="flex justify-center items-center gap-3 text-[#4A5E6D] text-[16px] font-normal"><HiOutlineAdjustmentsHorizontal className='text-[22px]' /><span className="pr-5">Filter</span><img src={DownImg} className="w-[30px] h-[28px]"/></Button>
         </div>
         {catalog.map((section, idx) => (
           <Section key={idx} section={section} />
@@ -66,7 +88,7 @@ const Catalog = () => {
 };
 
 const Section = ({ section }) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="mb-4">
@@ -79,14 +101,14 @@ const Section = ({ section }) => {
         <p className="text-[#323F49] text-xl font-normal font-numans">{section.items.length} Items</p>
       </div>
       {isOpen && (
-        <div className="pl-6 mt-2">
+        <div className="pl-6 mt-2 w-[400px] max-w-[400px]">
           {section.items.map((item, idx) => (
             <div key={idx} className="flex justify-between items-center py-1">
               <div className="flex items-center">
-                <input type="checkbox" className="mr-2" />
-                <span>{item.name}</span>
+                <img src={MaskGroupInput} alt="" className="mr-2 w-[26px] h-[26px]" />
+                <span className="text-[#323F49] text-xl font-normal font-numans">{item.name}</span>
               </div>
-              <span>₹{item.price}</span>
+              <span className="text-[#323F49] text-xl font-normal font-numans">₹{item.price}</span>
             </div>
           ))}
           <div className="w-[553px] flex flex-wrap gap-4 mt-2">

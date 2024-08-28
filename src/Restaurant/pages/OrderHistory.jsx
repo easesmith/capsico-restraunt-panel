@@ -8,9 +8,7 @@ import { Button } from '@/components/ui/button'
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 import { LiaDownloadSolid } from 'react-icons/lia'
 import BurgerImg from '../../assets/burger.png'
-import WifiImg from '../../assets/wifi.png'
-
-
+import Popup from '../components/Orderhistory/Popup'
 
 const OrderHistory = () => {
 
@@ -65,7 +63,7 @@ const OrderHistory = () => {
         </div>
       </div>
 
-      <div className='w-[830px] h-[594px] bg-[#FFFFFF] rounded-xl mx-auto'>
+      {/* <div className='w-[830px] h-[594px] bg-[#FFFFFF] rounded-xl mx-auto'>
         <div className=' flex justify-center items-center py-8'>
           <img src={WifiImg} alt="wifi-img" />
         </div>
@@ -73,7 +71,9 @@ const OrderHistory = () => {
           <p className='text-[#000000] text-2xl font-normal font-numans'>To prevent order rejections and ensure a positive customer experience, please go offline if you are unable to fulfill orders for any reason.”</p>
           <Button variant="wifi" className="bg-[#1AA6F1] text-[#FFFFFF] text-2xl font-normal font-numans tracking-[1%] rounded-[8px] py-5 px-16">Okay</Button>
         </div>
-      </div>
+      </div> */}
+
+      <Popup/>
     </RestaurantWrapper>
   )
 }
