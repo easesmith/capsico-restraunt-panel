@@ -73,11 +73,12 @@
   ::-webkit-scrollbar {
     width: 5px;
     display: none;
+    
   }
-
+  
   /* Scrollbar Thumb */
   ::-webkit-scrollbar-thumb {
-    /* background-color: ; */
+    background-color: red;
     border-radius: 6px;
   }
 

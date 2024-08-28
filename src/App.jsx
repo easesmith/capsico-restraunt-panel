@@ -10,6 +10,8 @@ const RegisterAndLogin = lazy(() => import('./Restaurant/pages/RegisterAndLogin'
 const Reporting = lazy(() => import('./Restaurant/pages/reporting/Reporting'));
 const Order = lazy(()=> import('./Restaurant/pages/Order'))
 const OrderHistory = lazy(()=> import('./Restaurant/pages/OrderHistory'))
+const OrderMenu = lazy(()=> import('./Restaurant/pages/orderMenu/OrderMenu'))
+const Payout = lazy(() => import('./Restaurant/pages/payout/Payout'))
 
 function App() {
 
@@ -26,6 +28,8 @@ function App() {
             <Route path='/abc' element={<ABC />} />
             <Route path='/restaurant/order' element={<Order />} />
             <Route path='/restaurant/order-history' element={<OrderHistory />} />
+            <Route path='/restaurant/order-menu' element={<OrderMenu />} />
+            <Route path='/restaurant/payout' element={<Payout />} />
           </Routes>
         </Suspense>
       </Router>
