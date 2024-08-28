@@ -18,7 +18,7 @@ function App() {
   return (
     <>
       <Router>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div className='w-full h-screen bg-white text-black flex justify-center items-center text-xl font-semibold'>Loading...</div>}>
           <Routes>
             <Route path='/' element={<RegisterAndLogin />} />
             <Route path='/restaurant/register' element={<Register />} />

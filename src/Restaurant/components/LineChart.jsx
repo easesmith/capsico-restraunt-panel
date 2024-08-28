@@ -1,4 +1,4 @@
-"use client"
+
 
 import { TrendingUp } from "lucide-react"
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
@@ -17,17 +17,14 @@ import {
     ChartTooltipContent,
 } from "@/components/ui/chart"
 const chartData = [
-    { month: "January", desktop: 33, mobile: 73 },
-    { month: "February", desktop: 39, mobile: 73 },
-    { month: "March", desktop: 33, mobile: 73 },
-    { month: "April", desktop: 33, mobile: 73 },
-    { month: "May", desktop: 33, mobile: 73 },
+    { month: "Week 27", desktop: 3, mobile: 3 },
+    { month: "Week 28", desktop: 9, mobile: 73 },
 ]
 
 const chartConfig = {
     desktop: {
         label: "Desktop",
-        color: "hsl(var(--chart-1))",
+        color: "#1AA6F1",
     },
     mobile: {
         label: "Mobile",
@@ -38,6 +35,10 @@ const chartConfig = {
 export function LineChartComp() {
     return (
         <Card>
+            <CardHeader>
+                <CardTitle className="font-numans font-semibold text-base">Line Chart - Dots</CardTitle>
+                {/* <CardDescription>January - June 2024</CardDescription> */}
+            </CardHeader>
             <CardContent>
                 <ChartContainer config={chartConfig}>
                     <LineChart
@@ -49,7 +50,7 @@ export function LineChartComp() {
                         }}
                     >
                         <CartesianGrid vertical={false} />
-                        {/* <XAxis
+                        <XAxis
                             dataKey="month"
                             tickLine={false}
                             axisLine={false}
@@ -59,7 +60,7 @@ export function LineChartComp() {
                         <ChartTooltip
                             cursor={false}
                             content={<ChartTooltipContent hideLabel />}
-                        /> */}
+                        />
                         <Line
                             dataKey="desktop"
                             type="natural"
