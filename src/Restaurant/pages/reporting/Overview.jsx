@@ -66,23 +66,39 @@ const options = {
   //         }
   //     }]
   // }
+  plugins: {
+    tooltip: {
+      // position: 'nearest',
+      // callbacks: {
+      //   label: function (tooltipItem) {
+      //     return `Value: ${tooltipItem.raw}`;
+      //   },
+      // },
+      position: function (context) {
+        const chart = context.chart;
+        const { x, y } = context.tooltip.caretX && context.tooltip.caretY
+          ? { x: context.tooltip.caretX, y: context.tooltip.caretY }
+          : chart.getDatasetMeta(0).data[context.tooltip.dataPoints[0].index].getCenterPoint();
+        return { x: x - context.tooltip.width - 10, y };
+      },
+    },
+  },
 };
 
 const data = {
   labels: [
-      'Mon',
-      'Tue',
-      'Wed',
+    'Week 27',
+    'Week 28',
   ],
   fontColor: "white",
   datasets: [
-      {
-          label: "Revenue / %",
-          data: [5, 3],
-          backgroundColor: ["#02A611"],
-          borderColor: ["white"],
-          borderWidth: 2,
-      },
+    {
+      label: "Impressions",
+      data: [2, 5],
+      backgroundColor: ["#1AA6F1"],
+      borderColor: ["#1AA6F1"],
+      borderWidth: 2,
+    },
   ],
 };
 
@@ -92,395 +108,167 @@ const Overview = () => {
       <h1 className='font-numans text-2xl font-semibold'>Sales Overview</h1>
       <div className='grid grid-cols-2 gap-5 mt-4'>
         <div className='bg-white rounded-2xl p-4'>
-          <LineChartComp />
+          <LineChartComp
+            chartData={data}
+            chartOptions={options}
+            title="Sales & Orders"
+          />
         </div>
         <div className='bg-white rounded-2xl p-4'>
-          <LineChartComp />
+          <LineChartComp
+            chartData={data}
+            chartOptions={options}
+            title="Average Order Value"
+          />
         </div>
         <div className='bg-white rounded-2xl p-4'>
-          <LineChartComp />
+          <LineChartComp
+            chartData={data}
+            chartOptions={options}
+            title="Market Share"
+          />
         </div>
       </div>
 
       <h1 className='font-numans text-2xl font-semibold mt-5'>User Experience</h1>
       <div className='grid grid-cols-2 gap-5 mt-4'>
         <div className='bg-white rounded-2xl p-4'>
-          <LineChartComp />
+          <LineChartComp
+            chartData={data}
+            chartOptions={options}
+            title="Rated order & review"
+          />
         </div>
         <div className='bg-white rounded-2xl p-4'>
-          <LineChartComp />
+          <LineChartComp
+            chartData={data}
+            chartOptions={options}
+            title="Average Order Value"
+          />
         </div>
         <div className='bg-white rounded-2xl p-4'>
-          <LineChartComp />
+          <LineChartComp
+            chartData={data}
+            chartOptions={options}
+            title="Online Percentage & Offline time"
+          />
         </div>
         <div className='bg-white rounded-2xl p-4'>
-          <LineChartComp />
+          <LineChartComp
+            chartData={data}
+            chartOptions={options}
+            title="For KPT & accuracy"
+          />
         </div>
       </div>
 
       <h1 className='font-numans text-2xl font-semibold mt-5'>User Funnel</h1>
       <div className='grid grid-cols-2 gap-5 mt-4'>
         <div className='bg-white rounded-2xl p-4'>
-          <Card>
-            <CardHeader>
-              <CardTitle className="font-numans font-semibold text-base">Impressions</CardTitle>
-              {/* <CardDescription>January - June 2024</CardDescription> */}
-            </CardHeader>
-            <CardContent>
-              <ChartContainer config={chartConfig}>
-                <LineChart
-                  accessibilityLayer
-                  data={chartData}
-                  margin={{
-                    left: 12,
-                    right: 12,
-                  }}
-                >
-                  <CartesianGrid vertical={false} />
-                  <XAxis
-                    dataKey="month"
-                    tickLine={false}
-                    axisLine={false}
-                    tickMargin={8}
-                    tickFormatter={(value) => value.slice(0, 3)}
-                  />
-                  <ChartTooltip
-                    cursor={false}
-                    content={<ChartTooltipContent hideLabel />}
-                  />
-                  <Line
-                    dataKey="desktop"
-                    type="natural"
-                    stroke="var(--color-desktop)"
-                    strokeWidth={2}
-                    dot={{
-                      fill: "var(--color-desktop)",
-                    }}
-                    activeDot={{
-                      r: 6,
-                    }}
-                  />
-                </LineChart>
-              </ChartContainer>
-            </CardContent>
-          </Card>
+          <LineChartComp
+            chartData={data}
+            chartOptions={options}
+            title="Impressions"
+          />
         </div>
         <div className='bg-white rounded-2xl p-4'>
-          <Card>
-            <CardHeader>
-              <CardTitle className="font-numans font-semibold text-base">Impressions to Menu</CardTitle>
-              {/* <CardDescription>January - June 2024</CardDescription> */}
-            </CardHeader>
-            <CardContent>
-              <ChartContainer config={chartConfig}>
-                <LineChart
-                  accessibilityLayer
-                  data={chartData}
-                  margin={{
-                    left: 12,
-                    right: 12,
-                  }}
-                >
-                  <CartesianGrid vertical={false} />
-                  <XAxis
-                    dataKey="month"
-                    tickLine={false}
-                    axisLine={false}
-                    tickMargin={8}
-                    tickFormatter={(value) => value.slice(0, 3)}
-                  />
-                  <ChartTooltip
-                    cursor={false}
-                    content={<ChartTooltipContent hideLabel />}
-                  />
-                  <Line
-                    dataKey="desktop"
-                    type="natural"
-                    stroke="var(--color-desktop)"
-                    strokeWidth={2}
-                    dot={{
-                      fill: "var(--color-desktop)",
-                    }}
-                    activeDot={{
-                      r: 6,
-                    }}
-                  />
-                </LineChart>
-              </ChartContainer>
-            </CardContent>
-          </Card>
+          <LineChartComp
+            chartData={data}
+            chartOptions={options}
+            title="Impressions to Menu"
+          />
         </div>
         <div className='bg-white rounded-2xl p-4'>
-          <Card>
-            <CardHeader>
-              <CardTitle className="font-numans font-semibold text-base">Impressions</CardTitle>
-              {/* <CardDescription>January - June 2024</CardDescription> */}
-            </CardHeader>
-            <CardContent>
-              <ChartContainer config={chartConfig}>
-                <LineChart
-                  accessibilityLayer
-                  data={chartData}
-                  margin={{
-                    left: 12,
-                    right: 12,
-                  }}
-                >
-                  <CartesianGrid vertical={false} />
-                  <XAxis
-                    dataKey="month"
-                    tickLine={false}
-                    axisLine={false}
-                    tickMargin={8}
-                    tickFormatter={(value) => value.slice(0, 3)}
-                  />
-                  <ChartTooltip
-                    cursor={false}
-                    content={<ChartTooltipContent hideLabel />}
-                  />
-                  <Line
-                    dataKey="desktop"
-                    type="natural"
-                    stroke="var(--color-desktop)"
-                    strokeWidth={2}
-                    dot={{
-                      fill: "var(--color-desktop)",
-                    }}
-                    activeDot={{
-                      r: 6,
-                    }}
-                  />
-                </LineChart>
-              </ChartContainer>
-            </CardContent>
-          </Card>
+          <LineChartComp
+            chartData={data}
+            chartOptions={options}
+            title="Impressions"
+          />
         </div>
         <div className='bg-white rounded-2xl p-4 h-full'>
-          {/* <Card>
-            <CardHeader>
-              <CardTitle className="font-numans font-semibold text-base">New users, Repeat users &  Lapsed users</CardTitle>
-              <CardDescription>January - June 2024</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ChartContainer config={chartConfig}>
-                <LineChart
-                  accessibilityLayer
-                  data={chartData}
-                  margin={{
-                    left: 12,
-                    right: 12,
-                  }}
-                >
-                  <CartesianGrid vertical={false} />
-                  <XAxis
-                    dataKey="month"
-                    tickLine={false}
-                    axisLine={false}
-                    tickMargin={8}
-                    tickFormatter={(value) => value.slice(0, 3)}
-                  />
-                  <ChartTooltip
-                    cursor={false}
-                    content={<ChartTooltipContent hideLabel />}
-                  />
-                  <Line
-                    dataKey="desktop"
-                    type="natural"
-                    stroke="var(--color-desktop)"
-                    strokeWidth={2}
-                    dot={{
-                      fill: "var(--color-desktop)",
-                    }}
-                    activeDot={{
-                      r: 6,
-                    }}
-                  />
-                </LineChart>
-              </ChartContainer>
-            </CardContent>
-          </Card> */}
-
-          <LineChart1 data={data} options={options} />
+          <LineChartComp
+            chartData={data}
+            chartOptions={options}
+            title="New users, Repeat users &  Lapsed users"
+          />
         </div>
       </div>
 
       <h1 className='font-numans text-2xl font-semibold mt-5'>Marketing</h1>
-
       <div className='grid grid-cols-2 gap-5 mt-4'>
         <div className='bg-white rounded-2xl p-4'>
-          <Card>
-            <CardHeader>
-              <CardTitle className="font-numans font-semibold text-base">Total sales & Sales from promotion</CardTitle>
-              {/* <CardDescription>January - June 2024</CardDescription> */}
-            </CardHeader>
-            <CardContent>
-              <ChartContainer config={chartConfig}>
-                <LineChart
-                  accessibilityLayer
-                  data={chartData}
-                  margin={{
-                    left: 12,
-                    right: 12,
-                  }}
-                >
-                  <CartesianGrid vertical={false} />
-                  <XAxis
-                    dataKey="month"
-                    tickLine={false}
-                    axisLine={false}
-                    tickMargin={8}
-                    tickFormatter={(value) => value.slice(0, 3)}
-                  />
-                  <ChartTooltip
-                    cursor={false}
-                    content={<ChartTooltipContent hideLabel />}
-                  />
-                  <Line
-                    dataKey="desktop"
-                    type="natural"
-                    stroke="var(--color-desktop)"
-                    strokeWidth={2}
-                    dot={{
-                      fill: "var(--color-desktop)",
-                    }}
-                    activeDot={{
-                      r: 6,
-                    }}
-                  />
-                </LineChart>
-              </ChartContainer>
-            </CardContent>
-          </Card>
+          <LineChartComp
+            chartData={data}
+            chartOptions={options}
+            title="Total sales & Sales from promotion"
+          />
         </div>
         <div className='bg-white rounded-2xl p-4'>
-          <Card>
-            <CardHeader>
-              <CardTitle className="font-numans font-semibold text-base">Order Percentage from Promotion</CardTitle>
-              {/* <CardDescription>January - June 2024</CardDescription> */}
-            </CardHeader>
-            <CardContent>
-              <ChartContainer config={chartConfig}>
-                <LineChart
-                  accessibilityLayer
-                  data={chartData}
-                  margin={{
-                    left: 12,
-                    right: 12,
-                  }}
-                >
-                  <CartesianGrid vertical={false} />
-                  <XAxis
-                    dataKey="month"
-                    tickLine={false}
-                    axisLine={false}
-                    tickMargin={8}
-                    tickFormatter={(value) => value.slice(0, 3)}
-                  />
-                  <ChartTooltip
-                    cursor={false}
-                    content={<ChartTooltipContent hideLabel />}
-                  />
-                  <Line
-                    dataKey="desktop"
-                    type="natural"
-                    stroke="var(--color-desktop)"
-                    strokeWidth={2}
-                    dot={{
-                      fill: "var(--color-desktop)",
-                    }}
-                    activeDot={{
-                      r: 6,
-                    }}
-                  />
-                </LineChart>
-              </ChartContainer>
-            </CardContent>
-          </Card>
+          <LineChartComp
+            chartData={data}
+            chartOptions={options}
+            title="Order Percentage from Promotion"
+          />
         </div>
         <div className='bg-white rounded-2xl p-4'>
-          <Card>
-            <CardHeader>
-              <CardTitle className="font-numans font-semibold text-base">Impressions & Impressions from Promotions</CardTitle>
-              {/* <CardDescription>January - June 2024</CardDescription> */}
-            </CardHeader>
-            <CardContent>
-              <ChartContainer config={chartConfig}>
-                <LineChart
-                  accessibilityLayer
-                  data={chartData}
-                  margin={{
-                    left: 12,
-                    right: 12,
-                  }}
-                >
-                  <CartesianGrid vertical={false} />
-                  <XAxis
-                    dataKey="month"
-                    tickLine={false}
-                    axisLine={false}
-                    tickMargin={8}
-                    tickFormatter={(value) => value.slice(0, 3)}
-                  />
-                  <ChartTooltip
-                    cursor={false}
-                    content={<ChartTooltipContent hideLabel />}
-                  />
-                  <Line
-                    dataKey="desktop"
-                    type="natural"
-                    stroke="var(--color-desktop)"
-                    strokeWidth={2}
-                    dot={{
-                      fill: "var(--color-desktop)",
-                    }}
-                    activeDot={{
-                      r: 6,
-                    }}
-                  />
-                </LineChart>
-              </ChartContainer>
-            </CardContent>
-          </Card>
+          <LineChartComp
+            chartData={data}
+            chartOptions={options}
+            title="Impressions & Impressions from Promotions"
+          />
         </div>
         <div className='bg-white rounded-2xl p-4 h-full'>
-          <Card>
-            <CardHeader>
-              <CardTitle className="font-numans font-semibold text-base">Promotion CTR</CardTitle>
-              {/* <CardDescription>January - June 2024</CardDescription> */}
-            </CardHeader>
-            <CardContent>
-              <ChartContainer config={chartConfig}>
-                <LineChart
-                  accessibilityLayer
-                  data={chartData}
-                  margin={{
-                    left: 12,
-                    right: 12,
-                  }}
-                >
-                  <CartesianGrid vertical={false} />
-                  <XAxis />
-                  <YAxis />
-                  <ChartTooltip
-                    cursor={false}
-                    content={<ChartTooltipContent hideLabel />}
-                  />
-                  <Line
-                    dataKey="desktop"
-                    type="natural"
-                    stroke="var(--color-desktop)"
-                    strokeWidth={2}
-                    dot={{
-                      fill: "var(--color-desktop)",
-                    }}
-                    activeDot={{
-                      r: 6,
-                    }}
-                  />
-                </LineChart>
-              </ChartContainer>
-            </CardContent>
-          </Card>
+          <LineChartComp
+            chartData={data}
+            chartOptions={options}
+            title="Promotion CTR"
+          />
+        </div>
+        <div className='bg-white rounded-2xl p-4 h-full'>
+          <LineChartComp
+            chartData={data}
+            chartOptions={options}
+            title="Promotion spent & ROI"
+          />
+        </div>
+        <div className='bg-white rounded-2xl p-4 h-full'>
+          <LineChartComp
+            chartData={data}
+            chartOptions={options}
+            title="Total sales & Gross Sales from Promotion"
+          />
+        </div>
+        <div className='bg-white rounded-2xl p-4 h-full'>
+          <LineChartComp
+            chartData={data}
+            chartOptions={options}
+            title="Orders % & Effective Offers"
+          />
+        </div>
+        <div className='bg-white rounded-2xl p-4 h-full'>
+          <LineChartComp
+            chartData={data}
+            chartOptions={options}
+            title="Net sales from discount & offers given"
+          />
+        </div>
+        <div className='bg-white rounded-2xl p-4 h-full'>
+          <LineChartComp
+            chartData={data}
+            chartOptions={options}
+            title="Effective discount"
+          />
+        </div>
+      </div>
+
+      <h1 className='font-numans text-2xl font-semibold mt-5'>Trending Menu</h1>
+      <div className='grid grid-cols-2 gap-5 mt-4'>
+        <div className='bg-white rounded-2xl p-4 h-full'>
+          <LineChartComp
+            chartData={data}
+            chartOptions={options}
+            title="M2C & Menu score"
+          />
         </div>
       </div>
     </div>
