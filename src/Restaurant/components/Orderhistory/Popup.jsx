@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import WifiImg from '../../../assets/wifi.png'
 import {
   Dialog,
+  DialogClose,
   DialogContent,
 } from "@/components/ui/dialog"
 import { Button } from '@/components/ui/button'
@@ -12,13 +13,13 @@ const Popup = () => {
   const [showPopup, setShowPopup] = useState(false);
   const location = useLocation()
 
-  useEffect(()=>{
-    if(location.pathname === '/restaurant/order-history'){
+  useEffect(() => {
+    if (location.pathname === '/restaurant/order-history') {
       setShowPopup(true)
-    } else{
+    } else {
       setShowPopup(false)
     }
-  },[location])
+  }, [location])
 
   return (
     <>
@@ -30,7 +31,9 @@ const Popup = () => {
             </div>
             <div className=' bg-[#E7EBEF66] flex flex-col items-end gap-1 rounded-xl py-6 px-8'>
               <p className='text-[#000000] text-lg font-normal font-numans'>To prevent order rejections and ensure a positive customer experience, please go offline if you are unable to fulfill orders for any reason.”</p>
-              <Button variant="capsico" className=" text-lg font-normal font-numans tracking-[1%] rounded-[8px] py-6 px-12 mt-1">Okay</Button>
+              <DialogClose asChild>
+                <Button variant="capsico" className=" text-lg font-normal font-numans tracking-[1%] rounded-[8px] py-6 px-12 mt-1">Okay</Button>
+              </DialogClose>
             </div>
           </DialogContent>
         </Dialog>
