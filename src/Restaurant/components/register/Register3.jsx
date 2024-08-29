@@ -37,8 +37,8 @@ const Register3 = ({ form }) => {
             <div className='border border-[#C2CDD6] rounded-md px-8 py-6 mt-6'>
                 <div className='w-full mt-4'>
                     <div>
-                        <h3 className='text-[33px] font-bold text-[#4A5E6D]'>Menu Images</h3>
-                        <p className='text-[25px] font-normal text-[#92A5B5]'>Your menu will be displayed directly to customers on Capsico</p>
+                        <h3 className='text-[28px] font-bold text-[#4A5E6D]'>Menu Images</h3>
+                        <p className='text-[20px] font-normal text-[#92A5B5]'>Your menu will be displayed directly to customers on Capsico</p>
                     </div>
                     <div className="grid w-full gap-10 pt-10">
                         <div className="w-full relative">
@@ -82,8 +82,8 @@ const Register3 = ({ form }) => {
 
                 <div className='w-full mt-4'>
                     <div>
-                        <h3 className='text-[33px] font-bold text-[#4A5E6D]'>Restaurant Images</h3>
-                        <p className='text-[25px] font-normal text-[#92A5B5]'>Please upload at least one photo of the restaurant’s facade (front view)</p>
+                        <h3 className='text-[28px] font-bold text-[#4A5E6D]'>Restaurant Images</h3>
+                        <p className='text-[20px] font-normal text-[#92A5B5]'>Please upload at least one photo of the restaurant’s facade (front view)</p>
                     </div>
                     <div className="grid w-full gap-10 pt-10">
                         <div className="w-full relative">
@@ -126,8 +126,8 @@ const Register3 = ({ form }) => {
 
                 <div className='w-full mt-4'>
                     <div>
-                        <h3 className='text-[33px] font-bold text-[#4A5E6D]'>Food Images</h3>
-                        <p className='text-[25px] font-normal text-[#92A5B5]'>Please avoid uploading images of raw ingredients</p>
+                        <h3 className='text-[28px] font-bold text-[#4A5E6D]'>Food Images</h3>
+                        <p className='text-[20px] font-normal text-[#92A5B5]'>Please avoid uploading images of raw ingredients</p>
                     </div>
                     <div className="grid w-full gap-10 pt-10">
                         <div className="w-full relative">

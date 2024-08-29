@@ -47,7 +47,7 @@ const Register2 = ({ form }) => {
     return (
         <div>
             <div className='border border-[#C2CDD6] rounded-md px-8 py-6'>
-                <h3 className='text-[33px] font-bold text-[#4A5E6D]'>Choose options for your restaurant</h3>
+                <h3 className='text-[28px] font-bold text-[#4A5E6D]'>Choose options for your restaurant</h3>
                 {/* <p className='text-[25px] font-normal text-[#92A5B5]'>Restaurant name. address. contact no., owner details</p> */}
                 <div className='mt-5'>
                     <FormField
@@ -82,7 +82,7 @@ const Register2 = ({ form }) => {
                                                                 }}
                                                             />
                                                         </FormControl>
-                                                        <FormLabel className="font-normal text-xl text-[#667085]">
+                                                        <FormLabel className="font-normal text-base text-[#667085]">
                                                             {item.label}
                                                         </FormLabel>
                                                     </FormItem>
@@ -92,7 +92,7 @@ const Register2 = ({ form }) => {
                                     ))}
 
                                     <div>
-                                        <button type='button' onClick={handleToggle} className="primary-color text-xl font-normal">
+                                        <button type='button' onClick={handleToggle} className="primary-color text-base font-normal">
                                             {showMoreRestaurantOptions ? '- View less' : '+ View more'}
                                         </button>
                                     </div>
@@ -105,8 +105,8 @@ const Register2 = ({ form }) => {
             </div>
 
             <div className='border border-[#C2CDD6] rounded-md px-8 py-6 mt-6'>
-                <h3 className='text-[33px] font-bold text-[#4A5E6D]'>Sorts of Cuisines</h3>
-                <p className='text-[25px] font-normal text-[#92A5B5]'>Pick options which best describe food you serve</p>
+                <h3 className='text-[28px] font-bold text-[#4A5E6D]'>Sorts of Cuisines</h3>
+                <p className='text-[20px] font-normal text-[#92A5B5]'>Pick options which best describe food you serve</p>
                 <div className='mt-5'>
                     <FormField
                         control={control}
@@ -140,7 +140,7 @@ const Register2 = ({ form }) => {
                                                                 }}
                                                             />
                                                         </FormControl>
-                                                        <FormLabel className="font-normal text-xl text-[#667085]">
+                                                        <FormLabel className="font-normal text-base text-[#667085]">
                                                             {item.label}
                                                         </FormLabel>
                                                     </FormItem>
@@ -149,7 +149,7 @@ const Register2 = ({ form }) => {
                                         />
                                     ))}
                                     <div>
-                                        <button type='button' onClick={handleToggleCuisines} className="primary-color text-xl font-normal">
+                                        <button type='button' onClick={handleToggleCuisines} className="primary-color text-base font-normal">
                                             {showMoreCuisines ? '- View less' : '+ View more'}
                                         </button>
                                     </div>
@@ -162,8 +162,8 @@ const Register2 = ({ form }) => {
             </div>
 
             <div className='border border-[#C2CDD6] rounded-md px-8 py-6 mt-6'>
-                <h3 className='text-[33px] font-bold text-[#4A5E6D]'>Restaurant Working Hours</h3>
-                <p className='text-[25px] font-normal text-[#92A5B5]'>Set restaurant opening and closing hours.</p>
+                <h3 className='text-[28px] font-bold text-[#4A5E6D]'>Restaurant Working Hours</h3>
+                <p className='text-[20px] font-normal text-[#92A5B5]'>Set restaurant opening and closing hours.</p>
 
                 <div className='mt-5 grid grid-cols-[47%_2%_47%] gap-5'>
                     <FormField
@@ -171,7 +171,7 @@ const Register2 = ({ form }) => {
                         name="openingTime"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel className="text-lg text-[#344054] font-inter">Opening Time</FormLabel>
+                                <FormLabel className=" text-[#344054] font-inter">Opening Time</FormLabel>
                                 <FormControl>
                                     <Select
                                         {...field}
@@ -206,7 +206,7 @@ const Register2 = ({ form }) => {
                         name="closingTime"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel className="text-lg text-[#344054] font-inter">Closing Time</FormLabel>
+                                <FormLabel className=" text-[#344054] font-inter">Closing Time</FormLabel>
                                 <FormControl>
                                     <Select
                                         {...field}
@@ -269,7 +269,7 @@ const Register2 = ({ form }) => {
                                                                 }}
                                                             />
                                                         </FormControl>
-                                                        <FormLabel className="font-normal text-xl text-[#667085]">
+                                                        <FormLabel className="font-normal text-base text-[#667085]">
                                                             {item.label}
                                                         </FormLabel>
                                                     </FormItem>
@@ -278,7 +278,7 @@ const Register2 = ({ form }) => {
                                         />
                                     ))}
                                     <div>
-                                        <button className="primary-color text-xl font-normal">+ View more</button>
+                                        <button className="primary-color text-base font-normal">+ View more</button>
                                     </div>
                                 </div>
                                 <FormMessage />

@@ -63,8 +63,8 @@ const OtpModal = ({ isOtpModalOpen, setIsOtpModalOpen, isEmail = false }) => {
                     </div>
                 </DialogHeader>
                 <div className="flex justify-center gap-1 mt-3">
-                    <h3 className="text-2xl font-dmSans font-bold text-[#1F2A37]">Did’t get the OTP?</h3>
-                    <button onClick={handleResendOtp} disabled={timeLeft !== 0} className="text-2xl font-dmSans font-normal disabled:cursor-not-allowed text-[#6B7280]">Resend Now</button>
+                    <h3 className="text-lg font-dmSans font-bold text-[#1F2A37]">Did’t get the OTP?</h3>
+                    <button onClick={handleResendOtp} disabled={timeLeft !== 0} className="text-lg font-dmSans font-normal disabled:cursor-not-allowed text-[#6B7280]">Resend Now</button>
                 </div>
                 <DialogDescription></DialogDescription>
             </DialogContent>

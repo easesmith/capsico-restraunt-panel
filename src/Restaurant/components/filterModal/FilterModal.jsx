@@ -28,7 +28,7 @@ const FilterModal = ({ isFilterModalOpen, setIsFilterModalOpen, setSelectedFilte
         <Dialog open={isFilterModalOpen} onOpenChange={() => setIsFilterModalOpen(!isFilterModalOpen)}>
             <DialogContent className="max-w-2xl w-full">
                 <DialogHeader>
-                    <DialogTitle className="font-numans text-[30px] text-black border-b-2 border-black pb-4">Filter</DialogTitle>
+                    <DialogTitle className="font-numans text-[26px] text-black border-b-2 border-black pb-4">Filter</DialogTitle>
 
                     <div className="pt-5 grid grid-cols-[200px_1fr]">
                         <div className="">

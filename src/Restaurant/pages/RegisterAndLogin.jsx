@@ -19,15 +19,15 @@ const RegisterAndLogin = () => {
             <div className='max-w-lg w-full mx-auto'>
                 <h1 className='font-semibold text-2xl text-[#4A67FF] font-numans text-center'>Capsico Restaurant Partner Dashboard</h1>
                 <img src={registerAndLoginImg} className='w-4/5 mx-auto mt-2' alt="registerAndLoginImg" />
-                <Button onClick={() => setIsLoginModalOpen(true)} variant="capsico" className="w-full mt-4 font-numans text-lg py-6">Login</Button>
+                <Button onClick={() => setIsLoginModalOpen(true)} variant="capsico" className="w-full mt-4 class-lg1 py-6">Login</Button>
                 <Link to={"/restaurant/register"}>
-                    <Button variant="capsico" className="w-full mt-5 font-numans text-lg py-6">Register</Button>
+                    <Button variant="capsico" className="w-full mt-5 class-lg1 py-6">Register</Button>
                 </Link>
                 <p className='font-numans font-medium text-xl text-center mt-4'>By continuing, you agree to our</p>
                 <ul className='flex justify-center gap-4 mt-2 items-center'>
-                    <li className='text-[#7C7C7C] text-lg border-b border-dashed border-[#7C7C7C]'>Terms of service</li>
-                    <li className='text-[#7C7C7C] text-lg border-b border-dashed border-[#7C7C7C]'>Privacy Policy</li>
-                    <li className='text-[#7C7C7C] text-lg border-b border-dashed border-[#7C7C7C]'>Code of Conduct</li>
+                    <li className='text-[#7C7C7C] text-lg list-none border-b border-dashed border-[#7C7C7C]'>Terms of service</li>
+                    <li className='text-[#7C7C7C] text-lg list-none border-b border-dashed border-[#7C7C7C]'>Privacy Policy</li>
+                    <li className='text-[#7C7C7C] text-lg list-none border-b border-dashed border-[#7C7C7C]'>Code of Conduct</li>
                 </ul>
             </div>
             {isLoginModalOpen &&

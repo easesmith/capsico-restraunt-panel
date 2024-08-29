@@ -141,6 +141,9 @@
 .class-sm4 {
   @apply text-sm font-medium font-inter
 }
+.class-sm5 {
+  @apply text-sm font-semibold font-numans
+}
 
 
 .class-base1 {

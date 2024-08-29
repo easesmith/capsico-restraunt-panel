@@ -30,8 +30,8 @@ const Register = () => {
         }
 
         const valid = await form.trigger(Object.keys(schema.shape));
+        setStep(step + 1);
         if (valid) {
-            setStep(step + 1);
         }
     };
 

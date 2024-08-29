@@ -73,7 +73,7 @@ const data = {
 export function LineChartComp({ title, chartData, chartOptions }) {
     return (
         <div>
-            <p className="font-numans font-semibold text-base">{title}</p>
+            <p className="class-base3">{title}</p>
             <Line data={chartData} options={chartOptions} />
         </div>
     )
