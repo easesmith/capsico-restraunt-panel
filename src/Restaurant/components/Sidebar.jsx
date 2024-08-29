@@ -24,7 +24,7 @@ const Sidebar = () => {
             <div className='flex flex-col gap-4 bg-[#FFFFFF] border-[1px] border-[#E7EBEF] px-5 py-16'>
                 <Link to="/restaurant/order" className={`flex justify-start items-center gap-[14px] h-[52px] p-[14px] cursor-pointer group hover:bg-[#F3F3FC] ${pathname.includes("/restaurant/order") ? 'text-[#1AA6F1] bg-[#F3F3FC]' : 'text-[red]'}`}>
                     <img src={OrderImg} alt="" className='w-[24px] h-[24px]' />
-                    <span className='text-[#637D92] text-[16.8px] font-normal font-inter group-hover:text-[#1AA6F1]'>Orders</span>
+                    <span className={`text-[#637D92] text-[16.8px] font-normal font-inter group-hover:text-[#1AA6F1]`}>Orders</span>
                 </Link>
                 <Link to="/restaurant/order-menu" className={`flex justify-start items-center gap-[14px] h-[52px] p-[14px] cursor-pointer group hover:bg-[#F3F3FC] ${pathname.includes("/restaurant/order-menu") ? 'text-[#1AA6F1] bg-[#F3F3FC]' : 'text-[red]'}`}>
                     <img src={MenuImg} alt="" className='w-[24px] h-[24px]' />
