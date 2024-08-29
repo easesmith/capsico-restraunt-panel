@@ -11,8 +11,8 @@ const Offers = () => {
             <div>
                 <div className='bg-[#D9F1FD66] p-5 font-inter font-medium'>Offers</div>
                 <div className='bg-[#D9F1FD66] px-3 border-t-2 border-[#DAE1E7] flex gap-4'>
-                    <button onClick={() => setIsCreateOffer(true)} className={`py-3 px-2 font-inter font-medium border-b-4 ${isCreateOffer ? "text-[#1AA6F1]  border-[#1AA6F1]" : "border-transparent"}`}>Create offers</button>
-                    <button onClick={() => setIsCreateOffer(false)} className={`py-3 px-2 font-inter font-medium border-b-4 ${isCreateOffer ? "border-transparent" : "text-[#1AA6F1] border-[#1AA6F1]"}`}>Track Offers</button>
+                    <button onClick={() => setIsCreateOffer(true)} className={`py-3 px-2 font-inter font-medium border-b-4 ${isCreateOffer ? "primary-color  border-[#1AA6F1]" : "border-transparent"}`}>Create offers</button>
+                    <button onClick={() => setIsCreateOffer(false)} className={`py-3 px-2 font-inter font-medium border-b-4 ${isCreateOffer ? "border-transparent" : "primary-color border-[#1AA6F1]"}`}>Track Offers</button>
                 </div>
 
                 <div>

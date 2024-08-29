@@ -3,7 +3,9 @@ import RestaurantWrapper from '../components/restaurantWrapper/RestaurantWrapper
 const OutletInfo = () => {
     return (
         <RestaurantWrapper>
-            <div>OutletInfo</div>
+            <div>
+                <div className='text-lg'></div>
+            </div>
         </RestaurantWrapper>
     )
 }

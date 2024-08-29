@@ -19,7 +19,7 @@ const Payout = () => {
                             <button
                                 key={tab}
                                 className={`p-[10px] text-xl font-normal font-numans focus:outline-none ${activeTab === tab
-                                    ? "text-[#1AA6F1] border-b-2 border-[#1AA6F1]"
+                                    ? "primary-color border-b-2 border-[#1AA6F1]"
                                     : "text-black"
                                     }`}
                                 onClick={() => setActiveTab(tab)}

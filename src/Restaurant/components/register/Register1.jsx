@@ -170,7 +170,7 @@ const Register1 = ({ form }) => {
                           >
                             <div className='flex border rounded'>
                               <Input placeholder="Search for your store here & drop a pin on its location." className="placeholder:text-[#667085] placeholder:font-inter border-none focus-visible:ring-0 focus-visible:ring-offset-0" {...field} />
-                              <button onClick={detectLocation} type='button' className="text-[#1AA6F1] flex items-center gap-1 px-4 py-2">
+                              <button onClick={detectLocation} type='button' className="primary-color flex items-center gap-1 px-4 py-2">
                                 <CiLocationOn size={20} />
                                 <span className='font-bold'>Detect</span>
                               </button>

@@ -20,7 +20,7 @@ const LiveTracking = () => {
             <img src={informationIcon} alt="" />
           </div>
           <div>
-            <button className="font-semibold flex text-lg text-[#1AA6F1] font-numans">
+            <button className="font-semibold flex text-lg primary-color font-numans">
               See resturant level Info
               <MdOutlineKeyboardArrowRight size={26} />
             </button>
@@ -42,7 +42,7 @@ const LiveTracking = () => {
             <img src={informationIcon} alt="" />
           </div>
           <div>
-            <button className="font-semibold flex text-lg text-[#1AA6F1] font-numans">
+            <button className="font-semibold flex text-lg primary-color font-numans">
               See resturant level Info
               <MdOutlineKeyboardArrowRight size={26} />
             </button>
@@ -78,7 +78,7 @@ const LiveTracking = () => {
             <img src={informationIcon} alt="" />
           </div>
           <div>
-            <button className="font-semibold flex text-lg text-[#1AA6F1] font-numans">
+            <button className="font-semibold flex text-lg primary-color font-numans">
               See resturant level Info
               <MdOutlineKeyboardArrowRight size={26} />
             </button>
@@ -105,7 +105,7 @@ const LiveTracking = () => {
             <img src={informationIcon} alt="" />
           </div>
           <div>
-            <button className="font-semibold flex text-lg text-[#1AA6F1] font-numans">
+            <button className="font-semibold flex text-lg primary-color font-numans">
               See resturant level Info
               <MdOutlineKeyboardArrowRight size={26} />
             </button>
@@ -125,7 +125,7 @@ const LiveTracking = () => {
             <img src={informationIcon} alt="" />
           </div>
           <div>
-            <button className="font-semibold flex text-lg text-[#1AA6F1] font-numans">
+            <button className="font-semibold flex text-lg primary-color font-numans">
               See resturant level Info
               <MdOutlineKeyboardArrowRight size={26} />
             </button>

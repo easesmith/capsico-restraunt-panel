@@ -2,7 +2,6 @@ import { lazy, Suspense } from 'react';
 import './App.css'
 
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import OutletInfo from './Restaurant/pages/OutletInfo';
 
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Register = lazy(() => import('./Restaurant/pages/Register'));
@@ -14,6 +13,7 @@ const OrderHistory = lazy(()=> import('./Restaurant/pages/OrderHistory'))
 const OrderMenu = lazy(()=> import('./Restaurant/pages/orderMenu/OrderMenu'))
 const Payout = lazy(() => import('./Restaurant/pages/payout/Payout'))
 const Offers = lazy(() => import('./Restaurant/pages/Offers'))
+const OutletInfo = lazy(() => import('./Restaurant/pages/OutletInfo'))
 
 function App() {
 
