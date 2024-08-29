@@ -18,7 +18,7 @@ const CreateOffer = () => {
                         <button className='py-3 px-5 bg-[#006296] font-numans font-semibold text-white rounded'>Turn on now</button>
                     </div>
                 </div>
-                <p className='font-numans font-normal text-[#1AA6F1] py-3 px-1'>This offer is better than 90% of Other North Indian Restaurants in the area.</p>
+                <p className='font-numans font-normal primary-color py-3 px-1'>This offer is better than 90% of Other North Indian Restaurants in the area.</p>
             </div>
             <div className="flex gap-3 mt-5">
                 {/* <div style={{ backgroundImage: `url(${offerIcon})` }} className='w-36 h-36 bg-no-repeat bg-center flex flex-col items-center justify-center'>

@@ -61,8 +61,8 @@ const Catalog = () => {
             <button
               key={tab}
               className={`p-[10px] text-xl font-normal font-numans focus:outline-none ${activeTab === tab
-                ? "text-[#1AA6F1] border-b-[3px] border-[#1AA6F1]"
-                : "text-black"
+                  ? "primary-color border-b-2 border-[#1AA6F1]"
+                  : "text-black"
                 }`}
               onClick={() => setActiveTab(tab)}
             >
@@ -101,7 +101,7 @@ const Catalog = () => {
           <Section key={idx} section={section} />
         ))}
         <div className="flex gap-4 mt-4">
-          <button className="flex items-center gap-3"><FiPlusCircle className="text-[#1AA6F1] text-2xl" /><span className="text-[#000000] text-xl font-normal font-numans">Add Main Menu</span></button>
+          <button className="flex items-center gap-3"><FiPlusCircle className="primary-color text-2xl" /><span className="text-[#000000] text-xl font-normal font-numans">Add Main Menu</span></button>
         </div>
       </div>
     </RestaurantWrapper>
@@ -116,7 +116,7 @@ const Section = ({ section }) => {
       <div className="flex justify-between items-center cursor-pointer border-y-[1px] py-4 " >
         <div className="flex justify-center items-center gap-4">
           <button onClick={() => setIsOpen(!isOpen)} className={` transform ${isOpen ? "rotate-90" : ""}`}><IoIosArrowForward className="text-[#323F49] text-2xl" /></button>
-          <h3 className="text-[#323F49] text-xl font-normal font-numans">{section.category}</h3>
+          <h3 className="text-[#323F49] text-lg font-normal font-numans">{section.category}</h3>
           <button className={``}><FiEdit2 className="text-[#323F49] text-xl" /></button>
         </div>
         <p className="text-[#323F49] text-xl font-normal font-numans">{section.items.length} Items</p>

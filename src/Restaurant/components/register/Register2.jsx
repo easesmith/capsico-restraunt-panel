@@ -92,7 +92,7 @@ const Register2 = ({ form }) => {
                                     ))}
 
                                     <div>
-                                        <button type='button' onClick={handleToggle} className="text-[#1AA6F1] text-xl font-normal">
+                                        <button type='button' onClick={handleToggle} className="primary-color text-xl font-normal">
                                             {showMoreRestaurantOptions ? '- View less' : '+ View more'}
                                         </button>
                                     </div>
@@ -149,7 +149,7 @@ const Register2 = ({ form }) => {
                                         />
                                     ))}
                                     <div>
-                                        <button type='button' onClick={handleToggleCuisines} className="text-[#1AA6F1] text-xl font-normal">
+                                        <button type='button' onClick={handleToggleCuisines} className="primary-color text-xl font-normal">
                                             {showMoreCuisines ? '- View less' : '+ View more'}
                                         </button>
                                     </div>
@@ -278,7 +278,7 @@ const Register2 = ({ form }) => {
                                         />
                                     ))}
                                     <div>
-                                        <button className="text-[#1AA6F1] text-xl font-normal">+ View more</button>
+                                        <button className="primary-color text-xl font-normal">+ View more</button>
                                     </div>
                                 </div>
                                 <FormMessage />

@@ -55,9 +55,9 @@ const Register3 = ({ form }) => {
 
                                             {!watch("menuImagesPreview") &&
                                                 <div className='border-2 border-dashed border-[#C2CDD6] w-full h-72  flex flex-col justify-center items-center rounded-md'>
-                                                    <div className='border-2 flex flex-col items-center text-[#1AA6F1] border-dashed rounded px-5 py-4'>
+                                                    <div className='border-2 flex flex-col items-center primary-color border-dashed rounded px-5 py-4'>
                                                         <PiCameraPlus size={45} />
-                                                        <p className='font-bold text-center text-[#1AA6F1] text-sm mt-2'>Add Photo</p>
+                                                        <p className='font-bold text-center primary-color text-sm mt-2'>Add Photo</p>
                                                     </div>
                                                     <p className='font-normal text-xs mt-2'>or drop files to upload</p>
                                                 </div>
@@ -99,9 +99,9 @@ const Register3 = ({ form }) => {
                                             } */}
                                             {!watch("restaurantPreview") &&
                                                 <div className='border-2 border-dashed border-[#C2CDD6] w-full h-72  flex flex-col justify-center items-center rounded-md'>
-                                                    <div className='border-2 flex flex-col items-center text-[#1AA6F1] border-dashed rounded px-5 py-4'>
+                                                    <div className='border-2 flex flex-col items-center primary-color border-dashed rounded px-5 py-4'>
                                                         <PiCameraPlus size={45} />
-                                                        <p className='font-bold text-center text-[#1AA6F1] text-sm mt-2'>Add Photo</p>
+                                                        <p className='font-bold text-center primary-color text-sm mt-2'>Add Photo</p>
                                                     </div>
                                                     <p className='font-normal text-xs mt-2'>or drop files to upload</p>
                                                 </div>
@@ -143,9 +143,9 @@ const Register3 = ({ form }) => {
                                             } */}
                                             {!watch("foodImagesPreview") &&
                                                 <div className='border-2 border-dashed border-[#C2CDD6] w-full h-72  flex flex-col justify-center items-center rounded-md'>
-                                                    <div className='border-2 flex flex-col items-center text-[#1AA6F1] border-dashed rounded px-5 py-4'>
+                                                    <div className='border-2 flex flex-col items-center primary-color border-dashed rounded px-5 py-4'>
                                                         <PiCameraPlus size={45} />
-                                                        <p className='font-bold text-center text-[#1AA6F1] text-sm mt-2'>Add Photo</p>
+                                                        <p className='font-bold text-center primary-color text-sm mt-2'>Add Photo</p>
                                                     </div>
                                                     <p className='font-normal text-xs mt-2'>or drop files to upload</p>
                                                 </div>

@@ -94,3 +94,101 @@
     background-color: grey;
   }
 }
+
+
+/* globals.css */
+
+.primary-color{
+  @apply text-[#1AA6F1]
+}
+
+.class-sm1 {
+  @apply text-sm font-normal font-numans
+}
+
+.class-sm2 {
+  @apply text-sm font-normal font-inter
+}
+
+.class-sm3 {
+  @apply text-sm font-medium font-numans
+}
+
+.class-sm4 {
+  @apply text-sm font-medium font-inter
+}
+
+
+.class-base1 {
+  @apply text-base font-normal font-numans
+}
+
+.class-base2 {
+  @apply text-base font-normal font-inter
+}
+
+.class-base3 {
+  @apply text-base font-medium font-numans
+}
+
+.class-base4 {
+  @apply text-base font-medium font-inter
+}
+
+.class-base5 {
+  @apply text-base font-semibold font-numans
+}
+
+.class-base6 {
+  @apply text-base font-semibold font-inter
+}
+
+
+.class-lg1 {
+  @apply text-lg font-normal font-numans
+}
+
+.class-lg2 {
+  @apply text-lg font-normal font-inter
+}
+
+.class-lg3 {
+  @apply text-lg font-medium font-numans
+}
+
+.class-lg4 {
+  @apply text-lg font-medium font-inter
+}
+
+.class-lg5 {
+  @apply text-lg font-semibold font-numans
+}
+
+.class-lg6 {
+  @apply text-lg font-semibold font-inter
+}
+
+
+.class-xl1 {
+  @apply text-xl font-normal font-numans
+}
+
+.class-xl2 {
+  @apply text-xl font-normal font-inter
+}
+
+.class-xl3 {
+  @apply text-xl font-medium font-numans
+}
+
+.class-xl4 {
+  @apply text-xl font-medium font-inter
+}
+
+.class-xl5 {
+  @apply text-xl font-semibold font-numans
+}
+
+.class-xl6 {
+  @apply text-xl font-semibold font-inter
+}

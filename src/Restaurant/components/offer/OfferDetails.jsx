@@ -19,20 +19,20 @@ const OfferDetails = () => {
             <div className="p-6">
                 <div className="flex gap-5 justify-center">
                     <div className="p-3 border border-[#1AA6F1] border-l-8 border-l-[#22C55E] rounded-xl w-[200px]">
-                        <p className="text-center text-3xl text-[#1AA6F1]">₹0</p>
-                        <p className="text-center text-[#1AA6F1] mt-2">Completed <br /> Orders</p>
+                        <p className="text-center text-3xl primary-color">₹0</p>
+                        <p className="text-center primary-color mt-2">Completed <br /> Orders</p>
                     </div>
                     <div className="p-3 border border-[#1AA6F1] border-l-8 border-l-[#22C55E] rounded-xl w-[200px]">
-                        <p className="text-center text-3xl text-[#1AA6F1]">₹0</p>
-                        <p className="text-center text-[#1AA6F1] mt-2">Discount <br /> given</p>
+                        <p className="text-center text-3xl primary-color">₹0</p>
+                        <p className="text-center primary-color mt-2">Discount <br /> given</p>
                     </div>
                     <div className="p-3 border border-[#1AA6F1] border-l-8 border-l-[#22C55E] rounded-xl w-[200px]">
-                        <p className="text-center text-3xl text-[#1AA6F1]">0%</p>
-                        <p className="text-center text-[#1AA6F1] mt-2">Effective <br /> discount</p>
+                        <p className="text-center text-3xl primary-color">0%</p>
+                        <p className="text-center primary-color mt-2">Effective <br /> discount</p>
                     </div>
                     <div className="p-3 border border-[#1AA6F1] border-l-8 border-l-[#22C55E] rounded-xl w-[200px]">
-                        <p className="text-center text-3xl text-[#1AA6F1]">₹0</p>
-                        <p className="text-center text-[#1AA6F1] mt-5">Net sales</p>
+                        <p className="text-center text-3xl primary-color">₹0</p>
+                        <p className="text-center primary-color mt-5">Net sales</p>
                     </div>
                 </div>
 
