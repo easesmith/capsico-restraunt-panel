@@ -4,7 +4,7 @@ const MetricLi = ({ title, week1, week2 }) => {
     return (
         <div className="grid grid-cols-[310px_250px_200px_200px] gap-4 px-5 py-3 border-b border-[#CED7DE]">
             <div className="flex justify-between items-center">
-                <p className="text-[#7991A4] font-semibold font-numans">{title}</p>
+                <p className="text-[#7991A4] class-base3">{title}</p>
             </div>
             <div className="flex items-center justify-center">
                 <div className="relative flex items-center">

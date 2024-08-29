@@ -133,17 +133,17 @@ const Login = ({ isLoginModalOpen, setIsLoginModalOpen }) => {
                     className="w-full flex justify-center gap-2 border-[#D3D3D3] py-4"
                 >
                     <img src={googleIcon} alt="googleIcon" />
-                    <span className='text-lg font-medium font-inter text-[#3B3B3B]'>Continue with Google</span>
+                    <span className='class-lg4 text-[#3B3B3B]'>Continue with Google</span>
                 </Button>
 
                 {isEmail ?
                     <Button onClick={() => setIsEmail(false)} type="button" variant="outline" className="w-full flex justify-center gap-2 border-[#D3D3D3] py-4 mt-1">
                         <FaPhoneAlt className='text-lg text-[#3B3B3B]' />
-                        <span className='text-lg font-medium font-inter text-[#3B3B3B]'>Continue with Phone</span>
+                        <span className='class-lg4 text-[#3B3B3B]'>Continue with Phone</span>
                     </Button>
                     : <Button onClick={() => setIsEmail(true)} type="button" variant="outline" className="w-full flex justify-center gap-2 border-[#D3D3D3] py-4 mt-1">
                         <img src={emailIcon} alt="emailIcon" />
-                        <span className='text-lg font-medium font-inter text-[#3B3B3B]'>Continue with Email</span>
+                        <span className='class-lg4 text-[#3B3B3B]'>Continue with Email</span>
                     </Button>}
                 {isOtpModalOpen &&
                     <OtpModal

@@ -11,6 +11,7 @@ import MaskGroupInput from '../../../assets/Mask group Input.png'
 const Catalog = () => {
 
   const [activeTab, setActiveTab] = useState("Items");
+  const [isExpanded, setIsExpanded] = useState(false)
 
   const tabs = ["Items", "Picture Gallery", "Add-ons"];
   const [catalog, setCatalog] = useState([
