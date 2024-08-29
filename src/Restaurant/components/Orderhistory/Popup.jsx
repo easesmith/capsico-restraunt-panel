@@ -30,9 +30,9 @@ const Popup = () => {
               <img src={WifiImg} alt="wifi-img" />
             </div>
             <div className=' bg-[#E7EBEF66] flex flex-col items-end gap-1 rounded-xl py-6 px-8'>
-              <p className='text-[#000000] text-lg font-normal font-numans'>To prevent order rejections and ensure a positive customer experience, please go offline if you are unable to fulfill orders for any reason.”</p>
+              <p className='five-color class-lg1'>To prevent order rejections and ensure a positive customer experience, please go offline if you are unable to fulfill orders for any reason.”</p>
               <DialogClose asChild>
-                <Button variant="capsico" className=" text-lg font-normal font-numans tracking-[1%] rounded-[8px] py-6 px-12 mt-1">Okay</Button>
+                <Button variant="capsico" className=" fourth-color class-lg1 tracking-[1%] rounded-[8px] py-6 px-12 mt-1">Okay</Button>
               </DialogClose>
             </div>
           </DialogContent>

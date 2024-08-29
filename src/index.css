@@ -102,6 +102,30 @@
   @apply text-[#1AA6F1]
 }
 
+.secondry-color{
+  @apply text-[#667085]
+}
+
+.third-color{
+  @apply text-[#4A5E6D]
+}
+
+.fourth-color{
+  @apply text-[#FFFFFF]
+}
+
+.five-color{
+  @apply text-[#000000]
+}
+
+.six-color{
+  @apply text-[#92A5B5]
+}
+
+.seven-color{
+  @apply text-[#323F49]
+}
+
 .class-sm1 {
   @apply text-sm font-normal font-numans
 }
