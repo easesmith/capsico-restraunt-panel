@@ -14,6 +14,8 @@ const OrderMenu = lazy(()=> import('./Restaurant/pages/orderMenu/OrderMenu'))
 const Payout = lazy(() => import('./Restaurant/pages/payout/Payout'))
 const Offers = lazy(() => import('./Restaurant/pages/Offers'))
 const OutletInfo = lazy(() => import('./Restaurant/pages/OutletInfo'))
+const CustomerComplaints = lazy(() => import('./Restaurant/pages/CustomerComplaints'))
+const Reviews = lazy(() => import('./Restaurant/pages/Reviews'))
 
 function App() {
 
@@ -34,6 +36,8 @@ function App() {
             <Route path='/restaurant/order-history' element={<OrderHistory />} />
             <Route path='/restaurant/order-menu' element={<OrderMenu />} />
             <Route path='/restaurant/*' element={<Payout />} />
+            <Route path='/restaurant/customer-complaint' element={<CustomerComplaints />} />
+            <Route path='/restaurant/reviews' element={<Reviews />} />
           </Routes>
         </Suspense>
       </Router>
