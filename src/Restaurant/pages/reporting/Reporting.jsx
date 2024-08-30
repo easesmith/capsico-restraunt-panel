@@ -29,8 +29,8 @@ const Reporting = () => {
             <div className='w-full'>
                 <div className='bg-[#D9F1FD66] px-8 py-5 w-full flex justify-between items-center'>
                     <div className='flex gap-3'>
-                        <Link to="live-tracking" className={`class-base3 ${pathname.includes("live-tracking") ? "primary-color" : "text-[#000000]"}`}>Live Tracking</Link>
-                        <Link to="business-reports" className={`class-base3 ${pathname.includes("business-reports") ? "primary-color" : "text-[#000000]"}`}>Business Reports</Link>
+                        <Link to="live-tracking" className={`class-base1 ${pathname.includes("live-tracking") ? "primary-color" : "text-[#000000]"}`}>Live Tracking</Link>
+                        <Link to="business-reports" className={`class-base1 ${pathname.includes("business-reports") ? "primary-color" : "text-[#000000]"}`}>Business Reports</Link>
                     </div>
 
 

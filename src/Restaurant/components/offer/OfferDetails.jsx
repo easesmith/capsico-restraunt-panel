@@ -45,7 +45,7 @@ const OfferDetails = () => {
                     <li className="ml-5 class-base1 text-[#637D92]">Offer sharing: 100% of the discount value is funded by you</li>
                     <li className="ml-5 class-base1 text-[#637D92]">Created: Offline</li>
                 </ul>
-                <Button variant="destructive" className="w-full bg-[#E4626F] mt-4">Deactivate Offer</Button>
+                <Button variant="destructive" className="w-full bg-[#E4626F] hover:bg-[#e85362] class-base1 mt-4">Deactivate Offer</Button>
             </div>
         </div>
     )

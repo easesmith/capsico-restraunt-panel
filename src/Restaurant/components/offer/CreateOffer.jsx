@@ -73,7 +73,7 @@ const CreateOffer = () => {
             <p className='mt-5 class-base5 text-[#7991A4]'>Personalized offer for you</p>
             
             <div className="grid grid-cols-2 gap-5 mt-3">
-                <div className='bg-white border rounded flex gap-3 p-5'>
+                <div className='bg-white border rounded grid grid-cols-[70px_1fr] gap-3 p-5'>
                     <div className="w-[70px] h-[70px] rounded-full bg-[#A4F4E7] flex justify-center items-center">
                         <img src={promoIcon} alt="promoIcon" />
                     </div>
@@ -82,13 +82,13 @@ const CreateOffer = () => {
                         <p className='text-[#7991A4] class-base1 mt-1'>Thrill customers with complimentary discounts on every order.</p>
                     </div>
                 </div>
-                <div className='bg-white border rounded flex gap-3 p-5'>
+                <div className='bg-white border rounded grid grid-cols-[70px_1fr] gap-3 p-5'>
                     <div className="w-[70px] h-[70px] rounded-full bg-[#F4C790] flex justify-center items-center">
                         <img src={promoIcon} alt="promoIcon" />
                     </div>
                     <div>
                         <h3 className='class-xl6'>Freebies</h3>
-                        <p className='text-[#7991A4] class-base1 mt-1'>Thrill customers with complimentary discounts on every order.</p>
+                        <p className='text-[#7991A4] class-base1 mt-1'>Enjoy a complimentary dish with every order over ₹500!</p>
                     </div>
                 </div>
             </div>
