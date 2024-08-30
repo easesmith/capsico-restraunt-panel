@@ -10,7 +10,9 @@ import Reporting2Img from '../../assets/scooter-02.png'
 import HelpCenterImg from '../../assets/help-circle.png'
 import OutletInfoImg from '../../assets/115799_shop_icon 1.png'
 import ComplaintsImg from '../../assets/profile.png'
-import ReviewsImg from '../../assets/information 1.png'
+import Complaints2Img from '../../assets/profile1.png'
+import ReviewsImg from '../../assets/information-circle.png'
+import Reviews2Img from '../../assets/information-circle1.png'
 import LearningImg from '../../assets/online-learning-01.png'
 
 import { Link, useLocation } from 'react-router-dom'
@@ -54,13 +56,13 @@ const Sidebar = () => {
                     <img src={OutletInfoImg} alt="" className='w-[24px] h-[24px]' />
                     <span className={`text-[#637D92] text-[16.8px] font-normal font-inter ${pathname.includes("/restaurant/outlet-info") ? 'text-[#637D92] bg-[#F3F3FC]' : 'text-[#637D92] group-hover:primary-color'}`}>Outlet Info</span>
                 </Link>
-                <Link to="/restaurant/complaint" className={`flex justify-start items-center gap-[14px] h-[52px] p-[14px] cursor-pointer group hover:bg-[#F3F3FC] ${pathname.includes("/restaurant/complaint") ? 'primary-color bg-[#F3F3FC]' : 'text-[red]'}`}>
-                    <img src={ComplaintsImg} alt="" className='w-[24px] h-[24px]' />
-                    <span className='text-[#637D92] text-[16.8px] font-normal font-inter group-hover:primary-color'>Customer complaints</span>
+                <Link to="/restaurant/customer-complaint" className={`flex justify-start items-center gap-[14px] h-[52px] p-[14px] cursor-pointer group hover:bg-[#F3F3FC] ${pathname.includes("/restaurant/customer-complaint") ? 'primary-color bg-[#F3F3FC]' : 'text-[red]'}`}>
+                    <img src={pathname.includes("/restaurant/customer-complaint") ? Complaints2Img:ComplaintsImg} alt="" className='w-[24px] h-[24px]' />
+                    <span className={`${pathname.includes("/restaurant/customer-complaint") ? 'primary-color' : 'text-[#637D92]'} text-[16.8px] font-normal font-inter group-hover:primary-color`}>Customer complaints</span>
                 </Link>
-                <Link to="/restaurant/review" className={`flex justify-start items-center gap-[14px] h-[52px] p-[14px] cursor-pointer group hover:bg-[#F3F3FC] ${pathname.includes("/restaurant/review") ? 'primary-color bg-[#F3F3FC]' : 'text-[red]'}`}>
-                    <img src={ReviewsImg} alt="" className='w-[24px] h-[24px]' />
-                    <span className='text-[#637D92] text-[16.8px] font-normal font-inter group-hover:primary-color'>Reviews</span>
+                <Link to="/restaurant/reviews" className={`flex justify-start items-center gap-[14px] h-[52px] p-[14px] cursor-pointer group hover:bg-[#F3F3FC] ${pathname.includes("/restaurant/reviews") ? 'primary-color bg-[#F3F3FC]' : 'text-[red]'}`}>
+                    <img src={pathname.includes("/restaurant/reviews") ? Reviews2Img:ReviewsImg} alt="" className='w-[24px] h-[24px]' />
+                    <span className={`${pathname.includes("/restaurant/reviews") ? 'primary-color' : 'text-[#637D92]'} text-[16.8px] font-normal font-inter group-hover:primary-color`}>Reviews</span>
                 </Link>
                 <Link to="/restaurant/learning" className={`flex justify-start items-center gap-[14px] h-[52px] p-[14px] cursor-pointer group hover:bg-[#F3F3FC] ${pathname.includes("/restaurant/learning") ? 'primary-color bg-[#F3F3FC]' : 'text-[red]'}`}>
                     <img src={LearningImg} alt="" className='w-[24px] h-[24px]' />

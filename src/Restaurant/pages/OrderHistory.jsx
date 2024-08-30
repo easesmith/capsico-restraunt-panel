@@ -3,12 +3,12 @@ import RestaurantWrapper from '../components/restaurantWrapper/RestaurantWrapper
 import { IoSearchOutline } from 'react-icons/io5'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { CiCalendar } from 'react-icons/ci'
 import { Button } from '@/components/ui/button'
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 import { LiaDownloadSolid } from 'react-icons/lia'
 import BurgerImg from '../../assets/burger.png'
 import Popup from '../components/Orderhistory/Popup'
+import { LuCalendar } from "react-icons/lu";
 
 const OrderHistory = () => {
 
@@ -32,7 +32,7 @@ const OrderHistory = () => {
 
             <Select onValueChange={handleSelectChange}>
               <SelectTrigger className="w-[175px] third-color">
-                <CiCalendar className='class-lg2' />
+                <LuCalendar className='class-lg2' />
                 <SelectValue placeholder="16th to 17th Jul" value={selectedDateRange} />
               </SelectTrigger>
               <SelectContent>
@@ -49,8 +49,8 @@ const OrderHistory = () => {
           </div>
         </div>
 
-        <div className='w-full h-[700px] bg-[#E7EBEF66] flex justify-center pt-4 pl-6 pb-2'>
-          <div className='w-1/2 bg-[#FFFFFF] pt-6 px-6 border-e-[1px] rounded-s-[7px]'>
+        <div className='w-full h-[700px] bg-[#E7EBEF66] flex justify-center pl-6 pb-2'>
+          <div className='w-1/2 bg-[#FFFFFF] pt-6 px-6  border-[2px] rounded-s-[7px]'>
             <div className='w-full flex items-center pl-3'>
               <IoSearchOutline className='-mr-6 z-10' />
               <Input type="search" placeholder="Enter Order ID to search" className="pl-8 secondry-color class-sm2" />
@@ -58,7 +58,7 @@ const OrderHistory = () => {
           </div>
           <div className=' w-1/2 bg-[#FFFFFF] flex flex-col items-center justify-center gap-12'>
             <img src={BurgerImg} alt="burger-img" className='w-[258px] h-[258px]' />
-            <p className='text-[#4A5E6D] text-2xl font-normal font-numans'>No order to show</p>
+            <p className='third-color class-2xl1'>No order to show</p>
           </div>
         </div>
       </div>

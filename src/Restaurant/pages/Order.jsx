@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { IoSearchOutline } from 'react-icons/io5'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { LiaDownloadSolid } from "react-icons/lia";
-import { CiCalendar } from "react-icons/ci";
+import { LuCalendar } from "react-icons/lu";
 import { Button } from '@/components/ui/button'
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 import Toast from '../components/Toast'
@@ -28,13 +28,13 @@ const Order = () => {
             </div>
             <div className=' flex justify-center items-center gap-5'>
               <div className='w-[324px] flex items-center'>
-                <IoSearchOutline className='-mr-6 z-10 ' />
+                <IoSearchOutline className='-mr-6 z-10 secondry-color' />
                 <Input type="search" placeholder="Enter Order ID to search" className="pl-8 secondry-color class-sm2" />
               </div>
 
               <Select onValueChange={handleSelectChange}>
                 <SelectTrigger className="w-[175px] third-color">
-                  <CiCalendar className='class-lg2' />
+                  <LuCalendar className='third-color class-lg2' />
                   <SelectValue placeholder="16th to 17th Jul"  value={selectedDateRange} />
                 </SelectTrigger>
                 <SelectContent>
@@ -56,9 +56,9 @@ const Order = () => {
               <img src={OutletImg} alt="" />
               <img src={CloseCartImg} alt="" className=' absolute bottom-[-4%] right-[-7%]' />
             </div>
-            <div className=' w-[521px] max-w-[521px] flex flex-col items-center gap-7'>
-              <span className='text-[#637D92] text-2xl text-center font-medium font-inter'>You are offline</span>
-              <p className='text-[#000000] text-2xl text-center font-normal font-inter'>Click <span className='text-[red] font-semibold'>Help center</span> for more Information.</p>
+            <div className=' w-[521px] max-w-[521px] flex flex-col items-center gap-6'>
+              <span className='eight-color class-xl3 text-center'>You are offline</span>
+              <p className='five-color class-xl3 text-center'>Click <span className='primary-color font-semibold'>Help center</span> for more Information.</p>
             </div>
           </div>
         </div>
