@@ -11,16 +11,16 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 const LiveTracking = () => {
   return (
     <div className='p-10 pt-0'>
-      <p className='py-5 text-[#637D92] class-lg3 text-center'>Wednesday Showdown: Battling Stats from July 10 vs. Now</p>
+      <p className='py-5 text-[#637D92] class-lg1 text-center'>Wednesday Showdown: Battling Stats from July 10 vs. Now</p>
       <div className="bg-white p-6 rounded-xl">
         <div className="flex justify-between items-center">
           <div className="flex gap-2 items-center">
             <img src={businessIcon} alt="businessIcon" />
-            <h4 className="class-lg3 text-[#4A5E6D] font-numans">Businesss Overview</h4>
+            <h4 className="class-lg1 text-[#4A5E6D] font-numans">Businesss Overview</h4>
             <img src={informationIcon} alt="" />
           </div>
           <div>
-            <button className="class-lg3 flex primary-color font-numans">
+            <button className="class-lg1 flex primary-color font-numans">
               See resturant level Info
               <MdOutlineKeyboardArrowRight size={26} />
             </button>
@@ -38,11 +38,11 @@ const LiveTracking = () => {
         <div className="flex justify-between items-center">
           <div className="flex gap-2 items-center">
             <img src={accountIcon} alt="businessIcon" />
-            <h4 className="class-lg3 text-[#4A5E6D] font-numans">User Experience</h4>
+            <h4 className="class-lg1 text-[#4A5E6D] font-numans">User Experience</h4>
             <img src={informationIcon} alt="" />
           </div>
           <div>
-            <button className="class-lg3 flex primary-color font-numans">
+            <button className="class-lg1 flex primary-color font-numans">
               See resturant level Info
               <MdOutlineKeyboardArrowRight size={26} />
             </button>
@@ -50,14 +50,14 @@ const LiveTracking = () => {
         </div>
         <div className="mt-4">
           <div className={`flex justify-between items-center py-4 border-b-2 border-[#C2CDD6] border-dashed mt-2`}>
-            <h4 className="class-lg3 text-[#4A5E6D] font-numans">Reviews</h4>
+            <h4 className="class-lg1 text-[#4A5E6D] font-numans">Reviews</h4>
             <div className="flex justify-end">
-              <p className="class-lg3 font-numans text-[#4A5E6D]">View business reports</p>
+              <p className="class-lg1 font-numans text-[#4A5E6D]">View business reports</p>
             </div>
           </div>
 
           <div className={`flex justify-between items-center py-4 border-b-2 border-[#C2CDD6] border-dashed mt-2`}>
-            <h4 className="class-lg3 text-[#4A5E6D] font-numans">Unsatisfied Orders</h4>
+            <h4 className="class-lg1 text-[#4A5E6D] font-numans">Unsatisfied Orders</h4>
           </div>
           <div className="pl-10 border-b-2 border-[#C2CDD6] border-dashed">
             <BusinessOverviewLi name="Rejected Orders" last={true} />
@@ -74,11 +74,11 @@ const LiveTracking = () => {
         <div className="flex justify-between items-center">
           <div className="flex gap-2 items-center">
             <img src={funnelIcon} alt="businessIcon" />
-            <h4 className="class-lg3 text-[#4A5E6D] font-numans">User Funnel</h4>
+            <h4 className="class-lg1 text-[#4A5E6D] font-numans">User Funnel</h4>
             <img src={informationIcon} alt="" />
           </div>
           <div>
-            <button className="class-lg3 flex primary-color font-numans">
+            <button className="class-lg1 flex primary-color font-numans">
               See resturant level Info
               <MdOutlineKeyboardArrowRight size={26} />
             </button>
@@ -101,11 +101,11 @@ const LiveTracking = () => {
         <div className="flex justify-between items-center">
           <div className="flex gap-2 items-center">
             <img src={offerIcon} alt="businessIcon" />
-            <h4 className="class-lg3 text-[#4A5E6D] font-numans">Promotions & Offers</h4>
+            <h4 className="class-lg1 text-[#4A5E6D] font-numans">Promotions & Offers</h4>
             <img src={informationIcon} alt="" />
           </div>
           <div>
-            <button className="class-lg3 flex primary-color font-numans">
+            <button className="class-lg1 flex primary-color font-numans">
               See resturant level Info
               <MdOutlineKeyboardArrowRight size={26} />
             </button>
@@ -121,18 +121,18 @@ const LiveTracking = () => {
         <div className="flex justify-between items-center">
           <div className="flex gap-2 items-center">
             <img src={latestDishIcon} alt="businessIcon" />
-            <h4 className="class-lg3 text-[#4A5E6D] font-numans">Latest Dish</h4>
+            <h4 className="class-lg1 text-[#4A5E6D] font-numans">Latest Dish</h4>
             <img src={informationIcon} alt="" />
           </div>
           <div>
-            <button className="class-lg3 flex primary-color font-numans">
+            <button className="class-lg1 flex primary-color font-numans">
               See resturant level Info
               <MdOutlineKeyboardArrowRight size={26} />
             </button>
           </div>
         </div>
         <div className="mt-4 border-t-2 border-[#C2CDD6] border-dashed">
-          <p className="py-4 class-lg3 font-numans text-[#4A5E6D]">View business reports</p>
+          <p className="py-4 class-lg1 font-numans text-[#4A5E6D]">View business reports</p>
         </div>
       </div>
     </div>

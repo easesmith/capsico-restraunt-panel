@@ -54,7 +54,7 @@ const Sidebar = () => {
                 </Link>
                 <Link to="/restaurant/outlet-info" className={`flex justify-start items-center gap-[14px] h-[52px] p-[14px] cursor-pointer group hover:bg-[#F3F3FC] ${pathname.includes("/restaurant/outlet-info") ? 'primary-color bg-[#F3F3FC]' : 'text-[red]'}`}>
                     <img src={OutletInfoImg} alt="" className='w-[24px] h-[24px]' />
-                    <span className={`text-[#637D92] text-[16.8px] font-normal font-inter ${pathname.includes("/restaurant/outlet-info") ? 'text-[#637D92] bg-[#F3F3FC]' : 'text-[#637D92] group-hover:primary-color'}`}>Outlet Info</span>
+                    <span className={` text-[16.8px] font-normal font-inter ${pathname.includes("/restaurant/outlet-info") ? 'primary-color bg-[#F3F3FC]' : 'text-[#637D92] group-hover:primary-color'}`}>Outlet Info</span>
                 </Link>
                 <Link to="/restaurant/customer-complaint" className={`flex justify-start items-center gap-[14px] h-[52px] p-[14px] cursor-pointer group hover:bg-[#F3F3FC] ${pathname.includes("/restaurant/customer-complaint") ? 'primary-color bg-[#F3F3FC]' : 'text-[red]'}`}>
                     <img src={pathname.includes("/restaurant/customer-complaint") ? Complaints2Img:ComplaintsImg} alt="" className='w-[24px] h-[24px]' />

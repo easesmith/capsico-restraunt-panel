@@ -6,6 +6,7 @@ import AboutOutlet from '../components/outletInfo/AboutOutlet'
 import ContactInfo from '../components/outletInfo/ContactInfo'
 import OutletWorkingTime from '../components/outletInfo/OutletWorkingTime'
 import RestaurantAddress from '../components/outletInfo/RestaurantAddress'
+import ControlDeliveryDistance from '../components/outletInfo/ControlDeliveryDistance'
 
 const OutletInfo = () => {
     const [selcected, setSelcected] = useState("About-Outlet");
@@ -14,11 +15,11 @@ const OutletInfo = () => {
         <RestaurantWrapper>
             <div>
                 <div className='bg-[#D9F1FD66] p-5 flex justify-between items-center'>
-                    <p className='font-inter class-base3'>Outlet Info</p>
-                    <Button variant="outline" className="">View on Capsico</Button>
+                    <p className='class-base1'>Outlet Info</p>
+                    <Button variant='outline' className="nine-color class-base2 rounded">View on Capsico</Button>
                 </div>
                 <div className="my-3 mx-8 bg-white grid grid-cols-[40%_60%] border shadow">
-                    <div>
+                    <div className='border border-b-0'>
                         <div onClick={() => setSelcected("About-Outlet")} className={`p-5  cursor-pointer flex justify-between items-center class-lg3 border-b-2 ${selcected === "About-Outlet" ? "text-[#1AA6F1] border-l-[#1AA6F1] bg-[#F3F3FC]" : "border-l-transparent"}  border-l-4`}>
                             <span>About Outlet</span>
                             <MdOutlineKeyboardArrowRight className='text-2xl' />
@@ -44,7 +45,7 @@ const OutletInfo = () => {
                         {selcected === "About-Outlet" && <AboutOutlet />}
                         {selcected === "Contact-Info" && <ContactInfo />}
                         {selcected === "Outlet-Working-time" && <OutletWorkingTime />}
-                        {selcected === "Control-delivery-distance" && <AboutOutlet />}
+                        {selcected === "Control-delivery-distance" && <ControlDeliveryDistance />}
                         {selcected === "Restaurant-address" && <RestaurantAddress />}
                     </div>
                 </div>
