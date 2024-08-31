@@ -3,6 +3,8 @@ import { FiEdit2 } from 'react-icons/fi'
 import { GrLocation } from "react-icons/gr";
 import { LuMic } from "react-icons/lu";
 import EditOutletModal from './EditOutletModal';
+import camera from '@/assets/camera.png';
+import placeholderIcon from '@/assets/placeholderIcon.png';
 import { Link } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -15,7 +17,9 @@ const AboutOutlet = () => {
   const form = useForm({
     resolver: zodResolver({}),
     defaultValues: {
-      restaurantName: "",
+      name: "Desi Platters",
+      category: "",
+      address: "Address:529/k, Shadab volony, Khurram Nagar, Gorakhpur",
     }
   })
 
@@ -23,18 +27,23 @@ const AboutOutlet = () => {
     console.log("data", data);
   }
 
-  const handleNameEdit = (value) => {
-    setCurrent(value);
+  const handleImageEdit = () => {
+    setCurrent("image");
     setIsEditOutletModalOpen(true);
   }
 
-  const handleCategoryEdit = (value) => {
-    setCurrent(value);
+  const handleNameEdit = () => {
+    setCurrent("name");
     setIsEditOutletModalOpen(true);
   }
 
-  const handleLocationEdit = (value) => {
-    setCurrent(value);
+  const handleCategoryEdit = () => {
+    setCurrent("category");
+    setIsEditOutletModalOpen(true);
+  }
+
+  const handleLocationEdit = () => {
+    setCurrent("location");
     setIsEditOutletModalOpen(true);
   }
   const handleAudioEdit = (value) => {
@@ -45,17 +54,21 @@ const AboutOutlet = () => {
   return (
     <div>
       <div className="w-full h-80 bg-blue-100 relative">
-        <Label onClick={handleNameEdit} className="px-8 cursor-pointer py-3 bg-white absolute right-2 top-2 flex gap-1 rounded-md">
-          <span></span>
+        <button onClick={handleImageEdit} className="px-8 cursor-pointer py-3 bg-white absolute right-4 top-4 flex items-center gap-3 rounded-md">
+          <img src={camera} alt="" />
           <span className='font-numans text-xs text-[#1AA6F1]'>Edit Photo</span>
-        </Label>
+        </button>
         <img className='w-full h-full' src={form.getValues("restaurantPreview")} alt="" />
+        <button onClick={handleImageEdit} className='bg-white flex flex-col items-center p-6 absolute bottom-4 left-4 rounded-md'>
+          <img src={placeholderIcon} alt="placeholderIcon" />
+          <p className='text-[8px] text-center font-numans font-normal mt-1 text-[#323F49]'>Upload image</p>
+        </button>
       </div>
 
       <div className="p-5">
         <div className='flex items-center justify-between'>
           <div className='flex items-center gap-2'>
-            <h2 className='class-xl5 text-[#323F49]'>Desi Platters</h2>
+            <h2 className='class-xl5 text-[#323F49]'>{form.getValues("name")}</h2>
             <FiEdit2 onClick={handleNameEdit} className="text-[#323F49] cursor-pointer text-xl" />
           </div>
           <Link to="/restaurant/reviews" className='class-base1 text-[#0083C9]'>Outlet reviews</Link>
@@ -68,7 +81,7 @@ const AboutOutlet = () => {
 
         <div className='flex items-center gap-5 mt-1 py-4 border-b border-b-[#DAE1E7]'>
           <GrLocation className="text-[#323F49] text-xl" />
-          <h2 className='class-base1 text-[#7991A4]'>Address:529/k, Shadab volony, Khurram Nagar, Gorakhpur.</h2>
+          <h2 className='class-base1 text-[#7991A4]'>Address:{form.getValues("address")}</h2>
           <FiEdit2 onClick={handleLocationEdit} className="text-[#323F49] cursor-pointer text-xl" />
         </div>
 
@@ -87,7 +100,7 @@ const AboutOutlet = () => {
           setIsEditOutletModalOpen={setIsEditOutletModalOpen}
           current={current}
           form={form}
-          onSubmit={onsubmit}
+          onSubmit={onSubmit}
         />
       }
     </div>

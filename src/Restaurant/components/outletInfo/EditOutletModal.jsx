@@ -9,9 +9,11 @@ import {
 } from "@/components/ui/dialog"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { updateMultiplePreview } from "@/utils/updatePreview";
 import { useEffect } from "react";
 import { PiCameraPlus } from "react-icons/pi";
+import MultipleSelect from "../MultiSelect";
 
 const EditOutletModal = ({ isEditOutletModalOpen, setIsEditOutletModalOpen, form, current, onSubmit }) => {
     const { register, control, watch, setValue, getValues } = form;
@@ -24,6 +26,8 @@ const EditOutletModal = ({ isEditOutletModalOpen, setIsEditOutletModalOpen, form
         updateMultiplePreview(restaurant, "restaurantPreview", setValue);
     }, [form, restaurant, setValue]);
 
+    const options = ['Option 1', 'Option 2', 'Option 3'];
+
     return (
         <Dialog open={isEditOutletModalOpen} onOpenChange={() => setIsEditOutletModalOpen(!isEditOutletModalOpen)}>
             <DialogContent>
@@ -31,38 +35,102 @@ const EditOutletModal = ({ isEditOutletModalOpen, setIsEditOutletModalOpen, form
                     <DialogTitle>Edit Outlet Info</DialogTitle>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="w-full py-5">
-                            <div className="w-full relative">
-                                <FormField
-                                    control={control}
-                                    name="restaurant"
-                                    render={({ field }) => (
-                                        <FormItem className="z-20">
-                                            <FormLabel className="cursor-pointer left-0 w-full h-full top-0">
-                                                <span className="cursor-pointer absolute right-0 -top-7 text-xs p-1 border-dashed rounded-sm">Change</span>
-                                                {!watch("restaurantPreview") &&
-                                                    <div className='border-2 border-dashed border-[#C2CDD6] w-full h-72  flex flex-col justify-center items-center rounded-md'>
-                                                        <div className='border-2 flex flex-col items-center primary-color border-dashed rounded px-5 py-4'>
-                                                            <PiCameraPlus size={45} />
-                                                            <p className='font-bold text-center primary-color text-sm mt-2'>Add Photo</p>
+                            {current === "image" &&
+                                <div className="w-full relative">
+                                    <FormField
+                                        control={control}
+                                        name="restaurant"
+                                        render={({ field }) => (
+                                            <FormItem className="z-20">
+                                                <FormLabel className="cursor-pointer left-0 w-full h-full top-0">
+                                                    <span className="cursor-pointer absolute right-0 -top-7 text-xs p-1 border-dashed rounded-sm">Change</span>
+                                                    {!watch("restaurantPreview") &&
+                                                        <div className='border-2 border-dashed border-[#C2CDD6] w-full h-72  flex flex-col justify-center items-center rounded-md'>
+                                                            <div className='border-2 flex flex-col items-center primary-color border-dashed rounded px-5 py-4'>
+                                                                <PiCameraPlus size={45} />
+                                                                <p className='font-bold text-center primary-color text-sm mt-2'>Add Photo</p>
+                                                            </div>
+                                                            <p className='font-normal text-xs mt-2'>or drop files to upload</p>
                                                         </div>
-                                                        <p className='font-normal text-xs mt-2'>or drop files to upload</p>
-                                                    </div>
-                                                }
-                                            </FormLabel>
-                                            <FormControl className="hidden">
-                                                <Input multiple={true} type="file" accept='.png,.jpeg,.jpg' {...restaurantRef} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                {watch("restaurantPreview") &&
-                                    <div className='flex flex-wrap h-full gap-4'>
-                                        {watch("restaurantPreview").map((prev, i) => (
-                                            <img key={i} className='w-80 h-52' src={prev} alt="" />
-                                        ))}
-                                    </div>}
-                            </div>
+                                                    }
+                                                </FormLabel>
+                                                <FormControl className="hidden">
+                                                    <Input multiple={true} type="file" accept='.png,.jpeg,.jpg' {...restaurantRef} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    {watch("restaurantPreview") &&
+                                        <div className='flex flex-wrap h-full gap-4'>
+                                            {watch("restaurantPreview").map((prev, i) => (
+                                                <img key={i} className='w-80 h-52' src={prev} alt="" />
+                                            ))}
+                                        </div>}
+                                </div>
+                            }
+
+                            {current === "name" &&
+                                <div className="w-full relative">
+                                    <FormField
+                                        control={control}
+                                        name="name"
+                                        render={({ field }) => (
+                                            <FormItem className="z-20">
+                                                <FormLabel className="">Name</FormLabel>
+                                                <FormControl>
+                                                    <Input  {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            }
+
+                            {current === "category" &&
+                                <div className="w-full relative">
+                                    <FormField
+                                        control={control}
+                                        name="category"
+                                        render={({ field }) => (
+                                            <FormItem className="z-20">
+                                                <FormLabel className="">Category</FormLabel>
+                                                <FormControl>
+                                                    {/* <Select className="w-full">
+                                                        <SelectTrigger className="border-none focus-visible:ring-0 focus:ring-0 focus-visible:ring-offset-0">
+                                                            <SelectValue placeholder="India" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            <SelectItem value="india">India</SelectItem>
+                                                        </SelectContent>
+                                                    </Select> */}
+                                                    <MultipleSelect options={options} onChange={() => { }} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            }
+
+                            {current === "location" &&
+                                <div className="w-full relative">
+                                    <FormField
+                                        control={control}
+                                        name="address"
+                                        render={({ field }) => (
+                                            <FormItem className="z-20">
+                                                <FormLabel className="">Address</FormLabel>
+                                                <FormControl>
+                                                    <Input  {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            }
 
                             <div className="flex justify-end mt-3">
                                 <Button onClick={() => setIsEditOutletModalOpen(false)} type="submit" variant="capsico" className="w-20">Submit</Button>
