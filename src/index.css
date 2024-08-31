@@ -134,6 +134,14 @@
   @apply text-[#252525]
 }
 
+.ten-color{
+  @apply text-[#637D92]
+}
+
+.eleven-color{
+  @apply text-[#667085]
+}
+
 .class-sm1 {
   @apply text-sm font-normal font-numans
 }

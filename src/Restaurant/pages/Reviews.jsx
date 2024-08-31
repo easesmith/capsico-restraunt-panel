@@ -13,7 +13,7 @@ const Reviews = () => {
       <div>
         <div className='bg-[#FFFFFF] flex justify-between items-center px-10 py-4'>
           <div>
-            <h1 className='five-color class-base2'>Customer Reviews</h1>
+            <h1 className='five-color class-base1'>Customer Reviews</h1>
           </div>
           <div className='flex justify-center items-center gap-3'>
             <Button variant="outline" className="flex justify-center items-center gap-2 third-color class-sm1">Latest</Button>
@@ -26,7 +26,7 @@ const Reviews = () => {
         <div className='w-full h-[700px] bg-[#E7EBEF66] flex justify-center gap-2 px-6 pt-4 pb-2'>
           <div className='w-[40%]  rounded-s-[7px] px-3'>
             <div className='w-full flex items-center'>
-              <IoSearchOutline className='-mr-6 z-10' />
+              <IoSearchOutline className='-mr-6 z-10 eleven-color' />
               <Input type="search" placeholder="Search" className="pl-8 secondry-color class-sm2" />
             </div>
           </div>
