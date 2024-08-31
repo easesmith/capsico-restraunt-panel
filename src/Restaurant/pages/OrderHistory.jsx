@@ -1,14 +1,13 @@
-import React, { useState } from 'react'
-import RestaurantWrapper from '../components/restaurantWrapper/RestaurantWrapper'
-import { IoSearchOutline } from 'react-icons/io5'
+import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Button } from '@/components/ui/button'
-import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
+import { useState } from 'react'
+import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2"
+import { IoSearchOutline } from 'react-icons/io5'
 import { LiaDownloadSolid } from 'react-icons/lia'
+import { LuCalendar } from "react-icons/lu"
 import BurgerImg from '../../assets/burger.png'
-import Popup from '../components/Orderhistory/Popup'
-import { LuCalendar } from "react-icons/lu";
+import RestaurantWrapper from '../components/restaurantWrapper/RestaurantWrapper'
 
 const OrderHistory = () => {
 
@@ -22,7 +21,7 @@ const OrderHistory = () => {
       <div className=''>
         <div className=' bg-[#D9F1FD66] flex justify-between items-center px-10 py-4 mb-4'>
           <div >
-            <h6 className='five-color class-base2'>Order History</h6>
+            <h6 className='five-color class-base1'>Order History</h6>
           </div>
           <div className=' flex justify-center items-center gap-5'>
             {/* <div className='w-[324px] flex items-center'>
@@ -52,7 +51,7 @@ const OrderHistory = () => {
         <div className='w-full h-[700px] bg-[#E7EBEF66] flex justify-center pl-6 pb-2'>
           <div className='w-1/2 bg-[#FFFFFF] pt-6 px-6  border-[2px] rounded-s-[7px]'>
             <div className='w-full flex items-center pl-3'>
-              <IoSearchOutline className='-mr-6 z-10' />
+              <IoSearchOutline className='-mr-6 z-10 eleven-color' />
               <Input type="search" placeholder="Enter Order ID to search" className="pl-8 secondry-color class-sm2" />
             </div>
           </div>
@@ -72,8 +71,6 @@ const OrderHistory = () => {
           <Button variant="wifi" className="bg-[#1AA6F1] text-[#FFFFFF] text-2xl font-normal font-numans tracking-[1%] rounded-[8px] py-5 px-16">Okay</Button>
         </div>
       </div> */}
-
-      <Popup/>
     </RestaurantWrapper>
   )
 }

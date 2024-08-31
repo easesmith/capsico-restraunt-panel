@@ -10,6 +10,7 @@ import { LuCalendar } from "react-icons/lu";
 import { Button } from '@/components/ui/button'
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 import Toast from '../components/Toast'
+import OrdersModel from '../components/orders/OrdersModel'
 const Order = () => {
 
   const [selectedDateRange, setSelectedDateRange] = useState("");
@@ -24,11 +25,11 @@ const Order = () => {
         <div>
           <div className=' bg-[#D9F1FD66] flex justify-between items-center px-10 py-4 mb-4'>
             <div >
-              <h6 className='five-color class-base2'>Order History</h6>
+              <h6 className='five-color class-base1'>Order History</h6>
             </div>
             <div className=' flex justify-center items-center gap-5'>
               <div className='w-[324px] flex items-center'>
-                <IoSearchOutline className='-mr-6 z-10 secondry-color' />
+                <IoSearchOutline className='-mr-6 z-10 eleven-color' />
                 <Input type="search" placeholder="Enter Order ID to search" className="pl-8 secondry-color class-sm2" />
               </div>
 
@@ -62,6 +63,7 @@ const Order = () => {
             </div>
           </div>
         </div>
+        <OrdersModel/>
       </>
     </RestaurantWrapper>
   )
