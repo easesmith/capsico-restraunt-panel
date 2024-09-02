@@ -1,8 +1,11 @@
 import React from 'react'
+// import ControlDeliveryDistanceModel from '../models/ControlDeliveryDistanceModel'
 
 const ControlDeliveryDistance = () => {
   return (
-    <div>ControlDeliveryDistance</div>
+    <div>
+      {/* <ControlDeliveryDistanceModel/> */}
+    </div>
   )
 }
 

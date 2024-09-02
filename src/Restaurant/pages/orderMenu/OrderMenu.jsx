@@ -15,6 +15,12 @@ const Catalog = () => {
 
   const [activeTab, setActiveTab] = useState("Items");
   const [isExpanded, setIsExpanded] = useState(false)
+  const [showInput, setShowInput] = useState(false)
+
+  const toggleShowInput = () => {
+    setShowInput(!showInput);
+  };
+
 
   const [isOpena, setIsOpena] = useState(true);
   const [isOpenb, setIsOpenb] = useState(false);
@@ -172,19 +178,22 @@ const Catalog = () => {
                   </div>
                 </div>
                 : ''}
-              <div className="w-[553px] flex flex-wrap gap-8 py-5">
+              <div className={`w-[553px] flex flex-wrap gap-8 py-5`}>
                 <button className="flex items-center gap-3"><FiPlusCircle className="primary-color text-2xl" /><span className="five-color class-xl1">Add food item</span></button>
                 <button className="flex items-center gap-3"><FiPlusCircle className="primary-color text-2xl" /><span className="five-color class-xl1">Arrange Existing item</span></button>
-                <button className="flex items-center gap-3"><FiPlusCircle className="primary-color text-2xl" /><span className="five-color class-xl1">Add sublevel</span></button>
-                <div>
-                  <div className="flex justify-between items-center mb-5">
-                    <input type="text" placeholder="Sample : Main Course Veg" className="w-fit min-w-[300px] bg-[#E7EBEF33] border-[1px] border-[#1AA1F1] rounded-lg py-5 px-4 text-center placeholder:fourteen-color " />
-                    <RiDeleteBinLine className="text-[red]" />
-                  </div>
-                  <div>
-                    <p className="five-color class-base1">Sublevel Uncertainty? Try Combos! </p>
-                  </div>
-                </div>
+                {
+                  showInput ? <button className="flex items-center gap-3"><FiPlusCircle onClick={toggleShowInput} className="primary-color text-2xl" /><span className="five-color class-xl1">Add sublevel</span></button>
+                    : <div className=" w-full flex flex-col gap-5">
+                      <div className="flex justify-between items-center">
+                        <input onClick={toggleShowInput} type="text" placeholder="Sample : Main Course Veg" className="w-fit min-w-[300px] bg-[#E7EBEF33] border-[1px] border-[#1AA1F1] rounded-lg py-5 px-4 text-center placeholder:fourteen-color " />
+                        <RiDeleteBinLine className="text-[red] text-[20px] cursor-pointer" />
+                      </div>
+                      <div>
+                        <p className="five-color class-base1">Sublevel Uncertainty? Try Combos! </p>
+                      </div>
+                    </div>
+                }
+
               </div>
             </div> :
             ''}

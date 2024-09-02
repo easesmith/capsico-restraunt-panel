@@ -6,10 +6,13 @@ import AboutOutlet from '../components/outletInfo/AboutOutlet'
 import ContactInfo from '../components/outletInfo/ContactInfo'
 import OutletWorkingTime from '../components/outletInfo/OutletWorkingTime'
 import RestaurantAddress from '../components/outletInfo/RestaurantAddress'
-import ControlDeliveryDistance from '../components/outletInfo/ControlDeliveryDistance'
+// import ControlDeliveryDistance from '../components/outletInfo/ControlDeliveryDistance'
+import ControlDeliveryDistanceModel from '../components/models/ControlDeliveryDistanceModel'
 
 const OutletInfo = () => {
     const [selcected, setSelcected] = useState("About-Outlet");
+
+    const [isControlDeliveryModel, setIsControlDeliveryModel] = useState(true)
 
     return (
         <RestaurantWrapper>
@@ -45,10 +48,18 @@ const OutletInfo = () => {
                         {selcected === "About-Outlet" && <AboutOutlet />}
                         {selcected === "Contact-Info" && <ContactInfo />}
                         {selcected === "Outlet-Working-time" && <OutletWorkingTime />}
-                        {selcected === "Control-delivery-distance" && <ControlDeliveryDistance />}
+                        {/* {selcected === "Control-delivery-distance" && <ControlDeliveryDistance/>} */}
+                        {/* {selcected === "Control-delivery-distance" && isControlDeliveryModel ? <ControlDeliveryDistanceModel/> : 'bh'} */}
+                        {/* {isControlDeliveryModel ?<ControlDeliveryDistanceModel/>: ''} */}
                         {selcected === "Restaurant-address" && <RestaurantAddress />}
                     </div>
                 </div>
+                        {isControlDeliveryModel &&
+                            <ControlDeliveryDistanceModel
+                            isControlDeliveryModel={isControlDeliveryModel}
+                            setIsControlDeliveryModel={setIsControlDeliveryModel}
+                            />
+                        }
             </div>
         </RestaurantWrapper>
     )
