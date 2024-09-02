@@ -51,7 +51,7 @@ const Sidebar = () => {
             url: "/restaurant/offers",
             clickBeforeImg: OffersImg,
             clickAfterImg: OffersImg,
-            title: "offers"
+            title: "Offers"
         },
         {
             url: "/restaurant/payout",

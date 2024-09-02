@@ -19,7 +19,7 @@ const Items = () => {
                     {tabs.map((tab) => (
                         <button
                             key={tab}
-                            className={`p-[10px] class-xl1 focus:outline-none ${activeTab === tab
+                            className={`p-[10px] class-base1 focus:outline-none ${activeTab === tab
                                 ? "primary-color border-b-[3px] border-[#1AA6F1]"
                                 : "text-black"
                                 }`}
@@ -31,7 +31,7 @@ const Items = () => {
                 </div>
                 <div className='flex items-center gap-2 pt-2 pb-8 px-1'>
                     <img src={PuzzleImg} className='w-[60px] h-[60px]' alt="" />
-                    <h1 className='five-color class-2xl1'>Craft your menu in just 3steps</h1>
+                    <h1 className='five-color class-xl1'>Craft your menu in just 3steps</h1>
                 </div>
                 <div className='flex flex-col gap-6 px-3'>
                     <div className='flex items-center gap-8'>
