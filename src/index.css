@@ -142,6 +142,34 @@
   @apply text-[#667085]
 }
 
+.twelve-color{
+  @apply text-[#515151]
+}
+
+.thirteen-color{
+  @apply text-[#4A67FF]
+}
+
+.fourteen-color{
+  @apply text-[#7991A4]
+}
+
+.class-xs1 {
+  @apply text-xs font-normal font-numans
+}
+
+.class-xs2 {
+  @apply text-xs font-normal font-inter
+}
+
+.class-xs3 {
+  @apply text-xs font-medium font-inter
+}
+
+.class-xs4 {
+  @apply text-xs font-medium font-inter
+}
+
 .class-sm1 {
   @apply text-sm font-normal font-numans
 }
@@ -207,7 +235,7 @@
   @apply text-lg font-semibold font-numans
 }
 
-.class-lg1 {
+.class-lg6 {
   @apply text-lg font-semibold font-inter
 }
 
@@ -236,6 +264,17 @@
   @apply text-xl font-semibold font-inter
 }
 
+.class-xl7 {
+  @apply text-xl font-normal font-dmSans
+}
+
+.class-xl8 {
+  @apply text-xl font-medium font-dmSans
+}
+
+.class-xl9 {
+  @apply text-xl font-semibold font-dmSans
+}
 .class-2xl1 {
   @apply text-2xl font-normal font-numans
 }
@@ -250,4 +289,12 @@
 
 .class-2xl4 {
   @apply text-2xl font-semibold font-inter
+}
+
+.class-2xl5 {
+  @apply text-2xl font-normal font-dmSans
+}
+
+.class-2xl6 {
+  @apply text-2xl font-semibold font-dmSans
 }

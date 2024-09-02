@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import RestaurantWrapper from '../components/restaurantWrapper/RestaurantWrapper'
 import ReviewImg from '../../assets/5410322-removebg-preview 1.png'
 import { IoSearchOutline } from 'react-icons/io5'
@@ -6,8 +6,16 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { HiOutlineAdjustmentsHorizontal } from 'react-icons/hi2'
 import { RxQuestionMarkCircled } from "react-icons/rx";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { LuCalendar } from 'react-icons/lu'
 
 const Reviews = () => {
+
+  const [selectedDateRange, setSelectedDateRange] = useState("");
+
+  const handleSelectChange = (value) => {
+    setSelectedDateRange(value);
+  };
   return (
     <RestaurantWrapper>
       <div>
@@ -18,6 +26,20 @@ const Reviews = () => {
           <div className='flex justify-center items-center gap-3'>
             <Button variant="outline" className="flex justify-center items-center gap-2 third-color class-sm1">Latest</Button>
             <Button variant="outline" className="flex justify-center items-center gap-2 third-color class-sm1">Detailed reviews</Button>
+            <Select onValueChange={handleSelectChange}>
+                <SelectTrigger className=" third-color class-sm1">
+                  {/* <LuCalendar className='third-color class-lg2' /> */}
+                  <HiOutlineAdjustmentsHorizontal className='class-lg2 mr-2' />
+                  <SelectValue placeholder="Desi Platters, Khurram N"  value={selectedDateRange} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup className=' third-color class-base1'>
+                    <SelectItem value="16">Desi Platters, Khurram</SelectItem>
+                    <SelectItem value="17">17th to 18th Jul</SelectItem>
+                    <SelectItem value="18">18th to 19th Jul</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             <Button variant="outline" className="flex justify-center items-center gap-2 third-color class-sm1"><HiOutlineAdjustmentsHorizontal className='text-[22px]' /><span>Filter</span></Button>
             <Button variant="outline" className="flex justify-center items-center gap-2 third-color class-sm1"><RxQuestionMarkCircled className='text-[22px]' /><span>FAQs</span></Button>
           </div>
