@@ -298,3 +298,16 @@
 .class-2xl6 {
   @apply text-2xl font-semibold font-dmSans
 }
+
+
+.btn-delete {
+  @apply bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600;
+}
+
+.btn-cancel {
+  @apply bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300;
+}
+
+.btn-confirm-delete {
+  @apply bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600;
+}
