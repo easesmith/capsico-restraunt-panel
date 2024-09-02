@@ -14,7 +14,7 @@ const OrdersModel = () => {
     const location = useLocation()
 
     useEffect(() => {
-        if (location.pathname === '/restaurant/order') {
+        if (location.pathname === '/restaurant/orders') {
             setShowPopup(true)
         } else {
             setShowPopup(false)
