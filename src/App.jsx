@@ -16,6 +16,9 @@ const Offers = lazy(() => import('./Restaurant/pages/Offers'))
 const OutletInfo = lazy(() => import('./Restaurant/pages/OutletInfo'))
 const CustomerComplaints = lazy(() => import('./Restaurant/pages/CustomerComplaints'))
 const Reviews = lazy(() => import('./Restaurant/pages/Reviews'))
+const Items = lazy(()=> import('./Restaurant/pages/Items'))
+const GSTDeclaration = lazy(() => import('./Restaurant/pages/GSTDeclaration'))
+const Charges = lazy(()=> import('./Restaurant/pages/Charges'))
 
 function App() {
 
@@ -32,9 +35,12 @@ function App() {
             {/* <Route path='/restaurant/reporting' element={<Reporting />} /> */}
             <Route path='*' element={<NotFound />} />
             <Route path='/abc' element={<ABC />} />
-            <Route path='/restaurant/order' element={<Order />} />
+            <Route path='/restaurant/orders' element={<Order />} />
             <Route path='/restaurant/order-history' element={<OrderHistory />} />
             <Route path='/restaurant/order-menu' element={<OrderMenu />} />
+            <Route path='/restaurant/items' element={<Items />} />
+            <Route path='/restaurant/gst-declaration' element={<GSTDeclaration />} />
+            <Route path='/restaurant/charges' element={<Charges />} />
             <Route path='/restaurant/*' element={<Payout />} />
             <Route path='/restaurant/customer-complaint' element={<CustomerComplaints />} />
             <Route path='/restaurant/reviews' element={<Reviews />} />
