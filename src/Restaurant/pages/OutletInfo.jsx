@@ -53,13 +53,13 @@ const OutletInfo = () => {
                         {/* {isControlDeliveryModel ?<ControlDeliveryDistanceModel/>: ''} */}
                         {selcected === "Restaurant-address" && <RestaurantAddress />}
                     </div>
-                </div>
-                        {isControlDeliveryModel &&
-                            <ControlDeliveryDistanceModel
+                    {isControlDeliveryModel &&
+                        <ControlDeliveryDistanceModel
                             isControlDeliveryModel={isControlDeliveryModel}
                             setIsControlDeliveryModel={setIsControlDeliveryModel}
-                            />
-                        }
+                        />
+                    }
+                </div>
             </div>
         </RestaurantWrapper>
     )

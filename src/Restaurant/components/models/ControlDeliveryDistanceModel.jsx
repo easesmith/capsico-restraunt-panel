@@ -1,4 +1,4 @@
-import { AlertDialog, AlertDialogContent } from '@radix-ui/react-alert-dialog'
+// import { AlertDialog, AlertDialogContent } from '@radix-ui/react-alert-dialog'
 import React, { useState } from 'react'
 import DistanceImg from '../../../assets/Layer_2.png'
 import ServiceImg from '../../../assets/Group1.png'
@@ -10,6 +10,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { AlertDialog, AlertDialogContent } from '@/components/ui/alert-dialog';
 
 
 const ControlDeliveryDistanceModel = ({ isControlDeliveryModel, setIsControlDeliveryModel }) => {
@@ -19,7 +20,7 @@ const ControlDeliveryDistanceModel = ({ isControlDeliveryModel, setIsControlDeli
     const [selectedDistance, setSelectedDistance] = useState('');
 
     function closePopup() {
-        setShowPopup(false)
+        setIsControlDeliveryModel(false)
     }
 
     return (
