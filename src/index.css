@@ -210,8 +210,20 @@
   @apply text-base font-semibold font-numans
 }
 
-.class-base1 {
+.class-base6 {
   @apply text-base font-semibold font-inter
+}
+
+.class-base7 {
+  @apply text-base font-semibold font-dmSans
+}
+
+.class-base8 {
+  @apply text-base font-semibold font-dmSans
+}
+
+.class-base9 {
+  @apply text-base font-semibold font-dmSans
 }
 
 
@@ -237,6 +249,18 @@
 
 .class-lg6 {
   @apply text-lg font-semibold font-inter
+}
+
+.class-lg7 {
+  @apply text-lg font-normal font-dmSans
+}
+
+.class-lg8 {
+  @apply text-lg font-medium font-dmSans
+}
+
+.class-lg9 {
+  @apply text-lg font-semibold font-dmSans
 }
 
 
@@ -275,6 +299,7 @@
 .class-xl9 {
   @apply text-xl font-semibold font-dmSans
 }
+
 .class-2xl1 {
   @apply text-2xl font-normal font-numans
 }

@@ -12,7 +12,7 @@ import ControlDeliveryDistanceModel from '../components/models/ControlDeliveryDi
 const OutletInfo = () => {
     const [selcected, setSelcected] = useState("About-Outlet");
 
-    const [isControlDeliveryModel, setIsControlDeliveryModel] = useState(true)
+    const [isControlDeliveryModel, setIsControlDeliveryModel] = useState(false)
 
     return (
         <RestaurantWrapper>
@@ -35,7 +35,7 @@ const OutletInfo = () => {
                             <span>Outlet Working time</span>
                             <MdOutlineKeyboardArrowRight className='text-2xl' />
                         </div>
-                        <div onClick={() => setSelcected("Control-delivery-distance")} className={`p-5  cursor-pointer flex justify-between items-center class-lg3 border-b-2 ${selcected === "Control-delivery-distance" ? "text-[#1AA6F1] border-l-[#1AA6F1] bg-[#F3F3FC]" : "border-l-transparent"}  border-l-4`}>
+                        <div onClick={() => setIsControlDeliveryModel(true)} className={`p-5  cursor-pointer flex justify-between items-center class-lg3 border-b-2 ${selcected === "Control-delivery-distance" ? "text-[#1AA6F1] border-l-[#1AA6F1] bg-[#F3F3FC]" : "border-l-transparent"}  border-l-4`}>
                             <span>Control delivery distance</span>
                             <MdOutlineKeyboardArrowRight className='text-2xl' />
                         </div>
@@ -54,12 +54,12 @@ const OutletInfo = () => {
                         {selcected === "Restaurant-address" && <RestaurantAddress />}
                     </div>
                 </div>
-                        {isControlDeliveryModel &&
-                            <ControlDeliveryDistanceModel
-                            isControlDeliveryModel={isControlDeliveryModel}
-                            setIsControlDeliveryModel={setIsControlDeliveryModel}
-                            />
-                        }
+                {isControlDeliveryModel &&
+                    <ControlDeliveryDistanceModel
+                        isControlDeliveryModel={isControlDeliveryModel}
+                        setIsControlDeliveryModel={setIsControlDeliveryModel}
+                    /> 
+                }
             </div>
         </RestaurantWrapper>
     )
