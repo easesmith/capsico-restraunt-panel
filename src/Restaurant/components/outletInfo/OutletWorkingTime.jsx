@@ -10,9 +10,7 @@ const OutletWorkingTime = () => {
   const form = useForm({
     resolver: zodResolver({}),
     defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
+      monday: {},
     }
   })
 

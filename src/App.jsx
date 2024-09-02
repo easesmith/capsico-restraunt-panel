@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import './App.css'
 
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Toaster } from './components/ui/sonner';
 
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Register = lazy(() => import('./Restaurant/pages/Register'));
@@ -47,6 +48,8 @@ function App() {
           </Routes>
         </Suspense>
       </Router>
+
+      <Toaster />
     </>
   )
 }
