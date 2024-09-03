@@ -9,6 +9,8 @@ import { BiSolidRightArrow } from "react-icons/bi";
 import ItemComp from "@/Restaurant/components/orderMenu/ItemComp";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { IoIosArrowForward } from "react-icons/io";
+import CategoryEditModel from "@/Restaurant/components/models/CategoryEditModel";
+import SubCategoryEditModel from "@/Restaurant/components/models/SubCategoryEditModel";
 
 const Catalog = () => {
 
@@ -17,6 +19,8 @@ const Catalog = () => {
   const [addCategory, setAddCategory] = useState(true)
 
   const [isOpena, setIsOpena] = useState(true);
+  const [isOpenCategoryModel, setIsOpenCategoryModel] = useState(false)
+  const [isOpenSubCategoryModel, setIsOpenSubCategoryModel] = useState(false)
 
   const toggleOpena = () => {
     setIsOpena(!isOpena);
@@ -106,21 +110,39 @@ const Catalog = () => {
           }
         </div>
         <ItemComp title={'abc'} />
-        <div className="w-full bg-red-200 rounded-2xl h-[500px] flex items-start">
-          <div className="left-section w-1/3 bg-[red] ">
-            <h3 className=" class-base5 bg-red-100 p-5">Categories</h3>
-            <button className="w-[553px] flex items-center gap-3 p-5" onClick={() => setAddCategory(false)}><FiPlusCircle className="primary-color text-lg" /><span className="class-base3 primary-color">Add Category</span></button>
+        <div className="w-full rounded-lg overflow-hidden h-[500px] flex items-start border border-[#CED7DE] my-5">
+          <div className="left-section w-1/3 h-full rounded-tl-lg bg-white border-r border-r-[#CED7DE]">
+            <h3 className=" class-base5 p-5 bg-[#F2F4F7] border-b border-b-[#CED7DE]">Categories</h3>
+            <button className="flex w-full items-center gap-3 p-5 border-b" onClick={() => setIsOpenCategoryModel(true)}>
+              <FiPlusCircle className="primary-color text-lg" />
+              <span className="class-base3 primary-color">Add Category</span>
+            </button>
             <div>
-              <div className=" flex">
+              {/* <div className=" flex">
                 <h4 className="text-color class-sm1 py-4 px-6">Combas (3)</h4>
                 <button className={``}><IoIosArrowForward className="seven-color text-2xl" /></button>
-              </div>
+                </div> */}
+              <ItemComp title={'abc'} />
             </div>
           </div>
-          <div className="right-section w-2/3 bg-red-300">
-            
+          <div className="right-section w-2/3 bg-white h-full">
+            <h3 className=" class-base5 p-5 bg-[#F2F4F7] border-b border-b-[#CED7DE]">Combos (3)</h3>
           </div>
         </div>
+
+        {isOpenCategoryModel &&
+          <CategoryEditModel
+            isOpenCategoryModel={isOpenCategoryModel}
+            setIsOpenCategoryModel={setIsOpenCategoryModel}
+          />
+        }
+
+{isOpenSubCategoryModel &&
+                <SubCategoryEditModel
+                    isOpenSubCategoryModel={isOpenSubCategoryModel}
+                    setIsOpenSubCategoryModel={setIsOpenSubCategoryModel}
+                />
+            }
       </div>
     </RestaurantWrapper>
   );

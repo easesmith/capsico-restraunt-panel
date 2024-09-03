@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { FiEdit2, FiPlusCircle } from 'react-icons/fi'
-import { IoIosArrowForward } from 'react-icons/io'
+import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io'
 import { RiDeleteBinLine } from 'react-icons/ri'
 import MaskGroupInput from '../../../assets/Mask group Input.png'
 import CategoryEditModel from '../models/CategoryEditModel'
 import SubCategoryEditModel from '../models/SubCategoryEditModel'
+import { FaTrash } from 'react-icons/fa6'
+import { BiTrash } from 'react-icons/bi'
 
 const ItemComp = ({ title }) => {
 
@@ -32,105 +34,45 @@ const ItemComp = ({ title }) => {
     };
     return (
         <div>
-            <div className="w-full flex items-center justify-between border-b-2">
-                <div className=" flex justify-start items-center gap-4 py-5">
-                    <button onClick={() => setIsOpenb(!isOpenb)} className={` transform ${isOpenb ? "rotate-90" : ""}`}><IoIosArrowForward className="seven-color text-2xl" /></button>
-                    <h3 className="seven-color class-lg1">{title}</h3>
-                    <button className={``} onClick={() => setIsOpenCategoryModel(true)}><FiEdit2 className="seven-color text-xl" /></button>
+            <div onClick={() => setIsOpenb(!isOpenb)} className="w-full flex items-center justify-between border-b-2 pl-10 pr-5 py-5 group cursor-pointer">
+                <h3 className="seven-color class-base1">{title}</h3>
+                <div className='flex items-center gap-8'>
+                    <div className='opacity-0 group-hover:opacity-100 transition-all duration-200 flex gap-4'>
+                        <FiEdit2 onClick={() => setIsOpenCategoryModel(true)} className="seven-color text-lg cursor-pointer" />
+                        <BiTrash onClick={() => { }} className="text-[#E4626F] text-xl cursor-pointer" />
+                    </div>
+                    <IoIosArrowDown className={`seven-color text-xl cursor-pointer transform transition-transform duration-200 ${isOpenb && "rotate-180 duration-200"}`} />
                 </div>
-                <p className="class-base1 seven-color">3 Items</p>
             </div>
 
-            {isOpenb ?
+            {isOpenb &&
                 <div className="">
-                    <div className="w-full flex items-center justify-between pl-10 border-b-2">
-                        <div className="flex justify-start items-center gap-4 py-5">
-                            <button onClick={() => setIsOpenc(!isOpenc)} className={` transform ${isOpenc ? "rotate-90" : ""}`}><IoIosArrowForward className="seven-color text-2xl" /></button>
-                            <h3 className="seven-color class-lg1">Combos</h3>
-                            <button className={``} onClick={() => setIsOpenSubCategoryModel(true)}><FiEdit2 className="seven-color text-xl" /></button>
+                    <div className="w-full flex items-center justify-between pl-20 pr-5 py-4 border-b-2 group">
+                        <h3 className="seven-color class-base1">{title}</h3>
+                        <div className='flex items-center gap-8'>
+                            <div className='opacity-0 group-hover:opacity-100 transition-all duration-200 flex gap-4'>
+                                <FiEdit2 onClick={() => setIsOpenSubCategoryModel(true)} className="seven-color text-lg cursor-pointer" />
+                                <BiTrash onClick={() => { }} className="text-[#E4626F] text-xl cursor-pointer" />
+                            </div>
+                            {/* <IoIosArrowForward onClick={() => setIsOpenb(!isOpenb)} className="seven-color text-2xl cursor-pointer" /> */}
                         </div>
-                        <p className="class-base1 seven-color">3 Items</p>
                     </div>
-                    {isOpenc ?
-                        <div className="pl-10">
-                            <div className="flex items-center gap-40 py-4 border-b-2 border-dotted">
-                                <div className="flex items-center gap-2">
-                                    <img src={MaskGroupInput} alt="" />
-                                    <span className="class-base1 seven-color">Egg combo</span>
-                                </div>
-                                <span className="class-base1 seven-color">₹90</span>
-                            </div>
-                            <div className="flex items-center gap-40 py-4 border-b-2 border-dotted">
-                                <div className="flex items-center gap-2">
-                                    <img src={MaskGroupInput} alt="" />
-                                    <span className="class-base1 seven-color">Egg combo</span>
-                                </div>
-                                <span className="class-base1 seven-color">₹90</span>
-                            </div>
-                            <div className="flex items-center gap-40 py-4 border-b-2 border-dashed">
-                                <div className="flex items-center gap-2">
-                                    <img src={MaskGroupInput} alt="" />
-                                    <span className="class-base1 seven-color">Egg combo</span>
-                                </div>
-                                <span className="class-base1 seven-color">₹90</span>
-                            </div>
-                        </div>
-                        : ''}
-                    <div className={`flex flex-wrap gap-8 py-5`}>
-                        {
-                            addFoodBtn ?
-                                <button className=" w-[250px] flex items-center gap-3" onClick={() => setAddFoodBtn(false)}><FiPlusCircle className="primary-color text-lg" /><span className="five-color class-lg1">Add food item</span></button>
-                                : <div className=" w-full flex flex-col gap-5">
-                                    <div className="flex justify-between items-center">
-                                        <input type="text" placeholder="Sample : Main Course Veg" className="w-fit min-w-[300px] bg-[#E7EBEF33] border-[1px] border-[#1AA1F1] rounded-lg py-5 px-4 text-center placeholder:fourteen-color " />
-                                        <RiDeleteBinLine className="text-[red] text-[20px] cursor-pointer" onClick={() => setAddFoodBtn(true)} />
-                                    </div>
-                                    <div>
-                                        <p className="five-color class-base1">food item Uncertainty? Try Combos! </p>
-                                    </div>
-                                </div>
-                        }
-                        {
-                            exitingBtn ?
-                                <button className="w-[553px] flex items-center gap-3" onClick={() => setExitingBtn(false)}><FiPlusCircle className="primary-color text-lg" /><span className="five-color class-lg1">Add Exiting item</span></button>
-                                : <div className=" w-full flex flex-col gap-5">
-                                    <div className="flex justify-between items-center">
-                                        <input type="text" placeholder="Sample : Main Course Veg" className="w-fit min-w-[300px] bg-[#E7EBEF33] border-[1px] border-[#1AA1F1] rounded-lg py-5 px-4 text-center placeholder:fourteen-color " />
-                                        <RiDeleteBinLine className="text-[red] text-[20px] cursor-pointer" onClick={() => setExitingBtn(true)} />
-                                    </div>
-                                    <div>
-                                        <p className="five-color class-base1">Exiting item Uncertainty? Try Combos! </p>
-                                    </div>
-                                </div>
-                        }
-                        {
-                            addSublevel ?
-                                <button className="w-[553px] flex items-center gap-3" onClick={() => setAddSublevel(false)} ><FiPlusCircle className="primary-color text-lg" /><span className="five-color class-lg1">Add sublevel</span></button>
-                                : <div className=" w-full flex flex-col gap-5">
-                                    <div className="flex justify-between items-center">
-                                        <input type="text" placeholder="Sample : Main Course Veg" className="w-fit min-w-[300px] bg-[#E7EBEF33] border-[1px] border-[#1AA1F1] rounded-lg py-5 px-4 text-center placeholder:fourteen-color " />
-                                        <RiDeleteBinLine className="text-[red] text-[20px] cursor-pointer" onClick={() => setAddSublevel(true)} />
-                                    </div>
-                                    <div>
-                                        <p className="five-color class-base1">Sublevel Uncertainty? Try Combos! </p>
-                                    </div>
-                                </div>
-                        }
-                    </div>
-                </div> :
-                ''}
+                    <button className="flex w-full items-center gap-3 px-5 py-4 pl-10 border-b" onClick={() => setIsOpenSubCategoryModel(true)}>
+                        <FiPlusCircle className="primary-color text-lg" />
+                        <span className="class-base3 primary-color">Add SubCategory</span>
+                    </button>
+                </div>
+            }
 
 
-            {
-                isOpenCategoryModel &&
+            {isOpenCategoryModel &&
                 <CategoryEditModel
                     isOpenCategoryModel={isOpenCategoryModel}
                     setIsOpenCategoryModel={setIsOpenCategoryModel}
                 />
             }
 
-            {
-                isOpenSubCategoryModel &&
+            {isOpenSubCategoryModel &&
                 <SubCategoryEditModel
                     isOpenSubCategoryModel={isOpenSubCategoryModel}
                     setIsOpenSubCategoryModel={setIsOpenSubCategoryModel}
