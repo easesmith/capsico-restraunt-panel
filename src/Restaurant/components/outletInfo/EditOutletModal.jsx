@@ -21,7 +21,7 @@ import { Label } from "@/components/ui/label";
 const libraries = ["places", "marker"];
 
 const EditOutletModal = ({ isEditOutletModalOpen, setIsEditOutletModalOpen, form, onSubmit }) => {
-    const { register, control, watch, setValue, getValues } = form;
+    const { register, control, watch, setValue, getValues,handleSubmit } = form;
 
     const restaurantRef = register("restaurant");
 
@@ -129,7 +129,7 @@ const EditOutletModal = ({ isEditOutletModalOpen, setIsEditOutletModalOpen, form
                 <DialogHeader>
                     <DialogTitle>Edit Outlet Info</DialogTitle>
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full py-5">
+                        <form onSubmit={handleSubmit(onSubmit)} className="w-full py-5">
                             <div className="w-full">
                             <Label className="pb-2 flex" htmlFor="category">Restaurant Images</Label>
                                 <FormField
@@ -288,7 +288,7 @@ const EditOutletModal = ({ isEditOutletModalOpen, setIsEditOutletModalOpen, form
                             </LoadScript>
 
                             <div className="flex justify-end mt-3">
-                                <Button onClick={() => setIsEditOutletModalOpen(false)} type="submit" variant="capsico" className="w-20">Submit</Button>
+                                <Button type="submit" variant="capsico" className="w-20">Submit</Button>
                             </div>
                         </form>
                     </Form>

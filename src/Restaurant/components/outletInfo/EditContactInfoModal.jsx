@@ -12,10 +12,32 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Label } from "@/components/ui/label";
 import restaurantOptions from '@/data/restaurantOptions.json';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { PiCameraPlus } from "react-icons/pi";
+import { z } from "zod";
 
-const EditContactInfoModal = ({ isEditContactModalOpen, setIsEditContactModalOpen, form, onSubmit }) => {
+const EditContactInfoModal = ({ isEditContactModalOpen, setIsEditContactModalOpen }) => {
+    const schema = z.object({
+        name: z.string().min(1, "Name is required"),
+        email: z.string().email("Invalid email address").min(1, "Email is required"),
+        phone: z.string().min(10, "Phone number is required"),
+    });
+    const form = useForm({
+        resolver: zodResolver(schema),
+        defaultValues: {
+            name: "",
+            email: "",
+            phone: "",
+        }
+    })
     const { register, control, watch, setValue, getValues } = form;
+
+    const onSubmit = (data) => {
+        console.log("data", data);
+        setIsEditContactModalOpen(false);
+    }
+
 
     return (
         <Dialog open={isEditContactModalOpen} onOpenChange={() => setIsEditContactModalOpen(!isEditContactModalOpen)}>
@@ -59,7 +81,7 @@ const EditContactInfoModal = ({ isEditContactModalOpen, setIsEditContactModalOpe
                             <div className="w-full mt-5 mb-5">
                                 <FormField
                                     control={control}
-                                    name="phone"
+                                    name="email"
                                     render={({ field }) => (
                                         <FormItem className="z-20">
                                             <FormLabel className="">Email</FormLabel>

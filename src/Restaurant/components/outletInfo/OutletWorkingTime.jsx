@@ -5,19 +5,57 @@ import WorkingDay from './WorkingDay'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Form } from '@/components/ui/form'
+import { WorkingDayFormSchema } from '@/schemas/workingDaySchema'
 
 const OutletWorkingTime = () => {
   const form = useForm({
-    resolver: zodResolver({}),
+    resolver: zodResolver(WorkingDayFormSchema),
     defaultValues: {
-      monday: {},
+      monday: {
+        timings: [{ startTime: "", endTime: "" }],
+        outletOpen: false,
+        timingToAllDays: false,
+      },
+      tuesday: {
+        timings: [{ startTime: "", endTime: "" }],
+        outletOpen: false,
+        timingToAllDays: false,
+      },
+      wednesday: {
+        timings: [{ startTime: "", endTime: "" }],
+        outletOpen: false,
+        timingToAllDays: false,
+      },
+      thursday: {
+        timings: [{ startTime: "", endTime: "" }],
+        outletOpen: false,
+        timingToAllDays: false,
+      },
+      friday: {
+        timings: [{ startTime: "", endTime: "" }],
+        outletOpen: false,
+        timingToAllDays: false,
+      },
+      saturday: {
+        timings: [{ startTime: "", endTime: "" }],
+        outletOpen: false,
+        timingToAllDays: false,
+      },
+      sunday: {
+        timings: [{ startTime: "", endTime: "" }],
+        outletOpen: false,
+        timingToAllDays: false,
+      },
     }
   })
 
-
-  const onSubmit = (data) => {
+  const { handleSubmit } = form;
+  const handleSave = (data) => {
     console.log("data", data);
   }
+
+  // console.log("defaultValues:", form.getValues());
+
 
   return (
     <div className='p-5'>
@@ -34,14 +72,24 @@ const OutletWorkingTime = () => {
       </div> */}
 
       <div className="mt-5">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="w-full py-5">
-            <WorkingDay
-              day="Monday"
-              form={form}
-            />
-          </form>
-        </Form>
+
+        <WorkingDay
+          day="Monday"
+          form={form}
+        />
+        <WorkingDay
+          day="Tuesday"
+          form={form}
+        />
+        <WorkingDay
+          day="Wednesday"
+          form={form}
+        />
+        <WorkingDay
+          day="Thursday"
+          form={form}
+        />
+
       </div>
     </div>
   )

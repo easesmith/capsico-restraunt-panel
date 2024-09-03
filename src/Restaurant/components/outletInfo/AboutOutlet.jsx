@@ -9,12 +9,23 @@ import { Link } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Label } from '@/components/ui/label';
+import { z } from 'zod';
 
 const AboutOutlet = () => {
   const [isEditOutletModalOpen, setIsEditOutletModalOpen] = useState(false);
 
+  const outletSchema = z.object({
+    name: z.string().min(1, "Name is required").default("Desi Platters"),
+    category: z.array(z.string()).nonempty("At least one category is required").default(["North Indian"]),
+    address: z.string().min(1, "Address is required").default("529/k, Shadab volony, Khurram Nagar, Gorakhpur"),
+    location: z.object({
+      lat: z.string().optional().default(""),
+      lng: z.string().optional().default("")
+    })
+  });
+
   const form = useForm({
-    resolver: zodResolver({}),
+    resolver: zodResolver(outletSchema),
     defaultValues: {
       name: "Desi Platters",
       category: ["North Indian"],
@@ -23,8 +34,8 @@ const AboutOutlet = () => {
     }
   })
 
-  console.log("categories",form.getValues("category"));
-  
+  console.log("categories", form.getValues("category"));
+
 
   const onSubmit = (data) => {
     console.log("data", data);
@@ -63,7 +74,7 @@ const AboutOutlet = () => {
         </div>
 
         <div className='flex items-center gap-2 mt-1 border-b border-b-[#DAE1E7] pb-5'>
-          <h2 className='class-base1 text-[#7991A4]'>{form.getValues("category").map((item)=> item).join(", ")}</h2>
+          <h2 className='class-base1 text-[#7991A4]'>{form.getValues("category").map((item) => item).join(", ")}</h2>
           {/* <FiEdit2 onClick={handleCategoryEdit} className="text-[#323F49] cursor-pointer text-xl" /> */}
         </div>
 

@@ -9,19 +9,11 @@ import EditContactInfoModal from './EditContactInfoModal';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import DeleteModal from './DeleteModal';
+import { z } from 'zod';
 
 const ContactInfo = () => {
   const [isEditContactModalOpen, setIsEditContactModalOpen] = useState(false);
   const [isDeleteContactModalOpen, setIsDeleteContactModalOpen] = useState(false);
-
-  const form = useForm({
-    resolver: zodResolver({}),
-    defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-    }
-  })
 
   const handleContactEdit = () => {
     setIsEditContactModalOpen(true);
@@ -29,11 +21,6 @@ const ContactInfo = () => {
 
   const handleContactDelete = () => {
     setIsDeleteContactModalOpen(true);
-  }
-
-  const onSubmit = (data) => {
-    console.log("data", data);
-    setIsEditContactModalOpen(false);
   }
 
   return (
@@ -138,8 +125,6 @@ const ContactInfo = () => {
         <EditContactInfoModal
           isEditContactModalOpen={isEditContactModalOpen}
           setIsEditContactModalOpen={setIsEditContactModalOpen}
-          form={form}
-          onSubmit={onSubmit}
         />
       }
 
