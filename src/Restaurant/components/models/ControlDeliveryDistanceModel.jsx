@@ -10,8 +10,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-// import { AlertDialog, AlertDialogContent } from '@/components/ui/alert-dialog';
-
 
 const ControlDeliveryDistanceModel = ({ isControlDeliveryModel, setIsControlDeliveryModel }) => {
 
