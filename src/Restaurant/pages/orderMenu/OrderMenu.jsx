@@ -8,6 +8,7 @@ import MaskGroupInput2 from '../../../assets/toppng.com-veg-1180x1172 1.png'
 import { BiSolidRightArrow } from "react-icons/bi";
 import ItemComp from "@/Restaurant/components/orderMenu/ItemComp";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { IoIosArrowForward } from "react-icons/io";
 
 const Catalog = () => {
 
@@ -103,6 +104,22 @@ const Catalog = () => {
                 </div>
               </div>
           }
+        </div>
+        <ItemComp title={'abc'} />
+        <div className="w-full bg-red-200 rounded-2xl h-[500px] flex items-start">
+          <div className="left-section w-1/3 bg-[red] ">
+            <h3 className=" class-base5 bg-red-100 p-5">Categories</h3>
+            <button className="w-[553px] flex items-center gap-3 p-5" onClick={() => setAddCategory(false)}><FiPlusCircle className="primary-color text-lg" /><span className="class-base3 primary-color">Add Category</span></button>
+            <div>
+              <div className=" flex">
+                <h4 className="text-color class-sm1 py-4 px-6">Combas (3)</h4>
+                <button className={``}><IoIosArrowForward className="seven-color text-2xl" /></button>
+              </div>
+            </div>
+          </div>
+          <div className="right-section w-2/3 bg-red-300">
+            
+          </div>
         </div>
       </div>
     </RestaurantWrapper>

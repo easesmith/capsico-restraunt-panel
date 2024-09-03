@@ -11,7 +11,17 @@ import { Button } from '@/components/ui/button'
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 import Toast from '../components/Toast'
 import OrdersModel from '../components/orders/OrdersModel'
+import { useSelector, useDispatch } from 'react-redux';
+import { hideNotification, showNotification } from '../redux/notificationSlice';
+
 const Order = () => {
+
+  const dispatch = useDispatch()
+  // const isVisible = useSelector((state) => state.notification.isVisible);
+  console.log(useSelector((state)=> state.notification.isVisible))
+
+  // isOn ? dispatch(hideNotification()) : dispatch(showNotification())
+
 
   const [selectedDateRange, setSelectedDateRange] = useState("");
 
@@ -51,6 +61,7 @@ const Order = () => {
               <Button variant="outline" className="flex justify-center items-center gap-2 third-color class-sm1"><LiaDownloadSolid className='text-[18px]' /><span>Export CSV</span></Button>
             </div>
           </div>
+          
           <Toast/>
           <div className='w-full h-[456px] flex flex-col justify-between items-center mt-40'>
             <div className='flex justify-center relative w-[577px]'>

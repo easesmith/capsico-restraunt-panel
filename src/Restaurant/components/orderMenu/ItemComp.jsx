@@ -3,18 +3,21 @@ import { FiEdit2, FiPlusCircle } from 'react-icons/fi'
 import { IoIosArrowForward } from 'react-icons/io'
 import { RiDeleteBinLine } from 'react-icons/ri'
 import MaskGroupInput from '../../../assets/Mask group Input.png'
+import CategoryEditModel from '../models/CategoryEditModel'
+import SubCategoryEditModel from '../models/SubCategoryEditModel'
 
-
-const ItemComp = ({title}) => {
+const ItemComp = ({ title }) => {
 
     const [addFoodBtn, setAddFoodBtn] = useState(true)
     const [exitingBtn, setExitingBtn] = useState(true)
     const [addSublevel, setAddSublevel] = useState(true)
 
-
     const [isOpena, setIsOpena] = useState(true);
     const [isOpenb, setIsOpenb] = useState(false);
     const [isOpenc, setIsOpenc] = useState(false);
+
+    const [isOpenCategoryModel, setIsOpenCategoryModel] = useState(false)
+    const [isOpenSubCategoryModel, setIsOpenSubCategoryModel] = useState(false)
 
     const toggleOpena = () => {
         setIsOpena(!isOpena);
@@ -33,7 +36,7 @@ const ItemComp = ({title}) => {
                 <div className=" flex justify-start items-center gap-4 py-5">
                     <button onClick={() => setIsOpenb(!isOpenb)} className={` transform ${isOpenb ? "rotate-90" : ""}`}><IoIosArrowForward className="seven-color text-2xl" /></button>
                     <h3 className="seven-color class-lg1">{title}</h3>
-                    <button className={``}><FiEdit2 className="seven-color text-xl" /></button>
+                    <button className={``} onClick={() => setIsOpenCategoryModel(true)}><FiEdit2 className="seven-color text-xl" /></button>
                 </div>
                 <p className="class-base1 seven-color">3 Items</p>
             </div>
@@ -44,7 +47,7 @@ const ItemComp = ({title}) => {
                         <div className="flex justify-start items-center gap-4 py-5">
                             <button onClick={() => setIsOpenc(!isOpenc)} className={` transform ${isOpenc ? "rotate-90" : ""}`}><IoIosArrowForward className="seven-color text-2xl" /></button>
                             <h3 className="seven-color class-lg1">Combos</h3>
-                            <button className={``}><FiEdit2 className="seven-color text-xl" /></button>
+                            <button className={``} onClick={() => setIsOpenSubCategoryModel(true)}><FiEdit2 className="seven-color text-xl" /></button>
                         </div>
                         <p className="class-base1 seven-color">3 Items</p>
                     </div>
@@ -117,6 +120,22 @@ const ItemComp = ({title}) => {
                 </div> :
                 ''}
 
+
+            {
+                isOpenCategoryModel &&
+                <CategoryEditModel
+                    isOpenCategoryModel={isOpenCategoryModel}
+                    setIsOpenCategoryModel={setIsOpenCategoryModel}
+                />
+            }
+
+            {
+                isOpenSubCategoryModel &&
+                <SubCategoryEditModel
+                    isOpenSubCategoryModel={isOpenSubCategoryModel}
+                    setIsOpenSubCategoryModel={setIsOpenSubCategoryModel}
+                />
+            }
         </div>
     )
 }
