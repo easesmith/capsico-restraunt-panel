@@ -11,6 +11,9 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { IoIosArrowForward } from "react-icons/io";
 import CategoryEditModel from "@/Restaurant/components/models/CategoryEditModel";
 import SubCategoryEditModel from "@/Restaurant/components/models/SubCategoryEditModel";
+import { FaPlus } from "react-icons/fa6";
+import Product from "@/Restaurant/components/orderMenu/Product";
+import AddItemModal from "@/Restaurant/components/orderMenu/AddItemModal";
 
 const Catalog = () => {
 
@@ -21,6 +24,7 @@ const Catalog = () => {
   const [isOpena, setIsOpena] = useState(true);
   const [isOpenCategoryModel, setIsOpenCategoryModel] = useState(false)
   const [isOpenSubCategoryModel, setIsOpenSubCategoryModel] = useState(false)
+  const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(true);
 
   const toggleOpena = () => {
     setIsOpena(!isOpena);
@@ -71,7 +75,7 @@ const Catalog = () => {
             </button>
           ))}
         </div>
-        <div>
+        {/* <div>
           <h3 className="five-color class-base1 py-3">Sample Food Menu item</h3>
           <div className="bg-[#D9F1FD] px-6 pt-7 pb-2">
             <div className="flex items-center justify-start gap-3">
@@ -84,17 +88,17 @@ const Catalog = () => {
               <span className="primary-color class-base1">₹220</span>
             </div> : ''}
           </div>
-        </div>
-        <div className="flex justify-between items-center py-4 border-b-2">
+        </div> */}
+        {/* <div className="flex justify-between items-center py-4 border-b-2">
           <h2 className="seven-color class-xl1">Culinary Catalog</h2>
           <Button variant="outline" className="flex justify-center items-center gap-3 third-color class-base2"><HiOutlineAdjustmentsHorizontal className='text-[22px]' /><span className="pr-5">Filter</span><img src={DownImg} className="w-[30px] h-[28px]" /></Button>
-        </div>
-        {
+        </div> */}
+        {/* {
           data.map((e, i) => {
             return <ItemComp key={i} title={e.category} />
           })
-        }
-        <div className="flex gap-4 mt-4 mb-8">
+        } */}
+        {/* <div className="flex gap-4 mt-4 mb-8">
           {
             addCategory ?
               <button className="w-[553px] flex items-center gap-3" onClick={() => setAddCategory(false)}><FiPlusCircle className="primary-color text-lg" /><span className="five-color class-lg1">Add Main Menu</span></button>
@@ -108,14 +112,14 @@ const Catalog = () => {
                 </div>
               </div>
           }
-        </div>
-        <ItemComp title={'abc'} />
+        </div> */}
+        {/* <ItemComp title={'abc'} /> */}
         <div className="w-full rounded-lg overflow-hidden h-[500px] flex items-start border border-[#CED7DE] my-5">
           <div className="left-section w-1/3 h-full rounded-tl-lg bg-white border-r border-r-[#CED7DE]">
             <h3 className=" class-base5 p-5 bg-[#F2F4F7] border-b border-b-[#CED7DE]">Categories</h3>
-            <button className="flex w-full items-center gap-3 p-5 border-b" onClick={() => setIsOpenCategoryModel(true)}>
-              <FiPlusCircle className="primary-color text-lg" />
-              <span className="class-base3 primary-color">Add Category</span>
+            <button className="flex w-full items-center gap-3 px-5 py-4 border-b" onClick={() => setIsOpenCategoryModel(true)}>
+              <FaPlus className="primary-color" />
+              <span className="class-base1 primary-color">Add Category</span>
             </button>
             <div>
               {/* <div className=" flex">
@@ -127,7 +131,17 @@ const Catalog = () => {
           </div>
           <div className="right-section w-2/3 bg-white h-full">
             <h3 className=" class-base5 p-5 bg-[#F2F4F7] border-b border-b-[#CED7DE]">Combos (3)</h3>
+            <button className="flex w-full items-center gap-3 p-5 border-b" onClick={() => setIsAddItemModalOpen(true)}>
+              <FaPlus className="primary-color" />
+              <span className="class-base1 primary-color">Add New Item</span>
+            </button>
+            <Product />
           </div>
+
+          <AddItemModal
+            isAddItemModalOpen={isAddItemModalOpen}
+            setIsAddItemModalOpen={setIsAddItemModalOpen}
+          />
         </div>
 
         {isOpenCategoryModel &&
@@ -137,12 +151,12 @@ const Catalog = () => {
           />
         }
 
-{isOpenSubCategoryModel &&
-                <SubCategoryEditModel
-                    isOpenSubCategoryModel={isOpenSubCategoryModel}
-                    setIsOpenSubCategoryModel={setIsOpenSubCategoryModel}
-                />
-            }
+        {isOpenSubCategoryModel &&
+          <SubCategoryEditModel
+            isOpenSubCategoryModel={isOpenSubCategoryModel}
+            setIsOpenSubCategoryModel={setIsOpenSubCategoryModel}
+          />
+        }
       </div>
     </RestaurantWrapper>
   );

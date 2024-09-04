@@ -89,6 +89,18 @@ const OutletWorkingTime = () => {
           day="Thursday"
           form={form}
         />
+        <WorkingDay
+          day="Friday"
+          form={form}
+        />
+        <WorkingDay
+          day="Saturday"
+          form={form}
+        />
+        <WorkingDay
+          day="Sunday"
+          form={form}
+        />
 
       </div>
     </div>
