@@ -28,9 +28,15 @@ import EggIcon from "../customIcons/EggIcon"
 import NonVegIcon from "../customIcons/NonVegIcon"
 import VegIcon from "../customIcons/VegIcon"
 import ItemImageUploadModal from "./ItemImageUploadModal"
+import { X } from "lucide-react"
+import { FaCirclePlus, FaMinus, FaPlus } from "react-icons/fa6"
+import CreateVariant from "./CreateVariant"
+import { TbRulerOff } from "react-icons/tb"
 
 const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
     const [isItemImageUploadModalOpen, setIsItemImageUploadModalOpen] = useState(false);
+    const [isVariant, setIsVariant] = useState(false);
+    const [isCreateVariantModalOpen, setIsCreateVariantModalOpen] = useState(false);
 
     const schema = z.object({
         itemName: z.string().min(1, "Item Name is required"),
@@ -71,14 +77,17 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
         <Sheet className="" open={isAddItemModalOpen} onOpenChange={setIsAddItemModalOpen}>
             <SheetContent className="sm:w-1/2 p-0 overflow-y-auto">
                 <SheetHeader>
-                    <SheetTitle className="text-2xl border-b p-5 sticky z-30 top-0 bg-white">Add Item Details</SheetTitle>
+                    <SheetTitle className="text-2xl border-b p-5 sticky z-30 flex justify-between top-0 bg-white">
+                        Add Item Details
+                        <X onClick={() => setIsAddItemModalOpen(false)} className="h-6 w-6 cursor-pointer" />
+                    </SheetTitle>
                     <SheetDescription>
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="w-full py-5">
                                 <div className="mb-16">
-                                    <div className="pb-5 border-b-2 border-dashed border=[#D3D3D3]">
+                                    <div className="pb-5 border-b-2 border-dashed border-[#D3D3D3]">
                                         <div className="p-5">
-                                            <h2 className="class-xl5 text-black">Basic Details</h2>
+                                            <h2 className="class-lg6 text-black">Basic Details</h2>
                                             <div className="w-full mt-5">
                                                 <FormField
                                                     control={control}
@@ -215,9 +224,9 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="pb-5 border-b-2 border-dashed border=[#D3D3D3]">
+                                    <div className="pb-5 border-b-2 border-dashed border-[#D3D3D3]">
                                         <div className="p-5">
-                                            <h2 className="class-xl5 text-black">Item Pricing</h2>
+                                            <h2 className="class-lg6 text-black">Item Pricing</h2>
 
                                             <div className="w-full mt-5">
                                                 <FormField
@@ -252,11 +261,31 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                             </div>
                                         </div>
                                     </div>
+                                    <div className="pb- border-b-2 border-dashed border-[#D3D3D3]">
+                                        <div className="p-5">
+                                            <div onClick={() => setIsVariant(!isVariant)} className="cursor-pointer pb-6">
+                                                <div className="flex justify-between items-center">
+                                                    <h3 className="text-black class-lg6">Variants</h3>
+                                                    {isVariant ? <FaMinus className="text-black" size={20} />
+                                                        : <FaPlus className="text-black" size={20} />}
+                                                </div>
+                                                <p>You can offer variations of a item, such as size/ base/ crust, etc. When customers place an order, they must choose at least one from the defined variants.</p>
+                                            </div>
+                                            {isVariant &&
+                                                <div>
+                                                    <div onClick={() => setIsCreateVariantModalOpen(true)} className='border cursor-pointer border-dashed border-[#1AA1F1] bg-[#1aa6f10c] w-full h-32 flex flex-col justify-center items-center rounded-md'>
+                                                        <FaCirclePlus className="primary-color" size={25} />
+                                                        <p className='font-semibold text-center primary-color class-base2 mt-3'>Create a new variant</p>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div className="flex gap-2 fixed right-0 bottom-0 w-1/2 bg-white p-4 shadow-3xl">
-                                    <Button type="button" size="lg" variant="ghost" className="w-1/2 hover:bg-[#FFF5F6] text-[#e85362] hover:text-[#e85362]">Discard</Button>
-                                    <Button type="submit" size="lg" variant="capsico" className="w-1/2">Save Changes</Button>
+                                    <Button onClick={() => setIsAddItemModalOpen(false)} type="button" size="lg" variant="ghost" className="w-1/2 class-base2 hover:bg-[#FFF5F6] text-[#e85362] hover:text-[#e85362]">Discard</Button>
+                                    <Button type="submit" size="lg" variant="capsico" className="w-1/2 class-base2">Save Changes</Button>
                                 </div>
 
                                 {isItemImageUploadModalOpen &&
@@ -265,13 +294,19 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                         setIsItemImageUploadModalOpen={setIsItemImageUploadModalOpen}
                                     />
                                 }
+
+                                {isCreateVariantModalOpen &&
+                                    <CreateVariant
+                                        isCreateVariantModalOpen={isCreateVariantModalOpen}
+                                        setIsCreateVariantModalOpen={setIsCreateVariantModalOpen}
+                                    />
+                                }
                             </form>
                         </Form>
                     </SheetDescription>
                 </SheetHeader>
             </SheetContent>
         </Sheet>
-
     )
 }
 

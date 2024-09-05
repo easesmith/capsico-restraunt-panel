@@ -24,7 +24,7 @@ const Catalog = () => {
   const [isOpena, setIsOpena] = useState(true);
   const [isOpenCategoryModel, setIsOpenCategoryModel] = useState(false)
   const [isOpenSubCategoryModel, setIsOpenSubCategoryModel] = useState(false)
-  const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(true);
+  const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
 
   const toggleOpena = () => {
     setIsOpena(!isOpena);
