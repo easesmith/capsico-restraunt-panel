@@ -14,6 +14,7 @@ import SubCategoryEditModel from "@/Restaurant/components/models/SubCategoryEdit
 import { FaPlus } from "react-icons/fa6";
 import Product from "@/Restaurant/components/orderMenu/Product";
 import AddItemModal from "@/Restaurant/components/orderMenu/AddItemModal";
+import AddOnGroups from "@/Restaurant/components/orderMenu/AddOnGroups";
 
 const Catalog = () => {
 
@@ -25,6 +26,7 @@ const Catalog = () => {
   const [isOpenCategoryModel, setIsOpenCategoryModel] = useState(false)
   const [isOpenSubCategoryModel, setIsOpenSubCategoryModel] = useState(false)
   const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
+  const [isAddonGroupsModalOpen, setIsAddonGroupsModalOpen] = useState(true);
 
   const toggleOpena = () => {
     setIsOpena(!isOpena);
@@ -155,6 +157,13 @@ const Catalog = () => {
           <SubCategoryEditModel
             isOpenSubCategoryModel={isOpenSubCategoryModel}
             setIsOpenSubCategoryModel={setIsOpenSubCategoryModel}
+          /> 
+        }
+
+        {isAddonGroupsModalOpen &&
+          <AddOnGroups
+            isAddonGroupsModalOpen={isAddonGroupsModalOpen}
+            setIsAddonGroupsModalOpen={setIsAddonGroupsModalOpen}
           />
         }
       </div>

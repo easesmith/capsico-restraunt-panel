@@ -198,7 +198,7 @@ const WorkingDay = ({ day, form }) => {
                                         <FormItem className="flex gap-3 items-center">
                                             <FormControl>
                                                 <Switch
-                                                    className="bg-[#34C759]"
+                                                    className="data-[state=checked]:bg-[#34C759]"
                                                     checked={field.value}
                                                     onCheckedChange={field.onChange}
                                                 />

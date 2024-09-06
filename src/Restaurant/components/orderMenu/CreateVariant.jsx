@@ -145,7 +145,7 @@ const CreateVariant = ({ isCreateVariantModalOpen, setIsCreateVariantModalOpen }
                                                                         <FormLabel>{`${getValues("variantName")} ${i + 1}`}</FormLabel>
                                                                         <FormControl className="">
                                                                             <div className='flex items-center gap-3'>
-                                                                                <Input placeholder="Enter variant name" className="py-6 w-full"  {...field} />
+                                                                                <Input placeholder="Enter property name" className="py-6 w-full"  {...field} />
                                                                                 <BiTrash onClick={() => handlePropertyRemove(i)} className="text-[#E4626F] text-lg cursor-pointer" />
                                                                             </div>
                                                                         </FormControl>
