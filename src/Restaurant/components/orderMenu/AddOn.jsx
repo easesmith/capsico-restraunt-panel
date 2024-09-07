@@ -1,16 +1,27 @@
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import React from 'react'
+import React, { useState } from 'react'
+import VegIcon from '../customIcons/VegIcon'
+import NonVegIcon from '../customIcons/NonVegIcon'
+import EggIcon from '../customIcons/EggIcon'
+import { FiUpload } from 'react-icons/fi'
+import ItemImageUploadModal from './ItemImageUploadModal'
+import { BiTrash } from 'react-icons/bi'
 
-const AddOn = ({ control }) => {
+const AddOn = ({ control, handlePropertyRemove, index }) => {
+    const [isUploadImageModal, setIsUploadImageModal] = useState(false);
+
     return (
-        <div className='grid grid-cols-[80px_1fr_70px_1fr] gap-4'>
-            <div className='border rounded-lg h-20 p-4'></div>
+        <div className='grid grid-cols-[80px_1fr_70px_1fr_30px] items-center gap-4'>
+            <button type='button' onClick={() => setIsUploadImageModal(true)} className='border rounded-lg flex flex-col gap-1 justify-center items-center h-20 p-3'>
+                <FiUpload className='text-4xl primary-color' />
+                <span className='primary-color class-base4'>Upload</span>
+            </button>
             <div>
                 <FormField
                     control={control}
-                    name="addOnName"
+                    name={`addOnName${index}`}
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Add on name</FormLabel>
@@ -27,17 +38,25 @@ const AddOn = ({ control }) => {
             <div>
                 <FormField
                     control={control}
-                    name="foodType"
+                    name={`foodType${index}`}
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel className="opacity-0">w</FormLabel>
                             <FormControl>
                                 <Select value={field.value} onValueChange={field.onChange}>
                                     <SelectTrigger>
-                                        <SelectValue placeholder="Select Service" />
+                                        <SelectValue placeholder="" />
                                     </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="Delivery">Delivery</SelectItem>
+                                    <SelectContent className="min-w-[70px]">
+                                        <SelectItem value="veg" className="w-[70px] pl-7">
+                                            <VegIcon />
+                                        </SelectItem>
+                                        <SelectItem value="non-veg" className="w-[70px] pl-7">
+                                            <NonVegIcon />
+                                        </SelectItem>
+                                        <SelectItem value="egg" className="w-[70px] pl-7">
+                                            <EggIcon />
+                                        </SelectItem>
                                     </SelectContent>
                                 </Select>
                             </FormControl>
@@ -49,18 +68,27 @@ const AddOn = ({ control }) => {
             <div>
                 <FormField
                     control={control}
-                    name="price"
+                    name={`price${index}`}
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Price</FormLabel>
                             <FormControl>
-                                <Input type="number" {...field} />
+                                <Input placeholder="Enter price" type="number" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
             </div>
+            <div className=''>
+                <BiTrash onClick={() => handlePropertyRemove(index)} className="text-[#E4626F] text-2xl mt-2 cursor-pointer" />
+            </div>
+            {isUploadImageModal &&
+                <ItemImageUploadModal
+                    isItemImageUploadModalOpen={isUploadImageModal}
+                    setIsItemImageUploadModalOpen={setIsUploadImageModal}
+                />
+            }
         </div>
     )
 }

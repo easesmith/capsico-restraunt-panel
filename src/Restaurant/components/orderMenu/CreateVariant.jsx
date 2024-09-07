@@ -127,46 +127,54 @@ const CreateVariant = ({ isCreateVariantModalOpen, setIsCreateVariantModalOpen }
                                             </>
                                             :
                                             <div className='border p-4 bg-white w-full rounded-md'>
-                                                <div className='flex justify-between'>
-                                                    <div className="flex gap-2 items-center">
-                                                        <FiEdit onClick={() => setIsAddNewProperty(false)} className="text-[#1AA6F1] text-lg cursor-pointer" />
-                                                        <h4 className='class-xl6 text-black'>{getValues("variantName")}</h4>
-                                                    </div>
-                                                    <BiTrash onClick={() => setIsAddNewProperty(false)} className="text-[#E4626F] text-lg cursor-pointer" />
-                                                </div>
-                                                <div>
-                                                    {propertyArray.map((_, i) => (
-                                                        <div key={i} className="w-full mt-5">
-                                                            <FormField
-                                                                control={control}
-                                                                name={`${getValues("variantName")}${i + 1}`}
-                                                                render={({ field }) => (
-                                                                    <FormItem className="w-full">
-                                                                        <FormLabel>{`${getValues("variantName")} ${i + 1}`}</FormLabel>
-                                                                        <FormControl className="">
-                                                                            <div className='flex items-center gap-3'>
-                                                                                <Input placeholder="Enter property name" className="py-6 w-full"  {...field} />
-                                                                                <BiTrash onClick={() => handlePropertyRemove(i)} className="text-[#E4626F] text-lg cursor-pointer" />
-                                                                            </div>
-                                                                        </FormControl>
-                                                                        <FormMessage />
-                                                                    </FormItem>
-                                                                )}
-                                                            />
+                                                {selected === "define-properties" && <>
+                                                    <div className='flex justify-between'>
+                                                        <div className="flex gap-2 items-center">
+                                                            <FiEdit onClick={() => setIsAddNewProperty(false)} className="text-[#1AA6F1] text-lg cursor-pointer" />
+                                                            <h4 className='class-xl6 text-black'>{getValues("variantName")}</h4>
                                                         </div>
-                                                    ))}
+                                                        <BiTrash onClick={() => setIsAddNewProperty(false)} className="text-[#E4626F] text-lg cursor-pointer" />
+                                                    </div>
+                                                    <div>
+                                                        {propertyArray.map((_, i) => (
+                                                            <div key={i} className="w-full mt-5">
+                                                                <FormField
+                                                                    control={control}
+                                                                    name={`${getValues("variantName")}${i + 1}`}
+                                                                    render={({ field }) => (
+                                                                        <FormItem className="w-full">
+                                                                            <FormLabel>{`${getValues("variantName")} ${i + 1}`}</FormLabel>
+                                                                            <FormControl className="">
+                                                                                <div className='flex items-center gap-3'>
+                                                                                    <Input placeholder="Enter property name" className="py-6 w-full"  {...field} />
+                                                                                    <BiTrash onClick={() => handlePropertyRemove(i)} className="text-[#E4626F] text-lg cursor-pointer" />
+                                                                                </div>
+                                                                            </FormControl>
+                                                                            <FormMessage />
+                                                                        </FormItem>
+                                                                    )}
+                                                                />
+                                                            </div>
+                                                        ))}
+                                                    </div>
+
+                                                    <button onClick={handleAddInput} className='primary-color class-base4 my-4 flex items-center gap-[2px]'>
+                                                        <FaPlus className='text-sm' />
+                                                        Add new {getValues("variantName")}
+                                                    </button>
+                                                </>}
+                                                {selected === "enter-pricing"&&
+                                                <div>
+                                                    
                                                 </div>
-                                                <button onClick={handleAddInput} className='primary-color class-base4 my-4 flex items-center gap-[2px]'>
-                                                    <FaPlus className='text-sm' />
-                                                    Add new {getValues("variantName")}
-                                                </button>
+                                                }
                                             </div>
                                         }
                                     </div>
                                 </div>
 
                                 <div className="flex gap-2 fixed right-0 bottom-0 w-1/2 bg-white p-4 shadow-3xl">
-                                    <Button onClick={() => { }} size="lg" variant="capsico" className="w-full class-base2">Enter prices and review</Button>
+                                    <Button onClick={() => setSelected("enter-pricing")} size="lg" variant="capsico" className="w-full class-base2">Enter prices and review</Button>
                                 </div>
                             </form>
                         </Form>

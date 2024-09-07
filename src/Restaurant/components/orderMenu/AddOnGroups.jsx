@@ -31,6 +31,16 @@ import AddOn from "./AddOn";
 const AddOnGroups = ({ isAddonGroupsModalOpen, setIsAddonGroupsModalOpen }) => {
     const [isAddOnGroups, setIsAddOnGroups] = useState(false);
     const [isAddFromExistingMenu, setIsAddFromExistingMenu] = useState(false);
+    const [addOnsArray, setAddOnsArray] = useState([]);
+
+    const handleAddOns = () => {
+        setAddOnsArray([...addOnsArray, "*"]);
+    }
+
+    const handlePropertyRemove = (index) => {
+        const filtered = addOnsArray.filter((_, i) => i !== index);
+        setAddOnsArray(filtered);
+    }
 
     const schema = z.object({
         groupName: z.string().min(1, "Group Name is required"),
@@ -50,7 +60,8 @@ const AddOnGroups = ({ isAddonGroupsModalOpen, setIsAddonGroupsModalOpen }) => {
             maxSelection: "",
             isCompulsory: false,
             isSelectMultiple: false,
-            maximumQuantity: ""
+            maximumQuantity: "",
+            foodType: "veg",
         }
     })
     const { register, control, watch, setValue, getValues, setError, clearErrors } = form;
@@ -267,15 +278,20 @@ const AddOnGroups = ({ isAddonGroupsModalOpen, setIsAddonGroupsModalOpen }) => {
                                                             <BiSolidFoodMenu className="text-2xl" />
                                                             Select existing item from menu
                                                         </Button>
-                                                        <Button type="button" size="lg" variant="outline" className="w-full class-sm2 border-[#1AA6F1] hover:bg-[#1aa6f10c] primary-color hover:text-[#1AA6F1] flex gap-2 justify-start py-6 items-center">
+                                                        <Button onClick={handleAddOns} type="button" size="lg" variant="outline" className="w-full class-sm2 border-[#1AA6F1] hover:bg-[#1aa6f10c] primary-color hover:text-[#1AA6F1] flex gap-2 justify-start py-6 items-center">
                                                             <FaPlus />
                                                             Create new add on
                                                         </Button>
                                                     </div>
                                                     <div className="flex flex-col gap-3 mt-5">
-                                                        <AddOn
-                                                            control={control}
-                                                        />
+                                                        {addOnsArray.map((item, index) => (
+                                                            <AddOn
+                                                                key={index}
+                                                                control={control}
+                                                                handlePropertyRemove={handlePropertyRemove}
+                                                                index={index}
+                                                            />
+                                                        ))}
                                                     </div>
                                                 </div>
                                                 <div className="flex gap-2 fixed right-0 bottom-0 w-1/2 bg-white p-4 shadow-3xl">

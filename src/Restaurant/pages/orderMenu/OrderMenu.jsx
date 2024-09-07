@@ -11,7 +11,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { IoIosArrowForward } from "react-icons/io";
 import CategoryEditModel from "@/Restaurant/components/models/CategoryEditModel";
 import SubCategoryEditModel from "@/Restaurant/components/models/SubCategoryEditModel";
-import { FaPlus } from "react-icons/fa6";
+import { FaArrowLeft, FaArrowRight, FaPlus } from "react-icons/fa6";
 import Product from "@/Restaurant/components/orderMenu/Product";
 import AddItemModal from "@/Restaurant/components/orderMenu/AddItemModal";
 import AddOnGroups from "@/Restaurant/components/orderMenu/AddOnGroups";
@@ -26,7 +26,7 @@ const Catalog = () => {
   const [isOpenCategoryModel, setIsOpenCategoryModel] = useState(false)
   const [isOpenSubCategoryModel, setIsOpenSubCategoryModel] = useState(false)
   const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
-  const [isAddonGroupsModalOpen, setIsAddonGroupsModalOpen] = useState(true);
+  const [isAddonGroupsModalOpen, setIsAddonGroupsModalOpen] = useState(false);
 
   const toggleOpena = () => {
     setIsOpena(!isOpena);
@@ -63,7 +63,7 @@ const Catalog = () => {
     <RestaurantWrapper>
       <p className="bg-[#22C55E4D] five-color class-sm1 text-center py-2">Morning Rush Alert! Please refrain from making any menu changes between 9 am and 11 am to avoid order disruptions.</p>
       <div className="w-full px-4">
-        <div className="flex justify-start gap-3 py-3">
+        {/* <div className="flex justify-start gap-3 py-3">
           {tabs.map((tab) => (
             <button
               key={tab}
@@ -76,7 +76,7 @@ const Catalog = () => {
               {tab}
             </button>
           ))}
-        </div>
+        </div> */}
         {/* <div>
           <h3 className="five-color class-base1 py-3">Sample Food Menu item</h3>
           <div className="bg-[#D9F1FD] px-6 pt-7 pb-2">
@@ -117,19 +117,23 @@ const Catalog = () => {
         </div> */}
         {/* <ItemComp title={'abc'} /> */}
         <div className="w-full rounded-lg overflow-hidden h-[500px] flex items-start border border-[#CED7DE] my-5">
-          <div className="left-section w-1/3 h-full rounded-tl-lg bg-white border-r border-r-[#CED7DE]">
+          <div className="left-section relative w-1/3 h-full rounded-tl-lg bg-white border-r border-r-[#CED7DE]">
             <h3 className=" class-base5 p-5 bg-[#F2F4F7] border-b border-b-[#CED7DE]">Categories</h3>
             <button className="flex w-full items-center gap-3 px-5 py-4 border-b" onClick={() => setIsOpenCategoryModel(true)}>
               <FaPlus className="primary-color" />
               <span className="class-base1 primary-color">Add Category</span>
             </button>
-            <div>
+            <div className="overflow-y-auto h-full pb-[180px]">
               {/* <div className=" flex">
                 <h4 className="text-color class-sm1 py-4 px-6">Combas (3)</h4>
                 <button className={``}><IoIosArrowForward className="seven-color text-2xl" /></button>
                 </div> */}
               <ItemComp title={'abc'} />
             </div>
+            <button onClick={() => setIsAddonGroupsModalOpen(true)} className="primary-color mt-auto bg-white shadow-3xl absolute bottom-0 flex w-full justify-between items-center left-0 p-4">
+              Go to Add Ons
+              <FaArrowRight className="primary-color" />
+            </button>
           </div>
           <div className="right-section w-2/3 bg-white h-full">
             <h3 className=" class-base5 p-5 bg-[#F2F4F7] border-b border-b-[#CED7DE]">Combos (3)</h3>
@@ -157,7 +161,7 @@ const Catalog = () => {
           <SubCategoryEditModel
             isOpenSubCategoryModel={isOpenSubCategoryModel}
             setIsOpenSubCategoryModel={setIsOpenSubCategoryModel}
-          /> 
+          />
         }
 
         {isAddonGroupsModalOpen &&
