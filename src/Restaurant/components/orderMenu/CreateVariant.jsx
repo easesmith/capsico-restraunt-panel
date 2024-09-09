@@ -18,6 +18,7 @@ import preparationTypeIcon from '@/assets/preparationType.webp'
 import { BiTrash } from 'react-icons/bi'
 import { Input } from '@/components/ui/input'
 import { FiEdit } from 'react-icons/fi'
+import { FaRupeeSign } from 'react-icons/fa'
 
 const CreateVariant = ({ isCreateVariantModalOpen, setIsCreateVariantModalOpen }) => {
     const [selected, setSelected] = useState("define-properties");
@@ -163,10 +164,30 @@ const CreateVariant = ({ isCreateVariantModalOpen, setIsCreateVariantModalOpen }
                                                         Add new {getValues("variantName")}
                                                     </button>
                                                 </>}
-                                                {selected === "enter-pricing"&&
-                                                <div>
-                                                    
-                                                </div>
+                                                {selected === "enter-pricing" &&
+                                                    <div>
+                                                        <div className="flex justify-between items-center">
+                                                            <p className='text-base text-black'>test</p>
+                                                            <div>
+                                                                <FormField
+                                                                    control={control}
+                                                                    name="price"
+                                                                    render={({ field }) => (
+                                                                        <FormItem className="w-full">
+                                                                            <FormLabel></FormLabel>
+                                                                            <FormControl className="">
+                                                                                <div className='w-full relative'>
+                                                                                    <FaRupeeSign className='absolute top-1/2 -translate-y-1/2 left-2 z-10 text-sm text-black' />
+                                                                                    <Input type="number" placeholder="Enter price" className="px-4 pl-8 w-60 secondry-color class-sm2 placeholder:text-[#667085]" />
+                                                                                </div>
+                                                                            </FormControl>
+                                                                            <FormMessage />
+                                                                        </FormItem>
+                                                                    )}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 }
                                             </div>
                                         }
