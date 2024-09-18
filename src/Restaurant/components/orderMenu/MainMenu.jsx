@@ -2,8 +2,16 @@ import { BiSolidRightArrow } from 'react-icons/bi'
 import RestaurantWrapper from '../restaurantWrapper/RestaurantWrapper'
 import CircularProgress from './CircularProgress'
 import { FaArrowRight } from 'react-icons/fa6'
+import { useState } from 'react'
+import AddComplementaryDishesModal from './AddComplementaryDishesModal'
+import ItemDescriptionModal from './ItemDescriptionModal'
+import ItemsImageModal from './ItemsImageModal'
 
 const MainMenu = () => {
+    const [isAddComplementaryDishesModalOpen, setIsAddComplementaryDishesModalOpen] = useState(false);
+    const [isItemDescriptionModalOpen, setIsItemDescriptionModalOpen] = useState(false);
+    const [isItemsImageModalOpen, setIsItemsImageModalOpen] = useState(false);
+
     return (
         <RestaurantWrapper>
             <div className='grid grid-cols-[59%_39%] gap-4 p-4 bg-white h-full items-start pt-10'>
@@ -21,7 +29,7 @@ const MainMenu = () => {
                         <div className='border border-[#EBEBEB] rounded-lg p-4'>
                             <h3 className='text-lg text-[#515151] font-semibold font-inter'>Create add-ons to <br />
                                 increase order value</h3>
-                            <button className='font-inter flex gap-1 items-center mt-3 text-[#4181F0]'>
+                            <button onClick={() => setIsAddComplementaryDishesModalOpen(true)} className='font-inter flex gap-1 items-center mt-3 text-[#4181F0]'>
                                 <span>View suggestions</span>
                                 <BiSolidRightArrow />
                             </button>
@@ -29,7 +37,7 @@ const MainMenu = () => {
                         <div className='border border-[#EBEBEB] rounded-lg p-4'>
                             <h3 className='text-lg text-[#515151] font-semibold font-inter'>Add descriptions of your <br />
                                 top selling items</h3>
-                            <button className='font-inter flex gap-1 items-center mt-3 text-[#4181F0]'>
+                            <button onClick={() => setIsItemDescriptionModalOpen(true)} className='font-inter flex gap-1 items-center mt-3 text-[#4181F0]'>
                                 <span>View items</span>
                                 <BiSolidRightArrow />
                             </button>
@@ -37,7 +45,7 @@ const MainMenu = () => {
                         <div className='border border-[#EBEBEB] rounded-lg p-4'>
                             <h3 className='text-lg text-[#515151] font-semibold font-inter'>Add photos of your top <br />
                                 selling items</h3>
-                            <button className='font-inter flex gap-1 items-center mt-3 text-[#4181F0]'>
+                            <button onClick={() => setIsItemsImageModalOpen(true)} className='font-inter flex gap-1 items-center mt-3 text-[#4181F0]'>
                                 <span>View items</span>
                                 <BiSolidRightArrow />
                             </button>
@@ -69,11 +77,32 @@ const MainMenu = () => {
                         </div>
                         <div className='border border-[#EBEBEB] pb-24 flex justify-between rounded-lg p-4'>
                             <h3 className='text-[#5D6370] font-semibold font-inter'>Add videos <br />
-                            on menu</h3>
+                                on menu</h3>
                             <FaArrowRight className='text-2xl cursor-pointer' />
                         </div>
                     </div>
                 </div>
+
+                {isAddComplementaryDishesModalOpen &&
+                    <AddComplementaryDishesModal
+                        isAddComplementaryDishesModalOpen={isAddComplementaryDishesModalOpen}
+                        setIsAddComplementaryDishesModalOpen={setIsAddComplementaryDishesModalOpen}
+                    />
+                }
+
+                {isItemDescriptionModalOpen &&
+                    <ItemDescriptionModal
+                        isItemDescriptionModalOpen={isItemDescriptionModalOpen}
+                        setIsItemDescriptionModalOpen={setIsItemDescriptionModalOpen}
+                    />
+                }
+
+                {isItemsImageModalOpen &&
+                    <ItemsImageModal
+                        isItemsImageModalOpen={isItemsImageModalOpen}
+                        setIsItemsImageModalOpen={setIsItemsImageModalOpen}
+                    />
+                }
             </div>
         </RestaurantWrapper>
     )
