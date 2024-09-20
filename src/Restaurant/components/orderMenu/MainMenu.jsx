@@ -6,11 +6,13 @@ import { useState } from 'react'
 import AddComplementaryDishesModal from './AddComplementaryDishesModal'
 import ItemDescriptionModal from './ItemDescriptionModal'
 import ItemsImageModal from './ItemsImageModal'
+import SimplifyMenuStructureModal from './SimplifyMenuStructure'
 
 const MainMenu = () => {
     const [isAddComplementaryDishesModalOpen, setIsAddComplementaryDishesModalOpen] = useState(false);
     const [isItemDescriptionModalOpen, setIsItemDescriptionModalOpen] = useState(false);
     const [isItemsImageModalOpen, setIsItemsImageModalOpen] = useState(false);
+    const [isSimplifyMenuStructureModalOpen, setIsSimplifyMenuStructureModalOpen] = useState(false);
 
     return (
         <RestaurantWrapper>
@@ -53,7 +55,7 @@ const MainMenu = () => {
                         <div className='border border-[#EBEBEB] rounded-lg p-4'>
                             <h3 className='text-lg text-[#515151] font-semibold font-inter'>Simplify your menu <br />
                                 structure</h3>
-                            <button className='font-inter flex gap-1 items-center mt-3 text-[#4181F0]'>
+                            <button onClick={() => setIsSimplifyMenuStructureModalOpen(true)} className='font-inter flex gap-1 items-center mt-3 text-[#4181F0]'>
                                 <span>View insights</span>
                                 <BiSolidRightArrow />
                             </button>
@@ -101,6 +103,13 @@ const MainMenu = () => {
                     <ItemsImageModal
                         isItemsImageModalOpen={isItemsImageModalOpen}
                         setIsItemsImageModalOpen={setIsItemsImageModalOpen}
+                    />
+                }
+
+                {isSimplifyMenuStructureModalOpen &&
+                    <SimplifyMenuStructureModal
+                        isSimplifyMenuStructureModalOpen={isSimplifyMenuStructureModalOpen}
+                        setIsSimplifyMenuStructureModalOpen={setIsSimplifyMenuStructureModalOpen}
                     />
                 }
             </div>

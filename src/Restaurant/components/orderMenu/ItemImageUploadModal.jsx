@@ -18,38 +18,32 @@ import { z } from "zod";
 import PhotoGuidelines from "./PhotoGuidelines";
 import { X } from "lucide-react";
 
-const ItemImageUploadModal = ({ isItemImageUploadModalOpen, setIsItemImageUploadModalOpen }) => {
+const ItemImageUploadModal = ({ isItemImageUploadModalOpen, setIsItemImageUploadModalOpen, form2,name }) => {
     const schema = z.object({
-        itemName: z.string().min(1, "Item Name is required"),
-        foodType: z.string().min(1, "Food Type is required"),
-        basePrice: z.string().min(1, "Price cannot be 0"),
+        itemImage: z.any().refine(file => file && file.length > 0, "Item Image is required"),
     });
 
     const form = useForm({
         resolver: zodResolver(schema),
         defaultValues: {
-            itemName: "",
-            itemDescription: "",
-            foodType: "",
-            serviceType: "",
-            basePrice: "",
-            packagingCharges: "",
+            itemImage: "",
         }
     })
     const { register, control, watch, setValue, getValues } = form;
 
-    const dishRef = register("dish");
+    const itemImageRef = register("itemImage");
 
-    const dish = watch("dish");
+    const itemImage = watch("itemImage");
 
     useEffect(() => {
-        updateMultiplePreview(dish, "dishPreview", setValue);
-    }, [form, dish, setValue]);
+        updateMultiplePreview(itemImage, "itemImagePreview", setValue);
+    }, [form, itemImage, setValue]);
 
     const [isPhotoGuidelines, setIsPhotoGuidelines] = useState(true);
 
     const onSubmit = (data) => {
         console.log("data", data);
+        form2.setValue(name, data.itemImage)
         setIsItemImageUploadModalOpen(false);
     }
 
@@ -78,23 +72,23 @@ const ItemImageUploadModal = ({ isItemImageUploadModalOpen, setIsItemImageUpload
                                                 <div className="mt-5 border-b pb-8 border-[#D3D3D3]">
                                                     <FormField
                                                         control={control}
-                                                        name="dish"
+                                                        name="itemImage"
                                                         render={({ field }) => (
                                                             <FormItem className="z-20">
                                                                 <FormLabel className="cursor-pointer left-0 w-full h-full top-0">
                                                                     <span className="cursor-pointer absolute right-0 -top-7 text-xs p-1 border-dashed rounded-sm">Change</span>
-                                                                    {!watch("dishPreview") &&
+                                                                    {!watch("itemImagePreview") &&
                                                                         <div className='border border-[#C2CDD6] bg-[#1aa6f10c] w-full h-60  flex flex-col justify-center items-center rounded-md'>
                                                                             <FaPlus className="primary-color" size={25} />
                                                                             <p className='font-semibold text-center primary-color class-base2 mt-3'>Upload from PC</p>
                                                                         </div>
                                                                     }
-                                                                    {watch("dishPreview") &&
-                                                                        <img className='w-72' src={watch("dishPreview")} alt="" />
+                                                                    {watch("itemImagePreview") &&
+                                                                        <img className='w-72' src={watch("itemImagePreview")} alt="" />
                                                                     }
                                                                 </FormLabel>
                                                                 <FormControl className="hidden">
-                                                                    <Input multiple={false} type="file" accept='.png,.jpeg,.jpg' {...dishRef} />
+                                                                    <Input multiple={false} type="file" accept='.png,.jpeg,.jpg' {...itemImageRef} />
                                                                 </FormControl>
                                                                 <FormMessage />
                                                             </FormItem>

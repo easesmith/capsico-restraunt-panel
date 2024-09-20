@@ -48,14 +48,16 @@ const ItemDescriptionModal = ({ isItemDescriptionModalOpen, setIsItemDescription
                 </div>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="w-full p-5">
-                        <ItemDescriptionInput
-                            control={control}
-                            getValues={getValues}
-                            trigger={trigger}
-                            category={"In starters"}
-                            name={"Panner Noodles"}
-                        />
-
+                        <div className="mb-16">
+                            <ItemDescriptionInput
+                                control={control}
+                                getValues={getValues}
+                                trigger={trigger}
+                                category={"In starters"}
+                                name={"Panner Noodles"}
+                            />
+                        </div>
+                        
                         <div className="flex gap-2 fixed right-0 bottom-0 w-1/2 bg-white p-4 shadow-3xl">
                             <Button type="submit" size="lg" variant="capsico" className="w-full class-base2">Save changes</Button>
                         </div>

@@ -15,23 +15,25 @@ import { Button } from "@/components/ui/button"
 import { FiUpload } from "react-icons/fi"
 import ItemImageUploadModal from "./ItemImageUploadModal"
 import { useState } from "react"
+import ItemImage from "./ItemImage"
 
 const ItemsImageModal = ({ isItemsImageModalOpen, setIsItemsImageModalOpen }) => {
-    const [isItemImageUploadModalOpen, setIsItemImageUploadModalOpen] = useState(false);
     const schema = z.object({
-        itemDescription: z.string().min(1, "Description is required").max(40, "Description cannot exceed 400 characters"),
+        itemImage1: z.string().min(1, "Description is required").max(40, "Description cannot exceed 400 characters"),
     });
 
     const form = useForm({
         resolver: zodResolver(schema),
         defaultValues: {
-            itemDescription: "",
+            itemImage1: "",
         }
     })
     const { register, control, watch, setValue, getValues, trigger } = form;
-
-    const onSubmit = (data) => {
-        console.log("data", data);
+    
+    const onSubmit = (e) => {
+        e.preventDefault()
+        console.log("form", form.getValues());
+        // console.log("data", data);
         // setIsItemDescriptionModalOpen(false);
     }
 
@@ -50,30 +52,18 @@ const ItemsImageModal = ({ isItemsImageModalOpen, setIsItemsImageModalOpen }) =>
                     <p className="text-lg font-inter font-light leading-6">Images you upload will be updated on your menu after moderation from the Zomato team</p>
                 </div>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="w-full p-5">
-                        <div className="w-full flex justify-between items-center pb-4 border-b">
-                            <div>
-                                <h4 className="font-inter font-normal">Chicken Combo</h4>
-                                <p className="font-inter font-normal text-[#858585]">In Combos</p>
-                            </div>
-
-                            <button onClick={() => setIsItemImageUploadModalOpen(true)} className='border-2 mt-2 flex flex-col bg-[#1aa6f10c] items-center justify-center primary-color w-20 h-20 rounded-md px-4 py-3'>
-                                <FiUpload size={25} />
-                                <p className='font-semibold text-center primary-color text-sm mt-2'>Upload</p>
-                            </button>
+                    <form  className="w-full p-5">
+                        <div className="mb-16">
+                            <ItemImage
+                                form={form}
+                                name="itemImage1"
+                            />
                         </div>
-
                         <div className="flex gap-2 fixed right-0 bottom-0 w-1/2 bg-white p-4 shadow-3xl">
-                            <Button type="submit" size="lg" variant="capsico" className="w-full class-base2">Save changes</Button>
+                            <Button onClick={onSubmit} size="lg" variant="capsico" className="w-full class-base2">Save changes</Button>
                         </div>
                     </form>
                 </Form>
-                {isItemImageUploadModalOpen &&
-                    <ItemImageUploadModal
-                        isItemImageUploadModalOpen={isItemImageUploadModalOpen}
-                        setIsItemImageUploadModalOpen={setIsItemImageUploadModalOpen}
-                    />
-                }
             </SheetContent>
         </Sheet>
     )
