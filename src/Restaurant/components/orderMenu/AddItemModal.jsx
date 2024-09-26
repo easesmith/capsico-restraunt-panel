@@ -32,6 +32,7 @@ import { X } from "lucide-react"
 import { FaCirclePlus, FaMinus, FaPlus } from "react-icons/fa6"
 import CreateVariant from "./CreateVariant"
 import { TbRulerOff } from "react-icons/tb"
+import Property from "./Property"
 
 const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
     const [isItemImageUploadModalOpen, setIsItemImageUploadModalOpen] = useState(false);
@@ -228,6 +229,11 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                         <div className="p-5">
                                             <h2 className="class-lg6 text-black">Item Pricing</h2>
 
+                                            <div className="bg-[#F7FAFF] py-4 px-6 rounded-lg mt-2">
+                                                <h2 className="class-base6 text-black">Customers trust brands with fair pricing</h2>
+                                                <p className="class-sm2 text-[#757575]">Keep same prices across menus offered for online ordering.</p>
+                                            </div>
+
                                             <div className="w-full mt-5">
                                                 <FormField
                                                     control={control}
@@ -259,6 +265,10 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                                     )}
                                                 />
                                             </div>
+
+                                            <div className="bg-[#F7FAFF] py-3 px-6 rounded-lg mt-5">
+                                                <h2 className="class-base6 text-black">Please make sure that your offline and online prices match</h2>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="pb- border-b-2 border-dashed border-[#D3D3D3]">
@@ -272,11 +282,23 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                                 <p>You can offer variations of a item, such as size/ base/ crust, etc. When customers place an order, they must choose at least one from the defined variants.</p>
                                             </div>
                                             {isVariant &&
-                                                <div>
-                                                    <div onClick={() => setIsCreateVariantModalOpen(true)} className='border cursor-pointer border-dashed border-[#1AA1F1] bg-[#1aa6f10c] w-full h-32 flex flex-col justify-center items-center rounded-md'>
-                                                        <FaCirclePlus className="primary-color" size={25} />
-                                                        <p className='font-semibold text-center primary-color class-base2 mt-3'>Create a new variant</p>
-                                                    </div>
+                                                <div className="bg-[#F8F9FC] p-5 grid grid-cols-2 gap-5 rounded-md">
+                                                    <Property
+                                                        title="Size"
+                                                        example="E.g. Small, Medium, Large"
+                                                    />
+                                                    <Property
+                                                        title="Quantity"
+                                                        example="E.g. Quarter, Half, Full"
+                                                    />
+                                                    <Property
+                                                        title="Preparation Type"
+                                                        example="E.g. Halal, Non halal"
+                                                    />
+                                                    <Property
+                                                        title="Base"
+                                                        example="E.g. Thin, thick crust"
+                                                    />
                                                 </div>
                                             }
                                         </div>

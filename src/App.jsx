@@ -40,6 +40,7 @@ function App() {
             <Route path='/restaurant/orders' element={<Order />} />
             <Route path='/restaurant/order-history' element={<OrderHistory />} />
             <Route path='/restaurant/order-menu' element={<MainMenu />} />
+            <Route path='/restaurant/order-menu/edit' element={<OrderMenu />} />
             <Route path='/restaurant/items' element={<Items />} />
             <Route path='/restaurant/gst-declaration' element={<GSTDeclaration />} />
             <Route path='/restaurant/charges' element={<Charges />} />

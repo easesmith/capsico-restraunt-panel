@@ -7,6 +7,7 @@ import AddComplementaryDishesModal from './AddComplementaryDishesModal'
 import ItemDescriptionModal from './ItemDescriptionModal'
 import ItemsImageModal from './ItemsImageModal'
 import SimplifyMenuStructureModal from './SimplifyMenuStructure'
+import { useNavigate } from 'react-router-dom'
 
 const MainMenu = () => {
     const [isAddComplementaryDishesModalOpen, setIsAddComplementaryDishesModalOpen] = useState(false);
@@ -14,17 +15,18 @@ const MainMenu = () => {
     const [isItemsImageModalOpen, setIsItemsImageModalOpen] = useState(false);
     const [isSimplifyMenuStructureModalOpen, setIsSimplifyMenuStructureModalOpen] = useState(false);
 
+    const navigate = useNavigate();
+
     return (
         <RestaurantWrapper>
             <div className='grid grid-cols-[59%_39%] gap-4 p-4 bg-white h-full items-start pt-10'>
                 <div>
-                    <div className='p-4 px-6 bg-[#F8F9FC] rounded-lg flex items-center justify-between gap-3'>
-                        <div>
-                            <h1 className='font-inter text-[#414142] font-semibold text-2xl'>Your menu Score </h1>
-                            <p className='font-inter text-[#8C8D8D] my-1 font-medium'>Top restaurants in your area have a menu score of 90%</p>
-                            <p className='font-inter text-sm text-[#C5C5C5] font-medium'>Last updated on 5:42 pm, 28/08/2024</p>
+                    <div onClick={()=> navigate("/restaurant/order-menu/edit")} className='border border-[#EBEBEB] rounded-lg p-4 pb-32 cursor-pointer'>
+                        <div className='flex justify-between'>
+                            <h3 className='text-lg text-[#515151] font-semibold font-inter'>Go to Menu Editor</h3>
+                            <FaArrowRight className='text-2xl cursor-pointer' />
                         </div>
-                        <CircularProgress progress={31} />
+                        <p className='font-inter font-medium text-[#8D8D8D]'>Edit menu, tax slabs and inventory</p>
                     </div>
                     <h2 className='mt-7 text-lg font-semibold font-inter text-[#4C4C4C]'>Top opportunities to grow your business</h2>
                     <div className="grid grid-cols-2 gap-4 mt-4">
@@ -62,7 +64,7 @@ const MainMenu = () => {
                         </div>
                     </div>
                 </div>
-                <div>
+                {/* <div>
                     <div className='border border-[#EBEBEB] rounded-lg p-4 pb-32'>
                         <div className='flex justify-between'>
                             <h3 className='text-lg text-[#515151] font-semibold font-inter'>Go to Menu Editor</h3>
@@ -83,7 +85,7 @@ const MainMenu = () => {
                             <FaArrowRight className='text-2xl cursor-pointer' />
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 {isAddComplementaryDishesModalOpen &&
                     <AddComplementaryDishesModal
