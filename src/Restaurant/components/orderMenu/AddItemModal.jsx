@@ -286,19 +286,27 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                                     <Property
                                                         title="Size"
                                                         example="E.g. Small, Medium, Large"
+                                                        form={form}
                                                     />
                                                     <Property
                                                         title="Quantity"
                                                         example="E.g. Quarter, Half, Full"
+                                                        form={form}
                                                     />
                                                     <Property
                                                         title="Preparation Type"
                                                         example="E.g. Halal, Non halal"
+                                                        form={form}
                                                     />
                                                     <Property
                                                         title="Base"
                                                         example="E.g. Thin, thick crust"
+                                                        form={form}
                                                     />
+                                                    {/* <div onClick={() => setIsCreateVariantModalOpen(true)} className='border cursor-pointer border-dashed border-[#1AA1F1] bg-[#1aa6f10c] w-full h-32 flex flex-col justify-center items-center rounded-md'>
+                                                        <FaCirclePlus className="primary-color" size={25} />
+                                                        <p className='font-semibold text-center primary-color class-base2 mt-3'>Create a new variant</p>
+                                                    </div> */}
                                                 </div>
                                             }
                                         </div>
