@@ -3,6 +3,7 @@ import './App.css'
 
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Toaster } from './components/ui/sonner';
+import MainMenu from './Restaurant/components/orderMenu/MainMenu';
 
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Register = lazy(() => import('./Restaurant/pages/Register'));
@@ -38,7 +39,8 @@ function App() {
             <Route path='/abc' element={<ABC />} />
             <Route path='/restaurant/orders' element={<Order />} />
             <Route path='/restaurant/order-history' element={<OrderHistory />} />
-            <Route path='/restaurant/order-menu' element={<OrderMenu />} />
+            <Route path='/restaurant/order-menu' element={<MainMenu />} />
+            <Route path='/restaurant/order-menu/edit' element={<OrderMenu />} />
             <Route path='/restaurant/items' element={<Items />} />
             <Route path='/restaurant/gst-declaration' element={<GSTDeclaration />} />
             <Route path='/restaurant/charges' element={<Charges />} />

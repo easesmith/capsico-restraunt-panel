@@ -32,12 +32,14 @@ const ItemComp = ({ title }) => {
     const toggleOpenc = () => {
         setIsOpenc(!isOpenc);
     };
+
     return (
         <div>
-            <div onClick={() => setIsOpenb(!isOpenb)} className="w-full flex items-center justify-between border-b-2 pl-10 pr-5 py-5 group cursor-pointer">
+            {/* #F2F4F7 */}
+            <div onClick={() => setIsOpenb(!isOpenb)} className="w-full flex items-center hover:bg-[#F7FAFF]  justify-between border-b-2 pl-10 pr-5 py-5 group cursor-pointer">
                 <h3 className="seven-color class-base1">{title}</h3>
                 <div className='flex items-center gap-8'>
-                    <div className='opacity-0 group-hover:opacity-100 transition-all duration-200 flex gap-4'>
+                    <div className='hidden group-hover:flex gap-4'>
                         <FiEdit2 onClick={() => setIsOpenCategoryModel(true)} className="seven-color text-lg cursor-pointer" />
                         <BiTrash onClick={() => { }} className="text-[#E4626F] text-xl cursor-pointer" />
                     </div>
@@ -47,10 +49,10 @@ const ItemComp = ({ title }) => {
 
             {isOpenb &&
                 <div className="">
-                    <div className="w-full flex items-center justify-between pl-20 pr-5 py-4 border-b-2 group">
+                    <div className="w-full flex items-center justify-between pl-20 pr-5 py-4 border-b-2 group hover:bg-[#F7FAFF]">
                         <h3 className="seven-color class-base1">{title}</h3>
                         <div className='flex items-center gap-8'>
-                            <div className='opacity-0 group-hover:opacity-100 transition-all duration-200 flex gap-4'>
+                            <div className='hidden group-hover:flex gap-4'>
                                 <FiEdit2 onClick={() => setIsOpenSubCategoryModel(true)} className="seven-color text-lg cursor-pointer" />
                                 <BiTrash onClick={() => { }} className="text-[#E4626F] text-xl cursor-pointer" />
                             </div>
@@ -59,7 +61,7 @@ const ItemComp = ({ title }) => {
                     </div>
                     <button className="flex w-full items-center gap-3 px-5 py-4 pl-10 border-b" onClick={() => setIsOpenSubCategoryModel(true)}>
                         <FiPlusCircle className="primary-color text-lg" />
-                        <span className="class-base3 primary-color">Add SubCategory</span>
+                        <span className="class-base1 primary-color">Add SubCategory</span>
                     </button>
                 </div>
             }

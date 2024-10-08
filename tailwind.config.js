@@ -17,6 +17,9 @@ module.exports = {
       },
     },
     extend: {
+      boxShadow: {
+        '3xl': '0px -10px 20px -15px rgba(0, 0, 0, 0.3)',
+      },
       fontFamily: {
         numans: ['Numans', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],

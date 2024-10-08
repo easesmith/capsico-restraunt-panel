@@ -10,10 +10,21 @@ import { LuCalendar } from "react-icons/lu";
 import { Button } from '@/components/ui/button'
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 import OrdersModel from '../components/orders/OrdersModel'
+import { useSelector, useDispatch } from 'react-redux';
+import { hideNotification, showNotification } from '../redux/notificationSlice';
+import SingleOrder from '../components/SingleOrder'
 
 const Order = () => {
 
+  const dispatch = useDispatch()
+  // const isVisible = useSelector((state) => state.notification.isVisible);
+  console.log(useSelector((state) => state.notification.isVisible))
+
+  // isOn ? dispatch(hideNotification()) : dispatch(showNotification())
+
+
   const [selectedDateRange, setSelectedDateRange] = useState("");
+  const [orderStatus, setOrderStatus] = useState("preparing")
 
   const handleSelectChange = (value) => {
     setSelectedDateRange(value);
@@ -36,7 +47,7 @@ const Order = () => {
               <Select onValueChange={handleSelectChange}>
                 <SelectTrigger className="w-[175px] third-color">
                   <LuCalendar className='third-color class-lg2' />
-                  <SelectValue placeholder="16th to 17th Jul"  value={selectedDateRange} />
+                  <SelectValue placeholder="16th to 17th Jul" value={selectedDateRange} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup className=' third-color class-sm1'>
@@ -51,8 +62,19 @@ const Order = () => {
               <Button variant="outline" className="flex justify-center items-center gap-2 third-color class-sm1"><LiaDownloadSolid className='text-[18px]' /><span>Export CSV</span></Button>
             </div>
           </div>
-          
-          <div className='w-full h-[456px] flex flex-col justify-between items-center mt-40'>
+
+          <Toast />
+          <div className="flex items-center gap-5 p-5">
+            <button onClick={() => setOrderStatus("preparing")} className={`px-6 py-1 rounded-lg ${orderStatus == "preparing" ? "bg-[#4A67FF] text-white" : "border border-[#8B8B8B] text-[#8B8B8B]"}`}>Preparing</button>
+            <button onClick={() => setOrderStatus("ready")} className={`px-6 py-1 rounded-md ${orderStatus == "ready" ? "bg-[#4A67FF] text-white" : "border border-[#8B8B8B] text-[#8B8B8B]"}`}>Ready</button>
+            <button onClick={() => setOrderStatus("collected")} className={`px-6 py-1 rounded-md ${orderStatus == "collected" ? "bg-[#4A67FF] text-white" : "border border-[#8B8B8B] text-[#8B8B8B]"}`}>Collected</button>
+          </div>
+
+          <div className="flex flex-col gap-3 p-5">
+            <SingleOrder />
+          </div>
+
+          {/* <div className='w-full h-[456px] flex flex-col justify-between items-center mt-40'>
             <div className='flex justify-center relative w-[577px]'>
               <img src={OutletImg} alt="" />
               <img src={CloseCartImg} alt="" className=' absolute bottom-[-4%] right-[-7%]' />
@@ -61,9 +83,9 @@ const Order = () => {
               <span className='eight-color class-xl3 text-center'>You are offline</span>
               <p className='five-color class-xl3 text-center'>Click <span className='primary-color font-semibold'>Help center</span> for more Information.</p>
             </div>
-          </div>
+          </div> */}
         </div>
-        <OrdersModel/>
+        <OrdersModel />
       </>
     </RestaurantWrapper>
   )
