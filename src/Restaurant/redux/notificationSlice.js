@@ -8,6 +8,7 @@ const notificationSlice = createSlice({
     reducers:{
         showNotification(state) {
             state.isVisible = true
+            
         },
         hideNotification(state) {
             state.isVisible = false

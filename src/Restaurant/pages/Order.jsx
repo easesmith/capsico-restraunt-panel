@@ -9,19 +9,9 @@ import { LiaDownloadSolid } from "react-icons/lia";
 import { LuCalendar } from "react-icons/lu";
 import { Button } from '@/components/ui/button'
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
-import Toast from '../components/Toast'
 import OrdersModel from '../components/orders/OrdersModel'
-import { useSelector, useDispatch } from 'react-redux';
-import { hideNotification, showNotification } from '../redux/notificationSlice';
 
 const Order = () => {
-
-  const dispatch = useDispatch()
-  // const isVisible = useSelector((state) => state.notification.isVisible);
-  console.log(useSelector((state)=> state.notification.isVisible))
-
-  // isOn ? dispatch(hideNotification()) : dispatch(showNotification())
-
 
   const [selectedDateRange, setSelectedDateRange] = useState("");
 
@@ -62,7 +52,6 @@ const Order = () => {
             </div>
           </div>
           
-          <Toast/>
           <div className='w-full h-[456px] flex flex-col justify-between items-center mt-40'>
             <div className='flex justify-center relative w-[577px]'>
               <img src={OutletImg} alt="" />
