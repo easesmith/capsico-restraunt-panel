@@ -1,17 +1,16 @@
-import { RegisterSchema, RegisterSchema1, RegisterSchema2, RegisterSchema3 } from '@/schemas/registerSchema';
-import React, { useState } from 'react'
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import Register1 from '../components/register/Register1';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
-import Register2 from '../components/register/Register2';
-import Register3 from '../components/register/Register3';
-import RegisterSuccessModal from '../components/RegisterSuccessModal';
-import { FaCheck } from 'react-icons/fa';
-import CreateOrRegisterRestaurantModal from '../components/CreateOrRegisterRestaurantModal';
+import OnlineOrdering1 from '@/Restaurant/components/online-ordering/OnlineOrdering1';
+import Register1 from '@/Restaurant/components/register/Register1';
+import RegisterSuccessModal from '@/Restaurant/components/RegisterSuccessModal';
+import { OnlineOrderingSchema, OnlineOrderingSchema1, OnlineOrderingSchema2, OnlineOrderingSchema3 } from '@/schemas/OnlineOrderingSchema';
+import { RegisterSchema, RegisterSchema1, RegisterSchema2, RegisterSchema3 } from '@/schemas/registerSchema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import React, { useState } from 'react'
+import { useForm } from 'react-hook-form';
+import { FaCheck } from 'react-icons/fa6';
 
-const Register = () => {
+const OnlineOrdering = () => {
     const [step, setStep] = useState(1);
     const [isRegisterSuccessModalOpen, setIsRegisterSuccessModalOpen] = useState(false);
     const [isCreateOrRegisterRestaurantModalOpen, setIsCreateOrRegisterRestaurantModalOpen] = useState(true);
@@ -21,13 +20,13 @@ const Register = () => {
         let schema;
         switch (step) {
             case 1:
-                schema = RegisterSchema1;
+                schema = OnlineOrderingSchema1;
                 break;
             case 2:
-                schema = RegisterSchema2;
+                schema = OnlineOrderingSchema2;
                 break;
             case 3:
-                schema = RegisterSchema3;
+                schema = OnlineOrderingSchema3;
                 break;
         }
 
@@ -39,42 +38,26 @@ const Register = () => {
 
 
     const form = useForm({
-        resolver: zodResolver(RegisterSchema),
+        resolver: zodResolver(OnlineOrderingSchema),
         defaultValues: {
-            restaurantName: "",
-            restaurantAddress: "",
-            latitude: "",
-            longitude: "",
-            phoneNumber: "",
-            phoneNumber2: "",
-            STDCode: "",
-            landlineNumber: "",
-            fullName: "",
-            email: "",
-            samePhoneNumber: false,
-            receiveUpdate: false,
-            restaurantOptions: [],
-            cuisines: [],
-            openingTime: "",
-            closingTime: "",
-            days: [],
+            isRefered: false,
+            timing: "",
         }
     })
 
 
     const onSubmit = (data) => {
-        setIsRegisterSuccessModalOpen(true);
         console.log("data", data);
     }
 
     return (
         <div className='max-w-7xl mx-auto p-6'>
-            <h1 className='font-semibold text-4xl text-[#4A5E6D] text-center'>Create your restaurant page</h1>
+            <h1 className='font-semibold text-4xl text-[#4A5E6D] text-center'>Registeration for online ordering</h1>
             <div className='border border-[#C2CDD6] mt-12 rounded-md w-full py-8 px-36'>
                 <div className='flex justify-between gap-10'>
                     <div className={`${step === 1 ? "border-t-4 border-[#1AA6F1]" : "border-t-4 border-transparent"} py-4 w-[240px] h-[170px] px-2 flex flex-col`}>
                         <h3 className='font-bold text-[19px] text-[#4A5E6D]'>Restaurant Information</h3>
-                        <p className='font-normal text-[19px] text-[#92A5B5]'>Restaurant name. address. contact no., owner details</p>
+                        <p className='font-normal text-[19px] text-[#92A5B5]'>Restaurant name, address, contact no., owner details</p>
                         <div className={`w-10 h-10 mt-auto mx-auto rounded-full ${isChecked && step === 1 ? "bg-[#22C55E]" : step === 1 ? "bg-[#1AA6F1]" : "bg-[#AEAEB0]"} flex justify-center items-center text-2xl text-white`}>
                             {isChecked && step === 1 ?
                                 <FaCheck className="text-white text-xl" />
@@ -82,8 +65,8 @@ const Register = () => {
                         </div>
                     </div>
                     <div className={`${step === 2 ? "border-t-4 border-[#1AA6F1]" : "border-t-4 border-transparent"} py-4 w-[260px] px-2 h-[170px] flex flex-col`}>
-                        <h3 className='font-bold text-[19px] text-[#4A5E6D]'>Restaurant Type & Timings</h3>
-                        <p className='font-normal text-[19px] text-[#92A5B5]'>Cuisine type. opening hours</p>
+                        <h3 className='font-bold text-[19px] text-[#4A5E6D]'>Upload Document</h3>
+                        <p className='font-normal text-[19px] text-[#92A5B5]'>PAN , FSSAI and bank account details</p>
                         <div className={`w-10 h-10 mt-auto mx-auto rounded-full ${isChecked && step === 2 ? "bg-[#22C55E]" : step === 1 ? "bg-[#1AA6F1]" : "bg-[#AEAEB0]"} flex justify-center items-center text-2xl text-white`}>
                             {isChecked && step === 2 ?
                                 <FaCheck className="text-white text-xl" />
@@ -91,8 +74,8 @@ const Register = () => {
                         </div>
                     </div>
                     <div className={`${step === 3 ? "border-t-4 border-[#1AA6F1]" : "border-t-4 border-transparent"} py-4 w-[240px] px-2 h-[170px] flex flex-col`}>
-                        <h3 className='font-bold text-[19px] text-[#4A5E6D]'>Upload Images</h3>
-                        <p className='font-normal text-[19px] text-[#92A5B5]'>Menu, restaurant. food images</p>
+                        <h3 className='font-bold text-[19px] text-[#4A5E6D]'>Partnership plans</h3>
+                        <p className='font-normal text-[19px] text-[#92A5B5]'>Select your plan</p>
                         <div className={`w-10 h-10 mt-auto mx-auto rounded-full ${isChecked && step === 3 ? "bg-[#22C55E]" : step === 1 ? "bg-[#1AA6F1]" : "bg-[#AEAEB0]"} flex justify-center items-center text-2xl text-white`}>
                             {isChecked && step === 3 ?
                                 <FaCheck className="text-white text-xl" />
@@ -101,11 +84,11 @@ const Register = () => {
                     </div>
                 </div>
             </div>
-            <div className='w-[70%] mt-5'>
+            <div className='w-[50%] mt-5'>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="w-full py-5">
                         {step === 1 &&
-                            <Register1 form={form} />
+                            <OnlineOrdering1 form={form} />
                         }
 
                         {step === 2 &&
@@ -131,14 +114,8 @@ const Register = () => {
                 />
             }
 
-            {isCreateOrRegisterRestaurantModalOpen &&
-                <CreateOrRegisterRestaurantModal
-                    isCreateOrRegisterRestaurantModalOpen={isCreateOrRegisterRestaurantModalOpen}
-                    setIsCreateOrRegisterRestaurantModalOpen={setIsCreateOrRegisterRestaurantModalOpen}
-                />
-            }
         </div>
     )
 }
 
-export default Register
+export default OnlineOrdering

@@ -22,6 +22,7 @@ const Items = lazy(()=> import('./Restaurant/pages/Items'))
 const GSTDeclaration = lazy(() => import('./Restaurant/pages/GSTDeclaration'))
 const Charges = lazy(()=> import('./Restaurant/pages/Charges'))
 const HelpCenter = lazy(()=> import('./Restaurant/pages/HelpCenter'))
+const OnlineOrdering = lazy(()=> import('./Restaurant/pages/online-ordering/OnlineOrdering'))
 
 function App() {
 
@@ -31,7 +32,8 @@ function App() {
         <Suspense fallback={<div className='w-full h-screen bg-white text-black flex justify-center items-center text-xl font-semibold'>Loading...</div>}>
           <Routes>
             <Route path='/' element={<RegisterAndLogin />} />
-            <Route path='/restaurant/register' element={<Register />} />
+            <Route path='/restaurant/create-restaurant' element={<Register />} />
+            <Route path='/restaurant/online-ordering' element={<OnlineOrdering />} />
             <Route path='/restaurant/reporting/*' element={<Reporting />} />
             <Route path='/restaurant/offers' element={<Offers />} />
             <Route path='/restaurant/outlet-info' element={<OutletInfo />} />
