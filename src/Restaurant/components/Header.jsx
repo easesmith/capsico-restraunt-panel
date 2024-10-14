@@ -21,10 +21,6 @@ const Header = () => {
             <IoSettingsOutline className='text-[24px]' />
             <GoBell className='text-[24px]' />
           </div>
-          {/* <div className=" relative flex items-center space-x-2 ">
-            <Switch id="airplane-mode" className="w-[140px] h-[50px] bg-red-500" />
-            <Label className="absolute right-[10%] text-[#FFFFFF] text-[16.8px] font-medium" htmlFor="airplane-mode">Offline</Label>
-          </div> */}
           <Switch/>
           <div className=' flex justify-center items-center gap-4 px-[10px]'>
             <div>

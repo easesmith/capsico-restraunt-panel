@@ -13,6 +13,7 @@ import OrdersModel from '../components/orders/OrdersModel'
 import { useSelector, useDispatch } from 'react-redux';
 import { hideNotification, showNotification } from '../redux/notificationSlice';
 import SingleOrder from '../components/SingleOrder'
+import Toast from '../components/Toast'
 
 const Order = () => {
 

@@ -154,6 +154,34 @@
   @apply text-[#7991A4]
 }
 
+.fifteen-color{
+  @apply text-[#4DA031]
+}
+
+.sixteen-color{
+  @apply text-[#7C7C7C]
+}
+
+.seventeen-color{
+  @apply text-[#FC3636]
+}
+
+.eighteen-color{
+  @apply text-[#9B9B9B]
+}
+
+.twenty-color{
+  @apply text-[#4A5E6D]
+}
+
+.twentyOne-color{
+  @apply text-[#737373]
+}
+
+.twentyTwo-color{
+  @apply text-[#6E6E6E]
+}
+
 .class-xs1 {
   @apply text-xs font-normal font-numans
 }
@@ -185,10 +213,26 @@
 .class-sm4 {
   @apply text-sm font-medium font-inter
 }
+
 .class-sm5 {
   @apply text-sm font-semibold font-numans
 }
 
+.class-sm6 {
+  @apply text-sm font-semibold font-inter
+}
+
+.class-sm7 {
+  @apply text-sm font-normal font-dmSans
+}
+
+.class-sm8 {
+  @apply text-sm font-medium font-dmSans
+}
+
+.class-sm9 {
+  @apply text-sm font-semibold font-dmSans
+}
 
 .class-base1 {
   @apply text-base font-normal font-numans
@@ -215,11 +259,11 @@
 }
 
 .class-base7 {
-  @apply text-base font-semibold font-dmSans
+  @apply text-base font-normal font-dmSans
 }
 
 .class-base8 {
-  @apply text-base font-semibold font-dmSans
+  @apply text-base font-medium font-dmSans
 }
 
 .class-base9 {
