@@ -20,12 +20,15 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         wifi:"hover:bg-[#3ba0d6]",
-        gst:"five-color class-lg7  border-[#C2CDD6]"
+        gst:"five-color class-lg7  border-[#C2CDD6]",
+        gst2:"bg-[#4A67FF] hover:bg-[#506dfe] text-[#FFFFFF] class-xl2 border-[1px] border-[#4A67FF]",
+        gst3:"bg-[#4A67FF] hover:bg-[#506dfe] text-[#FFFFFF] class-sm7 border-[1px] border-[#4A67FF]",
+        gst4:"bg-[#FC3636] hover:bg-[#f64b4b] text-[#FFFFFF] class-sm7 border-[1px] border-[#FC3636]"
       },
       size: {
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
+        lg: "rounded-lg px-4",
         icon: "h-10 w-10",
         gstSize:"px-7 py-1 border-[1px] rounded-none"
       },
