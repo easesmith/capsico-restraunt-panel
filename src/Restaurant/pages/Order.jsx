@@ -13,7 +13,7 @@ import OrdersModel from '../components/orders/OrdersModel'
 import { useSelector, useDispatch } from 'react-redux';
 import { hideNotification, showNotification } from '../redux/notificationSlice';
 import SingleOrder from '../components/SingleOrder'
-import Toast from '../components/Toast'
+import OrderAlertModal from '../components/OrderAlertModal'
 
 const Order = () => {
 
@@ -26,6 +26,7 @@ const Order = () => {
 
   const [selectedDateRange, setSelectedDateRange] = useState("");
   const [orderStatus, setOrderStatus] = useState("preparing")
+  const [isOrderAlertModalOpen, setIsOrderAlertModalOpen] = useState(true);
 
   const handleSelectChange = (value) => {
     setSelectedDateRange(value);
@@ -74,6 +75,12 @@ const Order = () => {
           <div className="flex flex-col gap-3 p-5">
             <SingleOrder />
           </div>
+          {isOrderAlertModalOpen &&
+            <OrderAlertModal
+              isOrderAlertModalOpen={isOrderAlertModalOpen}
+              setIsOrderAlertModalOpen={setIsOrderAlertModalOpen}
+            />
+          }
 
           {/* <div className='w-full h-[456px] flex flex-col justify-between items-center mt-40'>
             <div className='flex justify-center relative w-[577px]'>
