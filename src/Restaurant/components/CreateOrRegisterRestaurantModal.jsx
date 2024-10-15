@@ -8,7 +8,7 @@ const CreateOrRegisterRestaurantModal = ({ isCreateOrRegisterRestaurantModalOpen
 
     const handelNavigate = ()=>{
         setIsCreateOrRegisterRestaurantModalOpen(false);
-        navigate("/restaurant/create-restaurant");
+        navigate("/restaurant/register");
     }
     const handelNavigate2 = ()=>{
         setIsCreateOrRegisterRestaurantModalOpen(false);

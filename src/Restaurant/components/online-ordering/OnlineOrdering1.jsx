@@ -204,7 +204,7 @@ const OnlineOrdering1 = ({ form }) => {
         <div className='mt-5 flex flex-col gap-5'>
           <FormField
             control={control}
-            name="numberType"
+            name="isManually"
             render={({ field }) => (
               <FormItem>
                 <FormLabel></FormLabel>

@@ -1,7 +1,10 @@
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import OnlineOrdering1 from '@/Restaurant/components/online-ordering/OnlineOrdering1';
+import OnlineOrdering2 from '@/Restaurant/components/online-ordering/OnlineOrdering2';
+import OnlineOrdering3 from '@/Restaurant/components/online-ordering/OnlineOrdering3';
 import Register1 from '@/Restaurant/components/register/Register1';
+import Register3 from '@/Restaurant/components/register/Register3';
 import RegisterSuccessModal from '@/Restaurant/components/RegisterSuccessModal';
 import { OnlineOrderingSchema, OnlineOrderingSchema1, OnlineOrderingSchema2, OnlineOrderingSchema3 } from '@/schemas/OnlineOrderingSchema';
 import { RegisterSchema, RegisterSchema1, RegisterSchema2, RegisterSchema3 } from '@/schemas/registerSchema';
@@ -42,6 +45,26 @@ const OnlineOrdering = () => {
         defaultValues: {
             isRefered: false,
             timing: "",
+            menuImages: "",
+            menuImagesPreview: "",
+            numberType: "",
+            number: "",
+            isManually: "Enter this information manually",
+            fullName: "",
+            email: "",
+            accountingNotificationsNumber: "",
+
+            panNumber: "",
+            nameOnPan: "",
+            address: "",
+            panImage: "",
+            FSSAICertificateNumber: "",
+            FSSAIExpiryDate: "",
+            fssaiImage: "",
+            bankAccountNumber: "",
+            reEnterAccountNumber: "",
+            accountType: "",
+            IFSCCode: "",
         }
     })
 
@@ -57,7 +80,7 @@ const OnlineOrdering = () => {
                 <div className='flex justify-between gap-10'>
                     <div className={`${step === 1 ? "border-t-4 border-[#1AA6F1]" : "border-t-4 border-transparent"} py-4 w-[240px] h-[170px] px-2 flex flex-col`}>
                         <h3 className='font-bold text-[19px] text-[#4A5E6D]'>Restaurant Information</h3>
-                        <p className='font-normal text-[19px] text-[#92A5B5]'>Restaurant name, address, contact no., owner details</p>
+                        <p className='font-normal text-[19px] text-[#92A5B5]'>delivery timing, menu & contact information</p>
                         <div className={`w-10 h-10 mt-auto mx-auto rounded-full ${isChecked && step === 1 ? "bg-[#22C55E]" : step === 1 ? "bg-[#1AA6F1]" : "bg-[#AEAEB0]"} flex justify-center items-center text-2xl text-white`}>
                             {isChecked && step === 1 ?
                                 <FaCheck className="text-white text-xl" />
@@ -92,11 +115,11 @@ const OnlineOrdering = () => {
                         }
 
                         {step === 2 &&
-                            <Register2 form={form} />
+                            <OnlineOrdering2 form={form} />
                         }
 
                         {step === 3 &&
-                            <Register3 form={form} />
+                            <OnlineOrdering3 form={form} />
                         }
 
                         <div className="flex justify-end gap-2 mt-10">
