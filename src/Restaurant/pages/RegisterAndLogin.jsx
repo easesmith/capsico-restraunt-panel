@@ -31,12 +31,12 @@ const RegisterAndLogin = () => {
                 </ul>
             </div>
             {isLoginModalOpen &&
-                <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_ID}>
-                    <Login
-                        isLoginModalOpen={isLoginModalOpen}
-                        setIsLoginModalOpen={setIsLoginModalOpen}
-                    />
-                </GoogleOAuthProvider>
+                // <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+                <Login
+                    isLoginModalOpen={isLoginModalOpen}
+                    setIsLoginModalOpen={setIsLoginModalOpen}
+                />
+                // </GoogleOAuthProvider>
             }
         </div>
     )

@@ -10,11 +10,17 @@ import {
     InputOTPGroup,
     InputOTPSlot
 } from "@/components/ui/input-otp";
+import usePostApiReq from "@/hooks/usePostApiReq";
 
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
-const OtpModal = ({ isOtpModalOpen, setIsOtpModalOpen, isEmail = false }) => {
+const OtpModal = ({ isOtpModalOpen, setIsOtpModalOpen, phone, resendOtp, isEmail = false }) => {
     const [timeLeft, setTimeLeft] = useState(60);
+    const [otp, setOtp] = useState("")
+    const { res, fetchData, isLoading } = usePostApiReq();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (timeLeft > 0) {
@@ -23,9 +29,28 @@ const OtpModal = ({ isOtpModalOpen, setIsOtpModalOpen, isEmail = false }) => {
         }
     }, [timeLeft]);
 
-    const handleResendOtp = () => {
-        setTimeLeft(60);
+    const handleVerifyOtp = () => {
+        if (otp.length === 6) {
+            setTimeLeft(60);
+            fetchData("/restaurant/verify-login-otp", {
+                phone,
+                otp
+            });
+        }
     };
+
+    useEffect(() => {
+        handleVerifyOtp()
+    }, [otp])
+
+
+    useEffect(() => {
+        if (res?.status === 200 || res?.status === 201) {
+            toast.success(res?.data.message);
+            navigate("/restaurant/orders")
+            setIsOtpModalOpen(false)
+        }
+    }, [res])
 
     return (
         <Dialog open={isOtpModalOpen} onOpenChange={() => setIsOtpModalOpen(!isOtpModalOpen)}>
@@ -40,9 +65,13 @@ const OtpModal = ({ isOtpModalOpen, setIsOtpModalOpen, isEmail = false }) => {
                     <span className="text-4xl font-medium font-dmSans text-center text-[#515151] pt-3">{Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, '0')}</span>
 
                     <div className="pt-5">
-                        <InputOTP maxLength={6}>
+                        <InputOTP
+                            maxLength={6}
+                            value={otp}
+                            onChange={(value) => setOtp(value)}
+                        >
                             <InputOTPGroup>
-                                <InputOTPSlot className="" index={0} />
+                                <InputOTPSlot index={0} />
                             </InputOTPGroup>
                             <InputOTPGroup>
                                 <InputOTPSlot index={1} />
@@ -64,7 +93,7 @@ const OtpModal = ({ isOtpModalOpen, setIsOtpModalOpen, isEmail = false }) => {
                 </DialogHeader>
                 <div className="flex justify-center gap-1 mt-3">
                     <h3 className="text-lg font-dmSans font-bold text-[#1F2A37]">Did’t get the OTP?</h3>
-                    <button onClick={handleResendOtp} disabled={timeLeft !== 0} className="text-lg font-dmSans font-normal disabled:cursor-not-allowed text-[#6B7280]">Resend Now</button>
+                    <button onClick={resendOtp} disabled={timeLeft !== 0} className="text-lg font-dmSans font-normal disabled:cursor-not-allowed text-[#6B7280]">Resend Now</button>
                 </div>
                 <DialogDescription></DialogDescription>
             </DialogContent>

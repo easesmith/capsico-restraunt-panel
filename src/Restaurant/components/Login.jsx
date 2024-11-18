@@ -21,11 +21,14 @@ import {
 import { EmailSchema, PhoneSchema } from '@/schemas/loginSchema';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useGoogleLogin } from '@react-oauth/google';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { FaPhoneAlt } from 'react-icons/fa';
 import 'react-phone-input-2/lib/style.css';
 import OtpModal from './OtpModal';
+import usePostApiReq from '@/hooks/usePostApiReq';
+import { toast } from 'sonner';
+
 
 const Login = ({ isLoginModalOpen, setIsLoginModalOpen }) => {
     const [isEmail, setIsEmail] = useState(false);
@@ -39,14 +42,25 @@ const Login = ({ isLoginModalOpen, setIsLoginModalOpen }) => {
         }
     })
     const { register, control, watch, setValue, getValues } = form;
+    const { res, fetchData, isLoading } = usePostApiReq();
 
     const onSubmit = (data) => {
         console.log("data", data);
-        setIsOtpModalOpen(true)
+        fetchData("/restaurant/post-login", {
+            phone: data.phoneNumber
+        });
     }
+
+    useEffect(() => {
+        if (res?.status === 200 || res?.status === 201) {
+            toast.success(res?.data.message);
+            setIsOtpModalOpen(true)
+        }
+    }, [res])
 
     const handleLoginSuccess = (response) => {
         console.log('Login Success:', response);
+        fetchData("/restaurant/google-sign-in", { email: "restaurant@example.com" });
     };
 
     const handleLoginFailure = (error) => {
@@ -150,6 +164,10 @@ const Login = ({ isLoginModalOpen, setIsLoginModalOpen }) => {
                         isOtpModalOpen={isOtpModalOpen}
                         setIsOtpModalOpen={setIsOtpModalOpen}
                         isEmail={isEmail}
+                        phone={getValues("phoneNumber")}
+                        resendOtp={() => fetchData("/restaurant/post-login", {
+                            phone: getValues("phoneNumber")
+                        })}
                     />
                 }
                 <DialogDescription></DialogDescription>

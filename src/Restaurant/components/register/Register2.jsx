@@ -16,8 +16,22 @@ import restaurantOptions from '@/data/restaurantOptions.json';
 import days from '@/data/days.json';
 import { useEffect, useState } from 'react';
 import { generateTimeOptions } from '@/utils/generateTimeOptions';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { RegisterSchema2 } from '@/schemas/registerSchema';
 
-const Register2 = ({ form }) => {
+const Register2 = ({ setStep }) => {
+    const form = useForm({
+        resolver: zodResolver(RegisterSchema2),
+        defaultValues: {
+            restaurantOptions: [],
+            cuisines: [],
+            openingTime: "",
+            closingTime: "",
+            days: [],
+        }
+    })
+
     const { register, control, watch, setValue } = form;
     const [showMoreRestaurantOptions, setShowMoreRestaurantOptions] = useState(false)
     const [showMoreCuisines, setShowMoreCuisines] = useState(false)
@@ -43,6 +57,49 @@ const Register2 = ({ form }) => {
     }, [selectedCuisines, selectedRestaurantOptions, selectedDays]);
 
 
+    const { res, fetchData, isLoading } = usePostApiReq();
+
+    const onSubmit = (data) => {
+        // setIsRegisterSuccessModalOpen(true);
+        console.log("data", data);
+        fetchData("/restaurant/restaurant-signup", {
+            restaurantName: data.restaurantName,
+            email: "gourmet@example.com",
+            password: "securepassword",
+            restaurantType: "Fine Dining",
+            coordinates: {
+                latitude: data.latitude,
+                longitude: data.longitude
+            },
+            address: {
+                addressLine: "123 Main St",
+                city: "Dubai",
+                state: "Dubai",
+                pinCode: "12345"
+            },
+            contactDetails: {
+                phoneNumber: data.phoneNumber,
+                stdCode: data.STDCode,
+                landlineNumber: data.landlineNumber
+            },
+            ownerDetails: {
+                ownerName: data.fullName,
+                ownerPhoneNumber: data.phoneNumber2,
+                ownerEmail: data.email,
+                role: "OWNER",
+                idProof: "path_to_id_proof",
+                sameAsRestaurantPhone: data.samePhoneNumber
+            }
+        });
+    }
+
+
+    useEffect(() => {
+        if (res?.status === 200 || res?.status === 201) {
+            toast.success(res?.data.message);
+            setStep(true);
+        }
+    }, [res])
 
     return (
         <div>
@@ -286,6 +343,10 @@ const Register2 = ({ form }) => {
                         )}
                     />
                 </div>
+            </div>
+
+            <div className="flex justify-end mt-5">
+                <Button type="submit" variant="capsico" className="w-20">Next</Button>
             </div>
         </div>
     )

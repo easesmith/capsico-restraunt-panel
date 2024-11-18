@@ -10,36 +10,17 @@ import Register3 from '../components/register/Register3';
 import RegisterSuccessModal from '../components/RegisterSuccessModal';
 import { FaCheck } from 'react-icons/fa';
 import CreateOrRegisterRestaurantModal from '../components/CreateOrRegisterRestaurantModal';
+import usePostApiReq from '@/hooks/usePostApiReq';
 
 const Register = () => {
-    const [step, setStep] = useState(1);
+    const [step, setStep] = useState(2);
     const [isRegisterSuccessModalOpen, setIsRegisterSuccessModalOpen] = useState(false);
     const [isCreateOrRegisterRestaurantModalOpen, setIsCreateOrRegisterRestaurantModalOpen] = useState(true);
     const [isChecked, setIsChecked] = useState(true);
-
-    const handleNext = async () => {
-        let schema;
-        switch (step) {
-            case 1:
-                schema = RegisterSchema1;
-                break;
-            case 2:
-                schema = RegisterSchema2;
-                break;
-            case 3:
-                schema = RegisterSchema3;
-                break;
-        }
-
-        const valid = await form.trigger(Object.keys(schema.shape));
-        setStep(step + 1);
-        if (valid) {
-        }
-    };
-
+    const { res, fetchData, isLoading } = usePostApiReq();
 
     const form = useForm({
-        resolver: zodResolver(RegisterSchema),
+        resolver: zodResolver(RegisterSchema1),
         defaultValues: {
             restaurantName: "",
             restaurantAddress: "",
@@ -53,11 +34,11 @@ const Register = () => {
             email: "",
             samePhoneNumber: false,
             receiveUpdate: false,
-            restaurantOptions: [],
-            cuisines: [],
-            openingTime: "",
-            closingTime: "",
-            days: [],
+            // restaurantOptions: [],
+            // cuisines: [],
+            // openingTime: "",
+            // closingTime: "",
+            // days: [],
         }
     })
 
@@ -65,6 +46,35 @@ const Register = () => {
     const onSubmit = (data) => {
         setIsRegisterSuccessModalOpen(true);
         console.log("data", data);
+        fetchData("/restaurant/restaurant-signup", {
+            restaurantName: data.restaurantName,
+            email: "gourmet@example.com",
+            password: "securepassword",
+            restaurantType: "Fine Dining",
+            coordinates: {
+                latitude: data.latitude,
+                longitude: data.longitude
+            },
+            address: {
+                addressLine: "123 Main St",
+                city: "Dubai",
+                state: "Dubai",
+                pinCode: "12345"
+            },
+            contactDetails: {
+                phoneNumber: data.phoneNumber,
+                stdCode: data.STDCode,
+                landlineNumber: data.landlineNumber
+            },
+            ownerDetails: {
+                ownerName: data.fullName,
+                ownerPhoneNumber: data.phoneNumber2,
+                ownerEmail: data.email,
+                role: "OWNER",
+                idProof: "path_to_id_proof",
+                sameAsRestaurantPhone: data.samePhoneNumber
+            }
+        });
     }
 
     return (
@@ -105,22 +115,21 @@ const Register = () => {
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="w-full py-5">
                         {step === 1 &&
-                            <Register1 form={form} />
+                            <Register1 setStep={setStep} />
                         }
 
                         {step === 2 &&
-                            <Register2 form={form} />
+                            <Register2 setStep={setStep} />
                         }
 
                         {step === 3 &&
-                            <Register3 form={form} />
+                            <Register3 setStep={setStep} />
                         }
 
-                        <div className="flex justify-end gap-2 mt-10">
-                            {/* {step > 1 && <Button type="button" className="bg-[#95C22B] hover:bg-[#a2d825] px-14" onClick={handleBack}>Previous</Button>} */}
+                        {/* <div className="flex justify-end gap-2 mt-10">
                             {step < 3 && <Button type="button" variant="capsico" className="w-20" onClick={handleNext}>Next</Button>}
                             {step === 3 && <Button variant="capsico" className="w-20" type="submit">Done</Button>}
-                        </div>
+                        </div> */}
                     </form>
                 </Form>
             </div>
