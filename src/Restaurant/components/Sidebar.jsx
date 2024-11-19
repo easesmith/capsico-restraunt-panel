@@ -1,25 +1,25 @@
 import React from 'react'
 import OrderImg from '../../assets/dish-01.png'
-import Order2Img from '../../assets/dish-02.png'
-import MenuImg from '../../assets/menu-restaurant.png'
+import Order2Img from '../../assets/dish-01 (1).png'
+import MenuImg from '../../assets/menu.png'
 import Menu2Img from '../../assets/menu-restaurant.png'
-import OrderHistoryImg from '../../assets/restaurant-02.png'
-import OrderHistory2Img from '../../assets/restaurant-03.png'
-import OffersImg from '../../assets/discount.png'
+import OrderHistoryImg from '../../assets/restaurant-02 .png'
+import OrderHistory2Img from '../../assets/restaurant-02.png'
+import OffersImg from '../../assets/discount .png'
 import Offers2Img from '../../assets/discount.png'
-import PayoutImg from '../../assets/payment-02.png'
+import PayoutImg from '../../assets/payment-02 .png'
 import Payout2Img from '../../assets/payment-02.png'
-import ReportingImg from '../../assets/scooter-01.png'
-import Reporting2Img from '../../assets/scooter-02.png'
-import HelpCenterImg from '../../assets/help-circle.png'
+import ReportingImg from '../../assets/scooter-01 .png'
+import Reporting2Img from '../../assets/scooter-01.png'
+import HelpCenterImg from '../../assets/circlepng.png'
 import HelpCenter2Img from '../../assets/help-circle.png'
-import OutletInfoImg from '../../assets/115799_shop_icon 1.png'
+import OutletInfoImg from '../../assets/outlet   .png'
 import OutletInfo2Img from '../../assets/115799_shop_icon 1.png'
 import ComplaintsImg from '../../assets/profile.png'
-import Complaints2Img from '../../assets/profile1.png'
-import ReviewsImg from '../../assets/information-circle.png'
-import Reviews2Img from '../../assets/information-circle1.png'
-import LearningImg from '../../assets/online-learning-01.png'
+import Complaints2Img from '../../assets/profile  .png'
+import ReviewsImg from '../../assets/information-circle  .png'
+import Reviews2Img from '../../assets/information-circle.png'
+import LearningImg from '../../assets/online-learning-01  .png'
 import Learning2Img from '../../assets/online-learning-01.png'
 
 import { Link, useLocation } from 'react-router-dom'
@@ -123,7 +123,7 @@ const Sidebar = () => {
                         return (
                             <Link key={i} to={e.url} className={`flex justify-start items-center gap-[14px] h-[52px] p-[14px] cursor-pointer group hover:bg-[#F3F3FC] ${pathname.includes(e.url) ? 'primary-color bg-[#F3F3FC]' : 'text-[red]'}`}>
                                 <img src={pathname.includes(e.url) ? e.clickAfterImg : e.clickBeforeImg} alt="" className='w-[24px] h-[24px]' />
-                                <span className={`${pathname.includes(e.url) ? 'primary-color' : 'text-[#637D92]'} text-[16.8px] font-normal font-inter group-hover:primary-color`}>{e.title}</span>
+                                <span className={`${pathname.includes(e.url) ? 'thirteen-color' : 'text-[#637D92]'} text-[16.8px] font-normal font-inter group-hover:primary-color`}>{e.title}</span>
                             </Link>
                         )
                     })}

@@ -3,6 +3,8 @@ import OfferDetails from './OfferDetails'
 
 const TrackOffer = () => {
     const [selected, setSelected] = useState("All")
+    const [offerActiveTab, setOfferActiveTab] = useState(false)
+
     return (
         <div className='px-5 py-5'>
             <div className='bg-white py-3 pb-0 w-auto inline-flex gap-2'>
@@ -13,8 +15,30 @@ const TrackOffer = () => {
             </div>
 
             <div className='mt-5 flex flex-col gap-5'>
-                <OfferDetails />
-                <OfferDetails />
+                {
+                    selected === "All" && <>
+                        <OfferDetails offerActiveTab={offerActiveTab} setOfferActiveTab={setOfferActiveTab} />
+                        <OfferDetails offerActiveTab={offerActiveTab} setOfferActiveTab={setOfferActiveTab} />
+                    </>
+                }
+                {
+                    selected === "Active" && <>
+                        <OfferDetails offerActiveTab={offerActiveTab} setOfferActiveTab={setOfferActiveTab} />
+                        <OfferDetails offerActiveTab={offerActiveTab} setOfferActiveTab={setOfferActiveTab} />
+                    </>
+                }
+                {
+                    selected === "Inactive" && <>
+                        <OfferDetails offerActiveTab={offerActiveTab} setOfferActiveTab={setOfferActiveTab} />
+                        <OfferDetails offerActiveTab={offerActiveTab} setOfferActiveTab={setOfferActiveTab} />
+                    </>
+                }
+                {
+                    selected === "Scheduled" && <>
+                        <OfferDetails offerActiveTab={offerActiveTab} setOfferActiveTab={setOfferActiveTab} />
+                        <OfferDetails offerActiveTab={offerActiveTab} setOfferActiveTab={setOfferActiveTab} />
+                    </>
+                }
             </div>
         </div>
     )

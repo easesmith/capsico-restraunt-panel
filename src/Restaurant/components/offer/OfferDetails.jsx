@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import greenBadge from "@/assets/green-badge.png"
 
-const OfferDetails = () => {
+const OfferDetails = ({offerActiveTab, setOfferActiveTab}) => {
     return (
         <div className='bg-white rounded-xl'>
             <div className='p-4 bg-[#1AA6F1] flex justify-between rounded-xl'>
@@ -18,19 +18,19 @@ const OfferDetails = () => {
             </div>
             <div className="p-6">
                 <div className="flex gap-5 justify-center">
-                    <div className="p-3 border border-[#1AA6F1] border-l-8 border-l-[#22C55E] rounded-xl w-[200px]">
+                    <div className="p-3 border border-[#1AA6F1] border-l-8 border-l-[#22C55E] rounded-xl w-[200px] shadow-custom2">
                         <p className="text-center text-3xl primary-color">₹0</p>
                         <p className="text-center primary-color mt-2">Completed <br /> Orders</p>
                     </div>
-                    <div className="p-3 border border-[#1AA6F1] border-l-8 border-l-[#22C55E] rounded-xl w-[200px]">
+                    <div className="p-3 border border-[#1AA6F1] border-l-8 border-l-[#22C55E] rounded-xl w-[200px] shadow-custom2">
                         <p className="text-center text-3xl primary-color">₹0</p>
                         <p className="text-center primary-color mt-2">Discount <br /> given</p>
                     </div>
-                    <div className="p-3 border border-[#1AA6F1] border-l-8 border-l-[#22C55E] rounded-xl w-[200px]">
+                    <div className="p-3 border border-[#1AA6F1] border-l-8 border-l-[#22C55E] rounded-xl w-[200px] shadow-custom2">
                         <p className="text-center text-3xl primary-color">0%</p>
                         <p className="text-center primary-color mt-2">Effective <br /> discount</p>
                     </div>
-                    <div className="p-3 border border-[#1AA6F1] border-l-8 border-l-[#22C55E] rounded-xl w-[200px]">
+                    <div className="p-3 border border-[#1AA6F1] border-l-8 border-l-[#22C55E] rounded-xl w-[200px] shadow-custom2">
                         <p className="text-center text-3xl primary-color">₹0</p>
                         <p className="text-center primary-color mt-5">Net sales</p>
                     </div>
@@ -45,7 +45,7 @@ const OfferDetails = () => {
                     <li className="ml-5 class-base1 text-[#637D92]">Offer sharing: 100% of the discount value is funded by you</li>
                     <li className="ml-5 class-base1 text-[#637D92]">Created: Offline</li>
                 </ul>
-                <Button variant="destructive" className="w-full bg-[#E4626F] hover:bg-[#e85362] class-base1 mt-4">Deactivate Offer</Button>
+                <Button onClick={() => setOfferActiveTab(!offerActiveTab)} variant="destructive" className="w-full bg-[#E4626F] hover:bg-[#e85362] class-base1 mt-4 h-[51px] mb-5">{offerActiveTab?'Activate Offer':'Deactivate Offer'}</Button>
             </div>
         </div>
     )

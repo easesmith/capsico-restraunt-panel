@@ -109,17 +109,17 @@ const ContactInfo = () => {
       </div>
 
 
-      {/* <div className='bg-[#E7EBEF] flex justify-between items-center px-4 mt-3 py-3'>
+      <div className='bg-[#E7EBEF] flex justify-between items-center px-4 mt-3 py-3'>
         <p className='class-lg1 text-[#323F49]'>Staff</p>
         <button className='class-sm1 text-[#1AA6F1]'>View Permissions</button>
-      </div> */}
+      </div>
 
-      {/* <div className="flex justify-between items-center px-4 py-2 border-b border-b-[#DAE1E7]">
+      <div className="flex justify-between items-center px-4 py-2 border-b border-b-[#DAE1E7]">
         <div className='class-sm1 text-[#323F49]'>No one added as staff yet. Invite someone now.</div>
         <div>
           <Button variant="capsico" className="rounded-[1px] px-7 class-base3">Invite user</Button>
         </div>
-      </div> */}
+      </div>
 
       {isEditContactModalOpen &&
         <EditContactInfoModal
