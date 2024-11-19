@@ -13,19 +13,53 @@ import {
 import { Autocomplete, GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import OtpModal from '../OtpModal';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { RegisterSchema1 } from '@/schemas/registerSchema';
+import usePostApiReq from '@/hooks/usePostApiReq';
+import { toast } from 'sonner';
 
 const libraries = ["places", "marker"];
 
-const Register1 = ({ form }) => {
+const Register1 = ({ setStep }) => {
+  const form = useForm({
+    resolver: zodResolver(RegisterSchema1),
+    defaultValues: {
+      restaurantName: "",
+      restaurantAddress: "",
+      latitude: "",
+      longitude: "",
+      phoneNumber: "",
+      phoneNumber2: "",
+      STDCode: "",
+      landlineNumber: "",
+      fullName: "",
+      email: "",
+      samePhoneNumber: false,
+      receiveUpdate: false,
+      // restaurantOptions: [],
+      // cuisines: [],
+      // openingTime: "",
+      // closingTime: "",
+      // days: [],
+    }
+  })
+
   const { register, control, watch, setValue, getValues } = form;
   const [isOtpModalOpen, setIsOtpModalOpen] = useState(false)
   console.log("import.meta.env.VITE_GOOGLE_MAPS_API_KEY", import.meta.env.VITE_GOOGLE_MAPS_API_KEY);
 
   const samePhoneNumber = watch("samePhoneNumber");
+  const phoneNumber1 = watch("phoneNumber");
+  const phoneNumber2 = watch("phoneNumber2");
 
   useEffect(() => {
-    samePhoneNumber ? setValue("phoneNumber2", getValues("phoneNumber")) : setValue("phoneNumber2", "");
+    samePhoneNumber ? setValue("phoneNumber2", getValues("phoneNumber")) : "";
   }, [samePhoneNumber, setValue, getValues]);
+
+  useEffect(() => {
+    phoneNumber1 === phoneNumber2 ? "" : setValue("samePhoneNumber", false);
+  }, [phoneNumber2, setValue, getValues]);
 
 
   const containerStyle = {
@@ -106,6 +140,50 @@ const Register1 = ({ form }) => {
       });
     }
   }
+
+  const { res, fetchData, isLoading } = usePostApiReq();
+  
+  const onSubmit = (data) => {
+    // setIsRegisterSuccessModalOpen(true);
+    console.log("data", data);
+    fetchData("/restaurant/restaurant-signup", {
+      restaurantName: data.restaurantName,
+      email: "gourmet@example.com",
+      password: "securepassword",
+      restaurantType: "Fine Dining",
+      coordinates: {
+        latitude: data.latitude,
+        longitude: data.longitude
+      },
+      address: {
+        addressLine: "123 Main St",
+        city: "Dubai",
+        state: "Dubai",
+        pinCode: "12345"
+      },
+      contactDetails: {
+        phoneNumber: data.phoneNumber,
+        stdCode: data.STDCode,
+        landlineNumber: data.landlineNumber
+      },
+      ownerDetails: {
+        ownerName: data.fullName,
+        ownerPhoneNumber: data.phoneNumber2,
+        ownerEmail: data.email,
+        role: "OWNER",
+        idProof: "path_to_id_proof",
+        sameAsRestaurantPhone: data.samePhoneNumber
+      }
+    });
+  }
+
+
+  useEffect(() => {
+    if (res?.status === 200 || res?.status === 201) {
+      toast.success(res?.data.message);
+      setStep(true);
+    }
+  }, [res])
 
 
   return (
@@ -406,6 +484,9 @@ const Register1 = ({ form }) => {
             />
           </div>
         </div>
+      </div>
+      <div className="flex justify-end mt-5">
+        <Button type="submit" variant="capsico" className="w-20">Next</Button>
       </div>
 
       {isOtpModalOpen &&
