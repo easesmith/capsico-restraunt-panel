@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input';
 import { CiLocationOn } from "react-icons/ci";
 import {
@@ -18,15 +18,21 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { RegisterSchema1 } from '@/schemas/registerSchema';
 import usePostApiReq from '@/hooks/usePostApiReq';
 import { toast } from 'sonner';
+import useGetApiReq from '@/hooks/useGetApiReq';
+import VerifyPhoneOtpModal from '../VerifyPhoneOtpModal';
 
 const libraries = ["places", "marker"];
 
-const Register1 = ({ setStep }) => {
+const Register1 = ({ setStep, setRestaurant, restaurant }) => {
   const form = useForm({
     resolver: zodResolver(RegisterSchema1),
     defaultValues: {
       restaurantName: "",
-      restaurantAddress: "",
+      restaurantEmail: "",
+      addressLine: "",
+      city: "",
+      state: "",
+      pinCode: "",
       latitude: "",
       longitude: "",
       phoneNumber: "",
@@ -37,17 +43,14 @@ const Register1 = ({ setStep }) => {
       email: "",
       samePhoneNumber: false,
       receiveUpdate: false,
-      // restaurantOptions: [],
-      // cuisines: [],
-      // openingTime: "",
-      // closingTime: "",
-      // days: [],
     }
   })
 
   const { register, control, watch, setValue, getValues } = form;
   const [isOtpModalOpen, setIsOtpModalOpen] = useState(false)
-  console.log("import.meta.env.VITE_GOOGLE_MAPS_API_KEY", import.meta.env.VITE_GOOGLE_MAPS_API_KEY);
+  const [isPhoneNumberVerified, setIsPhoneNumberVerified] = useState(false);
+  const [isPhoneNumber2Verified, setIsPhoneNumber2Verified] = useState(true);
+  const [isPhone1, setIsPhone1] = useState(false);
 
   const samePhoneNumber = watch("samePhoneNumber");
   const phoneNumber1 = watch("phoneNumber");
@@ -60,6 +63,11 @@ const Register1 = ({ setStep }) => {
   useEffect(() => {
     phoneNumber1 === phoneNumber2 ? "" : setValue("samePhoneNumber", false);
   }, [phoneNumber2, setValue, getValues]);
+
+  useEffect(() => {
+    setIsPhoneNumberVerified(false);
+    setIsPhoneNumber2Verified(false);
+  }, [phoneNumber1, phoneNumber2, setValue, getValues]);
 
 
   const containerStyle = {
@@ -124,7 +132,6 @@ const Register1 = ({ setStep }) => {
     });
   }, []);
 
-  console.log("markerPosition", markerPosition);
 
   const detectLocation = () => {
     if (navigator.geolocation) {
@@ -142,13 +149,14 @@ const Register1 = ({ setStep }) => {
   }
 
   const { res, fetchData, isLoading } = usePostApiReq();
-  
+  const { res: verifyPhoneRes, fetchData: fetchVerifyPhoneData, isLoading: isVerifyPhoneLoading } = useGetApiReq();
+
   const onSubmit = (data) => {
     // setIsRegisterSuccessModalOpen(true);
     console.log("data", data);
     fetchData("/restaurant/restaurant-signup", {
       restaurantName: data.restaurantName,
-      email: "gourmet@example.com",
+      email: data.restaurantEmail,
       password: "securepassword",
       restaurantType: "Fine Dining",
       coordinates: {
@@ -156,10 +164,10 @@ const Register1 = ({ setStep }) => {
         longitude: data.longitude
       },
       address: {
-        addressLine: "123 Main St",
-        city: "Dubai",
-        state: "Dubai",
-        pinCode: "12345"
+        addressLine: data.addressLine,
+        city: data.city,
+        state: data.state,
+        pinCode: data.pinCode
       },
       contactDetails: {
         phoneNumber: data.phoneNumber,
@@ -168,9 +176,8 @@ const Register1 = ({ setStep }) => {
       },
       ownerDetails: {
         ownerName: data.fullName,
-        ownerPhoneNumber: data.phoneNumber2,
+        ownerPhoneNumber: getValues("phoneNumber2"),
         ownerEmail: data.email,
-        role: "OWNER",
         idProof: "path_to_id_proof",
         sameAsRestaurantPhone: data.samePhoneNumber
       }
@@ -180,260 +187,288 @@ const Register1 = ({ setStep }) => {
 
   useEffect(() => {
     if (res?.status === 200 || res?.status === 201) {
+      setRestaurant(res?.data?.data?.restaurant)
+      console.log("register response", res);
+
       toast.success(res?.data.message);
-      setStep(true);
+      setStep(2);
     }
   }, [res])
 
 
+  const handlePhoneNumberVerify = () => {
+    setIsPhone1(true);
+    fetchVerifyPhoneData(`/restaurant/get-otp?phone=${getValues("phoneNumber")}`);
+  }
+
+  const handlePhoneNumber2Verify = () => {
+    setIsPhone1(false);
+    fetchVerifyPhoneData(`/restaurant/get-otp?phone=${getValues("phoneNumber2")}`);
+  }
+
+  useEffect(() => {
+    if (verifyPhoneRes?.status === 200 || verifyPhoneRes?.status === 201) {
+      toast.success(verifyPhoneRes?.data.message);
+      setIsOtpModalOpen(true);
+    }
+  }, [verifyPhoneRes])
+
+
   return (
-    <div>
-      <div className='border border-[#C2CDD6] rounded-md px-8 py-6'>
-        <h3 className='text-[28px] font-bold text-[#4A5E6D]'>Restaurant Information</h3>
-        <p className='text-[20px] font-normal text-[#92A5B5]'>Restaurant name. address. contact no., owner details</p>
-        <div className='mt-5'>
-          <FormField
-            control={control}
-            name="restaurantName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className=" text-[#344054] font-inter">Restaurant Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Adiyaman Hotel" className="placeholder:text-[#667085] placeholder:font-inter border-[#E4E6EE]" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className='mt-5'>
-            <FormField
-              control={control}
-              name="restaurantAddress"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className=" text-[#344054] font-inter">Restaurant Complete address</FormLabel>
-                  <FormControl>
-                    <Input placeholder="5/230 Adnan street, Gorakhpur - 273 001" className="placeholder:text-[#667085] placeholder:font-inter" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <div className='mt-5'>
-            <p className='class-xl4 text-[#637D92]'>Please accurately place the pin at your outlet’s location on the map.</p>
-            <p className='class-lg3 text-[#A8A8A8] mt-2'>This will assist your customers and Capsico riders in finding your store easily.</p>
-
-
-
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full py-5">
+        <div>
+          <div className='border border-[#C2CDD6] rounded-md px-8 py-6'>
+            <h3 className='text-[28px] font-bold text-[#4A5E6D]'>Restaurant Information</h3>
+            <p className='text-[20px] font-normal text-[#92A5B5]'>Restaurant name. address. contact no., owner details</p>
             <div className='mt-5'>
-              <LoadScript
-                googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
-                libraries={libraries}
-                loadingElement={<div>Loading...</div>}
-                async
-              >
-                <div className='mb-2'>
-                  <FormField
-                    control={control}
-                    name="search"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className=" text-[#344054] font-inter"></FormLabel>
-                        <FormControl>
-                          <Autocomplete
-                            onLoad={(autocomplete) => setAutocomplete(autocomplete)}
-                            onPlaceChanged={handlePlaceSelect}
-                          >
-                            <div className='flex border rounded'>
-                              <Input placeholder="Search for your store here & drop a pin on its location." className="placeholder:text-[#667085] placeholder:font-inter border-none focus-visible:ring-0 focus-visible:ring-offset-0" {...field} />
-                              <button onClick={detectLocation} type='button' className="text-[#1AA6F1] flex items-center gap-1 px-4 py-2">
-                                <CiLocationOn size={20} />
-                                <span className='font-bold'>Detect</span>
-                              </button>
-                            </div>
-                          </Autocomplete>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <GoogleMap
-                  mapContainerStyle={containerStyle}
-                  center={center}
-                  zoom={10}
-                  onClick={onMapClick}
-                  onLoad={(map) => mapRef.current = map}
-                >
-                  {markerPosition && <Marker position={markerPosition} />}
-                </GoogleMap>
-              </LoadScript>
-            </div>
-            <p className='class-lg4 text-[#666666] text-center mt-4'>Or directly enter the co-ordinates</p>
-          </div>
-
-          <div className='mt-5 grid grid-cols-2 gap-5'>
-            <FormField
-              control={control}
-              name="latitude"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className=" text-[#344054] font-inter"></FormLabel>
-                  <FormControl>
-                    <Input placeholder="Latitude" className="placeholder:text-[#667085] placeholder:font-inter" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={control}
-              name="longitude"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className=" text-[#344054] font-inter"></FormLabel>
-                  <FormControl>
-                    <Input placeholder="Longitude" className="placeholder:text-[#667085] placeholder:font-inter" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className='border border-[#C2CDD6] rounded-md px-8 py-6 mt-6'>
-        <h3 className='text-[28px] font-bold text-[#4A5E6D]'>Contact number at Restaurant</h3>
-        <p className='text-[20px] font-normal text-[#92A5B5]'>Your customers can call this number for general inquiries.</p>
-        <div className='mt-5'>
-          <FormField
-            control={control}
-            name="phoneNumber"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className=" text-[#344054] font-inter">Phone Number</FormLabel>
-                <FormControl>
-                  <div className='flex gap-4'>
-                    <div className='flex gap-0 border rounded w-full'>
-                      <Select className="">
-                        <SelectTrigger className="w-[100px] border-none focus-visible:ring-0 focus:ring-0 focus-visible:ring-offset-0">
-                          <SelectValue placeholder="India" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="india">India</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <Input placeholder="+91 (98XXX XXXXX)" className="placeholder:text-[#667085] w-full placeholder:font-inter border-none focus-visible:ring-0 focus-visible:ring-offset-0" {...field} />
-                    </div>
-                    <Button type="button" onClick={() => setIsOtpModalOpen(true)} disabled={watch("phoneNumber")?.length !== 10} variant="capsico" className="disabled:bg-[#E1E1E1]">Verify</Button>
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <p className='class-lg4 text-[#666666] text-center mt-5'>Or Want to share Landline number</p>
-
-          <div className='mt-5 grid grid-cols-[20%_80%] gap-4'>
-            <FormField
-              control={control}
-              name="STDCode"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className=" text-[#344054] font-inter"></FormLabel>
-                  <FormControl>
-                    <Input placeholder="STD Code" className="placeholder:text-[#667085] placeholder:font-inter border-[#E4E6EE]" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={control}
-              name="landlineNumber"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className=" text-[#344054] font-inter"></FormLabel>
-                  <FormControl>
-                    <div className='flex gap-4'>
-                      <Input placeholder="Landline number" className="placeholder:text-[#667085] placeholder:font-inter border-[#E4E6EE]" {...field} />
-                      <Button disabled={true} variant="capsico" className="disabled:bg-[#E1E1E1]">Verify</Button>
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className='border border-[#C2CDD6] rounded-md px-8 py-6 mt-6'>
-        <h3 className='text-[28px] font-bold text-[#4A5E6D]'>Restaurant Owner Details</h3>
-        <p className='text-[20px] font-normal text-[#92A5B5]'>These will be used to share communications related to revenue.</p>
-
-        <FormField
-          control={control}
-          name="samePhoneNumber"
-          render={({ field }) => (
-            <FormItem className="flex gap-3 items-center">
-              <FormLabel className=" text-[#344054] font-inter"></FormLabel>
-              <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                  className="h-5 w-5"
+              <FormField
+                control={control}
+                name="restaurantName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className=" text-[#344054] font-inter">Restaurant Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Adiyaman Hotel" className="placeholder:text-[#667085] placeholder:font-inter border-[#E4E6EE]" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className='mt-5'>
+                <FormField
+                  control={control}
+                  name="restaurantEmail"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className=" text-[#344054] font-inter">Restaurant Email</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Restaurant Email" className="placeholder:text-[#667085] placeholder:font-inter" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-              </FormControl>
-              <div className="space-y-1 leading-none">
-                <FormLabel className="text-[#667085] class-lg1">
-                  Same as restaurant mobile number
-                </FormLabel>
               </div>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+              <div className='mt-5'>
+                <FormField
+                  control={control}
+                  name="addressLine"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className=" text-[#344054] font-inter">AddressLine</FormLabel>
+                      <FormControl>
+                        <Input placeholder="addressLine" className="placeholder:text-[#667085] placeholder:font-inter" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className='mt-5 grid grid-cols-3 gap-5'>
+                <FormField
+                  control={control}
+                  name="city"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className=" text-[#344054] font-inter">City</FormLabel>
+                      <FormControl>
+                        <Input placeholder="city" className="placeholder:text-[#667085] placeholder:font-inter" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={control}
+                  name="state"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className=" text-[#344054] font-inter">State</FormLabel>
+                      <FormControl>
+                        <Input placeholder="state" className="placeholder:text-[#667085] placeholder:font-inter" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={control}
+                  name="pinCode"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className=" text-[#344054] font-inter">PinCode</FormLabel>
+                      <FormControl>
+                        <Input type="number" placeholder="pinCode" className="placeholder:text-[#667085] placeholder:font-inter" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-        <div className='mt-5'>
-          <FormField
-            control={control}
-            name="phoneNumber2"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className=" text-[#344054] font-inter">Phone Number</FormLabel>
-                <FormControl>
-                  <div className='flex gap-4'>
-                    <div className='flex gap-0 border rounded w-full'>
-                      <Select className="">
-                        <SelectTrigger className="w-[100px] border-none focus-visible:ring-0 focus:ring-0 focus-visible:ring-offset-0">
-                          <SelectValue placeholder="Select" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="india">India</SelectItem>
-                          <SelectItem value="dark">Dark</SelectItem>
-                          <SelectItem value="system">System</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <Input placeholder="+91 (98XXX XXXXX)" className="placeholder:text-[#667085] w-full placeholder:font-inter border-none focus-visible:ring-0 focus-visible:ring-offset-0" {...field} />
+              <div className='mt-5'>
+                <p className='class-xl4 text-[#637D92]'>Please accurately place the pin at your outlet’s location on the map.</p>
+                <p className='class-lg3 text-[#A8A8A8] mt-2'>This will assist your customers and Capsico riders in finding your store easily.</p>
+
+
+
+                <div className='mt-5'>
+                  <LoadScript
+                    googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
+                    libraries={libraries}
+                    loadingElement={<div>Loading...</div>}
+                    async
+                  >
+                    <div className='mb-2'>
+                      <FormField
+                        control={control}
+                        name="search"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className=" text-[#344054] font-inter"></FormLabel>
+                            <FormControl>
+                              <Autocomplete
+                                onLoad={(autocomplete) => setAutocomplete(autocomplete)}
+                                onPlaceChanged={handlePlaceSelect}
+                              >
+                                <div className='flex border rounded'>
+                                  <Input placeholder="Search for your store here & drop a pin on its location." className="placeholder:text-[#667085] placeholder:font-inter border-none focus-visible:ring-0 focus-visible:ring-offset-0" {...field} />
+                                  <button onClick={detectLocation} type='button' className="text-[#1AA6F1] flex items-center gap-1 px-4 py-2">
+                                    <CiLocationOn size={20} />
+                                    <span className='font-bold'>Detect</span>
+                                  </button>
+                                </div>
+                              </Autocomplete>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                     </div>
-                    {!watch("samePhoneNumber") && <Button type="button" onClick={() => setIsOtpModalOpen(true)} disabled={watch("phoneNumber2")?.length !== 10} variant="capsico" className="disabled:bg-[#E1E1E1]">Verify</Button>}
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className='mt-5'>
+                    <GoogleMap
+                      mapContainerStyle={containerStyle}
+                      center={center}
+                      zoom={10}
+                      onClick={onMapClick}
+                      onLoad={(map) => mapRef.current = map}
+                    >
+                      {markerPosition && <Marker position={markerPosition} />}
+                    </GoogleMap>
+                  </LoadScript>
+                </div>
+                <p className='class-lg4 text-[#666666] text-center mt-4'>Or directly enter the co-ordinates</p>
+              </div>
+
+              <div className='mt-5 grid grid-cols-2 gap-5'>
+                <FormField
+                  control={control}
+                  name="latitude"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className=" text-[#344054] font-inter"></FormLabel>
+                      <FormControl>
+                        <Input type="number" placeholder="Latitude" className="placeholder:text-[#667085] placeholder:font-inter" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={control}
+                  name="longitude"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className=" text-[#344054] font-inter"></FormLabel>
+                      <FormControl>
+                        <Input type="number" placeholder="Longitude" className="placeholder:text-[#667085] placeholder:font-inter" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className='border border-[#C2CDD6] rounded-md px-8 py-6 mt-6'>
+            <h3 className='text-[28px] font-bold text-[#4A5E6D]'>Contact number at Restaurant</h3>
+            <p className='text-[20px] font-normal text-[#92A5B5]'>Your customers can call this number for general inquiries.</p>
+            <div className='mt-5'>
+              <FormField
+                control={control}
+                name="phoneNumber"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className=" text-[#344054] font-inter">Phone Number</FormLabel>
+                    <FormControl>
+                      <div className='flex gap-4'>
+                        <div className='flex gap-0 border rounded w-full'>
+                          <Select className="">
+                            <SelectTrigger className="w-[100px] border-none focus-visible:ring-0 focus:ring-0 focus-visible:ring-offset-0">
+                              <SelectValue placeholder="India" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="india">India</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <Input placeholder="+91 (98XXX XXXXX)" className="placeholder:text-[#667085] w-full placeholder:font-inter border-none focus-visible:ring-0 focus-visible:ring-offset-0" {...field} />
+                        </div>
+                        {(watch("phoneNumber")?.length === 10 && isPhoneNumberVerified) ?
+                          <Button type="button" disabled={watch("phoneNumber")?.length !== 10} variant="capsico" className="disabled:bg-[#E1E1E1]">Verified</Button>
+                          : <Button type="button" onClick={handlePhoneNumberVerify} disabled={watch("phoneNumber")?.length !== 10} variant="capsico" className="disabled:bg-[#E1E1E1]">Verify</Button>}
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <p className='class-lg4 text-[#666666] text-center mt-5'>Or Want to share Landline number</p>
+
+              <div className='mt-5 grid grid-cols-[20%_80%] gap-4'>
+                <FormField
+                  control={control}
+                  name="STDCode"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className=" text-[#344054] font-inter"></FormLabel>
+                      <FormControl>
+                        <Input placeholder="STD Code" className="placeholder:text-[#667085] placeholder:font-inter border-[#E4E6EE]" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={control}
+                  name="landlineNumber"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className=" text-[#344054] font-inter"></FormLabel>
+                      <FormControl>
+                        <div className='flex gap-4'>
+                          <Input placeholder="Landline number" className="placeholder:text-[#667085] placeholder:font-inter border-[#E4E6EE]" {...field} />
+                          {/* <Button disabled={true} variant="capsico" className="disabled:bg-[#E1E1E1]">Verify</Button> */}
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className='border border-[#C2CDD6] rounded-md px-8 py-6 mt-6'>
+            <h3 className='text-[28px] font-bold text-[#4A5E6D]'>Restaurant Owner Details</h3>
+            <p className='text-[20px] font-normal text-[#92A5B5]'>These will be used to share communications related to revenue.</p>
+
             <FormField
               control={control}
-              name="receiveUpdate"
+              name="samePhoneNumber"
               render={({ field }) => (
                 <FormItem className="flex gap-3 items-center">
                   <FormLabel className=" text-[#344054] font-inter"></FormLabel>
@@ -445,57 +480,122 @@ const Register1 = ({ setStep }) => {
                     />
                   </FormControl>
                   <div className="space-y-1 leading-none">
-                    <FormLabel className="class-lg1 text-[#667085]">
-                      Yes, I am interested in receiving important updates and notifications from Capsico through WhatsApp.
+                    <FormLabel className="text-[#667085] class-lg1">
+                      Same as restaurant mobile number
                     </FormLabel>
                   </div>
                   <FormMessage />
                 </FormItem>
               )}
             />
-          </div>
-          <div className='mt-5 grid grid-cols-2 gap-5'>
-            <FormField
-              control={control}
-              name="fullName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className=" text-[#344054] font-inter">Restaurant Owner Full name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Adiyaman Kumar" className="placeholder:text-[#667085] placeholder:font-inter" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
 
-            <FormField
-              control={control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className=" text-[#344054] font-inter">Restaurant Owner email address</FormLabel>
-                  <FormControl>
-                    <Input placeholder="you@company.com" className="placeholder:text-[#667085] placeholder:font-inter" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className='mt-5'>
+              <FormField
+                control={control}
+                name="phoneNumber2"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className=" text-[#344054] font-inter">Phone Number</FormLabel>
+                    <FormControl>
+                      <div className='flex gap-4'>
+                        <div className='flex gap-0 border rounded w-full'>
+                          <Select className="">
+                            <SelectTrigger className="w-[100px] border-none focus-visible:ring-0 focus:ring-0 focus-visible:ring-offset-0">
+                              <SelectValue placeholder="Select" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="india">India</SelectItem>
+                              <SelectItem value="dark">Dark</SelectItem>
+                              <SelectItem value="system">System</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <Input placeholder="+91 (98XXX XXXXX)" className="placeholder:text-[#667085] w-full placeholder:font-inter border-none focus-visible:ring-0 focus-visible:ring-offset-0" {...field} />
+                        </div>
+                        {!watch("samePhoneNumber") &&
+                          <>
+                            {(watch("phoneNumber2")?.length === 10 && isPhoneNumber2Verified) ?
+                              <Button type="button" disabled={watch("phoneNumber2")?.length !== 10} variant="capsico" className="disabled:bg-[#E1E1E1]">Verified</Button>
+                              : <Button type="button" onClick={handlePhoneNumber2Verify} disabled={watch("phoneNumber2")?.length !== 10} variant="capsico" className="disabled:bg-[#E1E1E1]">Verify</Button>}
+                          </>}
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className='mt-5'>
+                <FormField
+                  control={control}
+                  name="receiveUpdate"
+                  render={({ field }) => (
+                    <FormItem className="flex gap-3 items-center">
+                      <FormLabel className=" text-[#344054] font-inter"></FormLabel>
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          className="h-5 w-5"
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel className="class-lg1 text-[#667085]">
+                          Yes, I am interested in receiving important updates and notifications from Capsico through WhatsApp.
+                        </FormLabel>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className='mt-5 grid grid-cols-2 gap-5'>
+                <FormField
+                  control={control}
+                  name="fullName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className=" text-[#344054] font-inter">Restaurant Owner Full name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Adiyaman Kumar" className="placeholder:text-[#667085] placeholder:font-inter" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className=" text-[#344054] font-inter">Restaurant Owner email address</FormLabel>
+                      <FormControl>
+                        <Input placeholder="you@company.com" className="placeholder:text-[#667085] placeholder:font-inter" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
           </div>
+          <div className="flex justify-end mt-5">
+            <Button type="submit" variant="capsico" className="w-20">Next</Button>
+          </div>
+
+          {isOtpModalOpen &&
+            <VerifyPhoneOtpModal
+              isOtpModalOpen={isOtpModalOpen}
+              setIsOtpModalOpen={setIsOtpModalOpen}
+              phone={isPhone1 ? getValues("phoneNumber") : getValues("phoneNumber2")}
+              resendOtp={handlePhoneNumberVerify}
+              setIsPhoneNumberVerified={isPhone1 ? setIsPhoneNumberVerified : setIsPhoneNumber2Verified}
+            />
+          }
         </div>
-      </div>
-      <div className="flex justify-end mt-5">
-        <Button type="submit" variant="capsico" className="w-20">Next</Button>
-      </div>
+      </form>
 
-      {isOtpModalOpen &&
-        <OtpModal
-          isOtpModalOpen={isOtpModalOpen}
-          setIsOtpModalOpen={setIsOtpModalOpen}
-        />
-      }
-    </div>
+    </Form>
+
   )
 }
 

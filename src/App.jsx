@@ -5,6 +5,8 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Toaster } from './components/ui/sonner';
 import MainMenu from './Restaurant/components/orderMenu/MainMenu';
 import ProtectedRoute from './protected-route/ProtectedRoute';
+import { useSelector } from 'react-redux';
+import BackdropLoader from './components/BackdropLoader';
 
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Register = lazy(() => import('./Restaurant/pages/Register'));
@@ -26,9 +28,11 @@ const HelpCenter = lazy(() => import('./Restaurant/pages/HelpCenter'))
 const OnlineOrdering = lazy(() => import('./Restaurant/pages/online-ordering/OnlineOrdering'))
 
 function App() {
+  const { isLoading } = useSelector((state) => state.loading);
 
   return (
     <>
+    {isLoading && <BackdropLoader />}
       <Router>
         <Suspense fallback={<div className='w-full h-screen bg-white text-black flex justify-center items-center text-xl font-semibold'>Loading...</div>}>
           <Routes>

@@ -1,81 +1,17 @@
-import { RegisterSchema, RegisterSchema1, RegisterSchema2, RegisterSchema3 } from '@/schemas/registerSchema';
-import React, { useState } from 'react'
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
+import { FaCheck } from 'react-icons/fa';
+import CreateOrRegisterRestaurantModal from '../components/CreateOrRegisterRestaurantModal';
 import Register1 from '../components/register/Register1';
-import { Button } from '@/components/ui/button';
-import { Form } from '@/components/ui/form';
 import Register2 from '../components/register/Register2';
 import Register3 from '../components/register/Register3';
 import RegisterSuccessModal from '../components/RegisterSuccessModal';
-import { FaCheck } from 'react-icons/fa';
-import CreateOrRegisterRestaurantModal from '../components/CreateOrRegisterRestaurantModal';
-import usePostApiReq from '@/hooks/usePostApiReq';
 
 const Register = () => {
     const [step, setStep] = useState(2);
+    const [restaurant, setRestaurant] = useState("");
     const [isRegisterSuccessModalOpen, setIsRegisterSuccessModalOpen] = useState(false);
     const [isCreateOrRegisterRestaurantModalOpen, setIsCreateOrRegisterRestaurantModalOpen] = useState(true);
     const [isChecked, setIsChecked] = useState(true);
-    const { res, fetchData, isLoading } = usePostApiReq();
-
-    const form = useForm({
-        resolver: zodResolver(RegisterSchema1),
-        defaultValues: {
-            restaurantName: "",
-            restaurantAddress: "",
-            latitude: "",
-            longitude: "",
-            phoneNumber: "",
-            phoneNumber2: "",
-            STDCode: "",
-            landlineNumber: "",
-            fullName: "",
-            email: "",
-            samePhoneNumber: false,
-            receiveUpdate: false,
-            // restaurantOptions: [],
-            // cuisines: [],
-            // openingTime: "",
-            // closingTime: "",
-            // days: [],
-        }
-    })
-
-
-    const onSubmit = (data) => {
-        setIsRegisterSuccessModalOpen(true);
-        console.log("data", data);
-        fetchData("/restaurant/restaurant-signup", {
-            restaurantName: data.restaurantName,
-            email: "gourmet@example.com",
-            password: "securepassword",
-            restaurantType: "Fine Dining",
-            coordinates: {
-                latitude: data.latitude,
-                longitude: data.longitude
-            },
-            address: {
-                addressLine: "123 Main St",
-                city: "Dubai",
-                state: "Dubai",
-                pinCode: "12345"
-            },
-            contactDetails: {
-                phoneNumber: data.phoneNumber,
-                stdCode: data.STDCode,
-                landlineNumber: data.landlineNumber
-            },
-            ownerDetails: {
-                ownerName: data.fullName,
-                ownerPhoneNumber: data.phoneNumber2,
-                ownerEmail: data.email,
-                role: "OWNER",
-                idProof: "path_to_id_proof",
-                sameAsRestaurantPhone: data.samePhoneNumber
-            }
-        });
-    }
 
     return (
         <div className='max-w-7xl mx-auto p-6'>
@@ -112,26 +48,32 @@ const Register = () => {
                 </div>
             </div>
             <div className='w-[70%] mt-5'>
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="w-full py-5">
-                        {step === 1 &&
-                            <Register1 setStep={setStep} />
-                        }
+                {step === 1 &&
+                    <Register1
+                        restaurant={restaurant}
+                        setRestaurant={setRestaurant}
+                        setStep={setStep}
+                    />
+                }
 
-                        {step === 2 &&
-                            <Register2 setStep={setStep} />
-                        }
+                {step === 2 &&
+                    <Register2
+                        restaurant={restaurant}
+                        setStep={setStep}
+                    />
+                }
 
-                        {step === 3 &&
-                            <Register3 setStep={setStep} />
-                        }
+                {step === 3 &&
+                    <Register3
+                        restaurant={restaurant}
+                        setStep={setStep}
+                    />
+                }
 
-                        {/* <div className="flex justify-end gap-2 mt-10">
+                {/* <div className="flex justify-end gap-2 mt-10">
                             {step < 3 && <Button type="button" variant="capsico" className="w-20" onClick={handleNext}>Next</Button>}
                             {step === 3 && <Button variant="capsico" className="w-20" type="submit">Done</Button>}
                         </div> */}
-                    </form>
-                </Form>
             </div>
             {isRegisterSuccessModalOpen &&
                 <RegisterSuccessModal

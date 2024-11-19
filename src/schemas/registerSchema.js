@@ -4,13 +4,29 @@ export const RegisterSchema1 = z.object({
     restaurantName: z.string().min(1, {
         message: "Restaurant name is required",
     }),
-    restaurantAddress: z.string().min(1, {
-        message: "Restaurant address is required",
+    restaurantEmail: z.string()
+        .min(1, {
+            message: "Email is required",
+        })
+        .email({
+            message: "Invalid email address",
+        }),
+    addressLine: z.string().min(1, {
+        message: "AddressLine is required",
     }),
-    latitude: z.string().min(1, {
+    city: z.string().min(1, {
+        message: "City is required",
+    }),
+    state: z.string().min(1, {
+        message: "State is required",
+    }),
+    pinCode: z.string().length(6, {
+        message: "PinCode must be exactly 6 digits long",
+    }),
+    latitude: z.number().min(1, {
         message: "Latitude is required",
     }),
-    longitude: z.string().min(1, {
+    longitude: z.number().min(1, {
         message: "Longitude is required",
     }),
     phoneNumber: z.string()
@@ -59,6 +75,10 @@ export const RegisterSchema1 = z.object({
 
 export const RegisterSchema2 =
     z.object({
+        restaurantType: z.enum(["BOTH", "VEG", "NON_VEG"], {
+            required_error: "Please select an opening time",
+        }),
+        priceForOne: z.string().min(1, "Price for one in required"),
         restaurantOptions: z.array(z.string()).min(1, "Please select at least one restaurant option"),
         cuisines: z.array(z.string()).min(1, "Please select at least one cuisine"),
         openingTime: z.string().min(1, "Please select an opening time"),
