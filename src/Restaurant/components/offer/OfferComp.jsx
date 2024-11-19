@@ -1,9 +1,15 @@
 import greenBadge from "@/assets/green-badge.png"
 import redBadge from "@/assets/red-badge.png"
 
-const OfferComp = ({ offerIcon, offerVale, offerPercent, tagTitle, isTagRed=false }) => {
+const OfferComp = ({ offerIcon, offerVale, offerPercent, tagTitle, isTagRed=false, setOfferValue }) => {
+
+    function abc() {
+        setOfferValue(offerPercent)
+        console.log('bh')
+    }
+
     return (
-        <div style={{ backgroundImage: `url(${offerIcon})` }} className='w-36 h-36 relative bg-no-repeat bg-center flex flex-col items-center justify-center'>
+        <div onClick={abc} style={{ backgroundImage: `url(${offerIcon})` }} className='w-36 h-36 relative bg-no-repeat bg-center flex flex-col items-center justify-center'>
             <h3 className='text-xl font-bold font-numans'>{offerPercent}% Off</h3>
             <p className='font-numans font-medium text-xs'>Max ₹{offerVale}</p>
             {tagTitle && <div style={{ backgroundImage: `url(${isTagRed ? redBadge : greenBadge})` }} className="text-white w-24 h-20 absolute -bottom-4 bg-no-repeat bg-center py-1 px-5 text-center flex flex-col items-center justify-center">

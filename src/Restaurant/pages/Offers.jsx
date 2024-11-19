@@ -5,7 +5,6 @@ import TrackOffer from '../components/offer/TrackOffer';
 
 const Offers = () => {
     const [isCreateOffer, setIsCreateOffer] = useState(true);
-
     return (
         <RestaurantWrapper>
             <div>

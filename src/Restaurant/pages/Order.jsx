@@ -65,7 +65,7 @@ const Order = () => {
             </div>
           </div>
 
-          <Toast />
+          {/* <Toast /> */}
           <div className="flex items-center gap-5 p-5">
             <button onClick={() => setOrderStatus("preparing")} className={`px-6 py-1 rounded-lg ${orderStatus == "preparing" ? "bg-[#4A67FF] text-white" : "border border-[#8B8B8B] text-[#8B8B8B]"}`}>Preparing</button>
             <button onClick={() => setOrderStatus("ready")} className={`px-6 py-1 rounded-md ${orderStatus == "ready" ? "bg-[#4A67FF] text-white" : "border border-[#8B8B8B] text-[#8B8B8B]"}`}>Ready</button>

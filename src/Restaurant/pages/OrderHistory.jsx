@@ -12,6 +12,7 @@ import { IoIosCheckmarkCircle } from "react-icons/io";
 import { IoMdCall } from "react-icons/io";
 import ProfileImg from '@/assets/Ellipse 1.png'
 import { FaCircleXmark } from 'react-icons/fa6'
+import vegicon from '@/assets/vegicon.png'
 
 const OrderHistory = () => {
 
@@ -61,7 +62,7 @@ const OrderHistory = () => {
           <div className=' flex justify-center items-center gap-5'>
             <div className='w-[300px] flex items-center pl-3'>
               <IoSearchOutline className='-mr-6 z-10 eleven-color' />
-              <Input type="search" value={searchQuery} onChange={(e)=> setSearchQuery(e.target.value)} placeholder="Enter Order ID to search" className="pl-8 secondry-color class-sm2" />
+              <Input type="search" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Enter Order ID to search" className="pl-8 secondry-color class-sm2" />
             </div>
             <Select onValueChange={handleSelectChange}>
               <SelectTrigger className="w-[175px] third-color">
@@ -118,15 +119,24 @@ const OrderHistory = () => {
                   <div className='w-1/3 flex flex-col gap-5 h-full justify-start items-center px-10 py-7 border-s-[1px] border-e-[1px] border-dashed border-[#C4C4C4]'>
                     <div className='px-2 w-full'>
                       <div className='flex items-center justify-between mb-3'>
-                        <p className='class-sm8 twelve-color'>7 X Idli 2 nos</p>
+                        <div className='flex items-center gap-2'>
+                          <img src={vegicon} alt="" />
+                          <p className='class-sm8 twelve-color'>7 X Idli 2 nos</p>
+                        </div>
                         <p className='class-sm8 twelve-color'>₹230</p>
                       </div>
                       <div className='flex items-center justify-between mb-3'>
-                        <p className='class-sm8 twelve-color'>8 X 1 Medu Vada</p>
+                        <div className='flex items-center gap-2'>
+                          <img src={vegicon} alt="" />
+                          <p className='class-sm8 twelve-color'>8 X 1 Medu Vada</p>
+                        </div>
                         <p className='class-sm8 twelve-color'>₹110</p>
                       </div>
                       <div className='flex items-center justify-between'>
-                        <p className='class-sm8 twelve-color'>1 X 1 Plain Dosa</p>
+                        <div className='flex items-center gap-2'>
+                          <img src={vegicon} alt="" />
+                          <p className='class-sm8 twelve-color'>1 X 1 Plain Dosa</p>
+                        </div>
                         <p className='class-sm8 twelve-color'>₹50</p>
                       </div>
                     </div>

@@ -21,7 +21,7 @@ const OutletInfo = () => {
                     <p className='class-base1'>Outlet Info</p>
                     <Button variant='outline' className="nine-color class-base2 rounded">View on Capsico</Button>
                 </div>
-                <div className="my-3 mx-8 bg-white grid grid-cols-[40%_60%] border shadow">
+                <div className="my-3 mx-8 bg-white grid grid-cols-[40%_60%] border rounded-md shadow">
                     <div className='border border-b-0'>
                         <div onClick={() => setSelcected("About-Outlet")} className={`p-5  cursor-pointer flex justify-between items-center class-lg3 border-b-2 ${selcected === "About-Outlet" ? "text-[#1AA6F1] border-l-[#1AA6F1] bg-[#F3F3FC]" : "border-l-transparent"}  border-l-4`}>
                             <span>About Outlet</span>
