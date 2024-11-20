@@ -1,31 +1,31 @@
 [
     {
-        "id": "desserts",
-        "label": "Desserts"
+        "id": "bakery",
+        "label": "Bakery"
     },
     {
-        "id": "beverages",
-        "label": "Beverages"
+        "id": "pureVeg",
+        "label": "Pure Veg"
     },
     {
-        "id": "chinese",
-        "label": "Chinese"
+        "id": "foodCourt",
+        "label": "Food Court"
     },
     {
-        "id": "northIndian",
-        "label": "North Indian"
+        "id": "dessertShop",
+        "label": "Dessert Shop"
     },
     {
-        "id": "southIndian",
-        "label": "South Indian"
+        "id": "beverageShop",
+        "label": "Beverage Shop"
     },
     {
-        "id": "biryani",
-        "label": "Biryani"
+        "id": "fastFood",
+        "label": "Fast Food"
     },
     {
-        "id": "pizza",
-        "label": "Pizza"
+        "id": "casualFoodStall",
+        "label": "Casual Food Stall"
     },
     {
         "id": "fastFood",

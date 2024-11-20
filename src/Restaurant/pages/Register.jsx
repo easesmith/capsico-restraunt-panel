@@ -7,8 +7,8 @@ import Register3 from '../components/register/Register3';
 import RegisterSuccessModal from '../components/RegisterSuccessModal';
 
 const Register = () => {
-    const [step, setStep] = useState(2);
-    const [restaurant, setRestaurant] = useState("");
+    const [step, setStep] = useState(3);
+    const [restaurant, setRestaurant] = useState({ _id: "673c6c4737e46cc800e45e15" });
     const [isRegisterSuccessModalOpen, setIsRegisterSuccessModalOpen] = useState(false);
     const [isCreateOrRegisterRestaurantModalOpen, setIsCreateOrRegisterRestaurantModalOpen] = useState(true);
     const [isChecked, setIsChecked] = useState(true);
@@ -75,12 +75,6 @@ const Register = () => {
                             {step === 3 && <Button variant="capsico" className="w-20" type="submit">Done</Button>}
                         </div> */}
             </div>
-            {isRegisterSuccessModalOpen &&
-                <RegisterSuccessModal
-                    isRegisterSuccessModalOpen={isRegisterSuccessModalOpen}
-                    setIsRegisterSuccessModalOpen={setIsRegisterSuccessModalOpen}
-                />
-            }
 
             {isCreateOrRegisterRestaurantModalOpen &&
                 <CreateOrRegisterRestaurantModal

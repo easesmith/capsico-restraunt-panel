@@ -90,13 +90,6 @@ export const RegisterSchema2 =
 export const RegisterSchema3 =
     z.object({
         menuImages: z.any().refine(file => file && file.length > 0, "Menu Images are required"),
-        restaurant: z.any().refine(file => file && file.length > 0, "Restaurant Images are required"),
+        restaurantImages: z.any().refine(file => file && file.length > 0, "Restaurant Images are required"),
         foodImages: z.any().refine(file => file && file.length > 0, "Food Images are required"),
     })
-
-
-export const RegisterSchema = z.object({
-    ...RegisterSchema1.shape,
-    ...RegisterSchema2.shape,
-    ...RegisterSchema3.shape,
-})

@@ -39,6 +39,9 @@ const Register2 = ({ setStep, restaurant }) => {
         }
     })
 
+    console.log("restaurant",restaurant);
+    
+
     const { register, control, watch, setValue } = form;
     const [showMoreRestaurantOptions, setShowMoreRestaurantOptions] = useState(false)
     const [showMoreCuisines, setShowMoreCuisines] = useState(false)
@@ -87,19 +90,54 @@ const Register2 = ({ setStep, restaurant }) => {
     const onSubmit = (data) => {
         // setIsRegisterSuccessModalOpen(true);
         console.log("data", data);
-        let operatingHours = [];
-        const operating = data.days.map((day)=>{
-            
-        })
+        const restaurantTypes = {
+            bakery: false,
+            pureVeg: false,
+            foodCourt: false,
+            dessertShop: false,
+            beverageShop: false,
+            fastFood: false,
+            casualFoodStall: false
+        };
+        const workingHours = {
+            openingTime: data.openingTime,
+            closingTime: data.closingTime,
+            weekDays: {
+                monday: false,
+                tuesday: false,
+                wednesday: false,
+                thursday: false,
+                friday: false,
+                saturday: false,
+                sunday: false
+            }
+        }
 
-        fetchData(`/restaurant/restraunt-registration2/${restaurant?._id}`, {});
+        data.restaurantOptions.forEach((opt) => {
+            restaurantTypes[opt] = true
+        });
+
+        data.days.forEach((day) => {
+            workingHours.weekDays[day] = true
+        });
+
+        console.log("restaurantTypes", restaurantTypes);
+
+
+        fetchData(`/restaurant/restraunt-registration2/${restaurant?._id}`, {
+            priceForOne: data.priceForOne,
+            vegType: data.restaurantType,
+            restaurantTypes: restaurantTypes,
+            selectedCuisineIds: data.cuisines,
+            workingHours,
+        });
     }
 
 
     useEffect(() => {
         if (res?.status === 200 || res?.status === 201) {
             toast.success(res?.data.message);
-            setStep(true);
+            setStep(3);
         }
     }, [res])
 
@@ -404,9 +442,9 @@ const Register2 = ({ setStep, restaurant }) => {
                                                     }}
                                                 />
                                             ))}
-                                            <div>
+                                            {/* <div>
                                                 <button className="primary-color text-base font-normal">+ View more</button>
-                                            </div>
+                                            </div> */}
                                         </div>
                                         <FormMessage />
                                     </FormItem>
