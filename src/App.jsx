@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import './App.css'
 
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
@@ -7,6 +7,9 @@ import MainMenu from './Restaurant/components/orderMenu/MainMenu';
 import ProtectedRoute from './protected-route/ProtectedRoute';
 import { useSelector } from 'react-redux';
 import BackdropLoader from './components/BackdropLoader';
+import useAuth from './protected-route/UserAuth';
+import useGetApiReq from './hooks/useGetApiReq';
+import usePostApiReq from './hooks/usePostApiReq';
 
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Register = lazy(() => import('./Restaurant/pages/Register'));
@@ -29,17 +32,50 @@ const OnlineOrdering = lazy(() => import('./Restaurant/pages/online-ordering/Onl
 
 function App() {
   const { isLoading } = useSelector((state) => state.loading);
+  const isAuthenticated = useAuth()
+  console.log("isAuthenticated", isAuthenticated);
+
+  const { res, fetchData } = useGetApiReq();
+  const { res: refreshRes, fetchData: fetchRefreshData, } = usePostApiReq();
+
+  const getStatus = () => {
+    fetchData("/user/status");
+  }
+
+  useEffect(() => {
+    getStatus();
+  }, [])
+
+  useEffect(() => {
+    if (res?.status === 200 || res?.status === 201) {
+      console.log("status response", res);
+    }
+  }, [res])
+
+  const refreshToken = () => {
+    fetchRefreshData("/user/refresh-token");
+  }
+
+  useEffect(() => {
+    !res?.data?.isAuthenticated && refreshToken();
+  }, [])
+
+  useEffect(() => {
+    if (refreshRes?.status === 200 || res?.status === 201) {
+      console.log("refreshRes response", refreshRes);
+    }
+  }, [refreshRes])
 
   return (
     <>
-    {isLoading && <BackdropLoader />}
+      {isLoading && <BackdropLoader />}
       <Router>
         <Suspense fallback={<div className='w-full h-screen bg-white text-black flex justify-center items-center text-xl font-semibold'>Loading...</div>}>
           <Routes>
             <Route path='/' element={<RegisterAndLogin />} />
             <Route path='/restaurant/register' element={<Register />} />
 
-            <Route element={<ProtectedRoute />}>
+            <Route element={<ProtectedRoute isAuthenticated={true} />}>
               <Route path='/restaurant/online-ordering' element={<OnlineOrdering />} />
               <Route path='/restaurant/reporting/*' element={<Reporting />} />
               <Route path='/restaurant/offers' element={<Offers />} />

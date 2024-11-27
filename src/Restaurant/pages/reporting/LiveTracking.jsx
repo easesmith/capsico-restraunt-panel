@@ -1,7 +1,7 @@
 import businessIcon from "@/assets/6843047_business_development_financial_growing_growth_icon 1.png";
 import funnelIcon from "@/assets/9025666_funnel_icon 1.png";
 import accountIcon from "@/assets/5094668_account_group_team_user_icon 1.png";
-import informationIcon from "@/assets/information 1.png";
+import informationIcon from "@/assets/information-circle  .png";
 import offerIcon from "@/assets/offerIcon.png";
 import latestDishIcon from "@/assets/latestDishIcon.png";
 import BusinessOverviewLi from "@/Restaurant/components/reporting/BusinessOverviewLi";

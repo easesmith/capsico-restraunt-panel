@@ -5,14 +5,15 @@ import { FaArrowRight } from 'react-icons/fa6'
 import { useState } from 'react'
 import AddComplementaryDishesModal from './AddComplementaryDishesModal'
 import ItemDescriptionModal from './ItemDescriptionModal'
-import ItemsImageModal from './ItemsImageModal'
+import ItemsImageModal from './PackagingChargesModal'
 import SimplifyMenuStructureModal from './SimplifyMenuStructure'
 import { useNavigate } from 'react-router-dom'
+import PackagingChargesModal from './PackagingChargesModal'
 
 const MainMenu = () => {
     const [isAddComplementaryDishesModalOpen, setIsAddComplementaryDishesModalOpen] = useState(false);
     const [isItemDescriptionModalOpen, setIsItemDescriptionModalOpen] = useState(false);
-    const [isItemsImageModalOpen, setIsItemsImageModalOpen] = useState(false);
+    const [isPackagingChargesModalOpen, setIsPackagingChargesModalOpen] = useState(false);
     const [isSimplifyMenuStructureModalOpen, setIsSimplifyMenuStructureModalOpen] = useState(false);
 
     const navigate = useNavigate();
@@ -21,7 +22,7 @@ const MainMenu = () => {
         <RestaurantWrapper>
             <div className='grid grid-cols-[59%_39%] gap-4 p-4 bg-white h-full items-start pt-10'>
                 <div>
-                    <div onClick={()=> navigate("/restaurant/order-menu/edit")} className='border border-[#EBEBEB] rounded-lg p-4 pb-32 cursor-pointer'>
+                    <div onClick={() => navigate("/restaurant/order-menu/edit")} className='border border-[#EBEBEB] rounded-lg p-4 pb-32 cursor-pointer'>
                         <div className='flex justify-between'>
                             <h3 className='text-lg text-[#515151] font-semibold font-inter'>Go to Menu Editor</h3>
                             <FaArrowRight className='text-2xl cursor-pointer' />
@@ -47,9 +48,8 @@ const MainMenu = () => {
                             </button>
                         </div>
                         <div className='border border-[#EBEBEB] rounded-lg p-4'>
-                            <h3 className='text-lg text-[#515151] font-semibold font-inter'>Add photos of your top <br />
-                                selling items</h3>
-                            <button onClick={() => setIsItemsImageModalOpen(true)} className='font-inter flex gap-1 items-center mt-3 text-[#4181F0]'>
+                            <h3 className='text-lg text-[#515151] font-semibold font-inter'>Add packaging charges</h3>
+                            <button onClick={() => setIsPackagingChargesModalOpen(true)} className='font-inter flex gap-1 items-center mt-3 text-[#4181F0]'>
                                 <span>View items</span>
                                 <BiSolidRightArrow />
                             </button>
@@ -101,10 +101,10 @@ const MainMenu = () => {
                     />
                 }
 
-                {isItemsImageModalOpen &&
-                    <ItemsImageModal
-                        isItemsImageModalOpen={isItemsImageModalOpen}
-                        setIsItemsImageModalOpen={setIsItemsImageModalOpen}
+                {isPackagingChargesModalOpen &&
+                    <PackagingChargesModal
+                        isPackagingChargesModalOpen={isPackagingChargesModalOpen}
+                        setIsPackagingChargesModalOpen={setIsPackagingChargesModalOpen}
                     />
                 }
 

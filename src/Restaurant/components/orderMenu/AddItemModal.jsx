@@ -41,17 +41,23 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
 
     const schema = z.object({
         itemName: z.string().min(1, "Item Name is required"),
+        itemImage: z.any().refine(file => file && file.length > 0, "Item Image is required"),
+        itemDescription: z.string().min(1, "Item Description is required"),
         foodType: z.string().min(1, "Food Type is required"),
+        menuCategory: z.string().min(1, "Menu Category is required"),
         basePrice: z.string().min(1, "Price cannot be 0"),
+        packagingCharges: z.string().min(1, "Packaging Charges cannot be 0"),
     });
 
     const form = useForm({
         resolver: zodResolver(schema),
         defaultValues: {
             itemName: "",
+            itemImage: "",
+            itemImagePreview: "",
             itemDescription: "",
             foodType: "",
-            serviceType: "",
+            menuCategory: "",
             basePrice: "",
             packagingCharges: "",
         }
@@ -59,12 +65,19 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
     const { register, control, watch, setValue, getValues } = form;
 
     const restaurantRef = register("restaurant");
+    const itemImageRef = register("itemImage");
 
     const restaurant = watch("restaurant");
+    const itemImage = watch("itemImage");
+
+    console.log("itemImage", itemImage);
+    console.log("itemImagePreview", watch("itemImagePreview"));
+
 
     useEffect(() => {
         updateMultiplePreview(restaurant, "restaurantPreview", setValue);
-    }, [form, restaurant, setValue]);
+        updateMultiplePreview(itemImage, "itemImagePreview", setValue);
+    }, [form, restaurant, itemImage, setValue]);
 
     const onSubmit = (data) => {
         console.log("data", data);
@@ -169,20 +182,20 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                                 />
                                             </div>
 
-                                            <div className="w-full mt-5 grid grid-cols-2 gap-5">
+                                            <div className="w-full mt-5">
                                                 <FormField
                                                     control={control}
-                                                    name="serviceType"
+                                                    name="menuCategory"
                                                     render={({ field }) => (
                                                         <FormItem className="z-20">
-                                                            <FormLabel>Service Type</FormLabel>
+                                                            <FormLabel>Menu Category</FormLabel>
                                                             <FormControl>
                                                                 <Select value={field.value} onValueChange={field.onChange}>
                                                                     <SelectTrigger>
-                                                                        <SelectValue placeholder="Select Service" />
+                                                                        <SelectValue placeholder="Select Category" />
                                                                     </SelectTrigger>
                                                                     <SelectContent>
-                                                                        <SelectItem value="Delivery">Delivery</SelectItem>
+                                                                        <SelectItem value="Combos">Combos</SelectItem>
                                                                     </SelectContent>
                                                                 </Select>
                                                             </FormControl>
@@ -194,34 +207,38 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
 
                                             <div className="mt-5">
                                                 <Label>Item Photos</Label>
-                                                <button onClick={() => setIsItemImageUploadModalOpen(true)} className='border-2 mt-2 flex flex-col bg-[#1aa6f10c] items-center justify-center primary-color w-32 h-[140px] rounded-md px-5 py-4'>
+                                                {/* <div onClick={() => setIsItemImageUploadModalOpen(true)} className='border-2 mt-2 flex flex-col bg-[#F7FAFF] items-center justify-center primary-color w-40 h-40 rounded-md px-5 py-4'>
                                                     <FiUpload size={25} />
                                                     <p className='font-semibold text-center primary-color text-sm mt-2'>Upload</p>
-                                                </button>
-                                                {/* <FormField
+                                                </div> */}
+                                                <FormField
                                                     control={control}
-                                                    name="restaurant"
+                                                    name="itemImage"
                                                     render={({ field }) => (
                                                         <FormItem className="z-20">
                                                             <FormLabel className="cursor-pointer left-0 w-full h-full top-0">
                                                                 <span className="cursor-pointer absolute right-0 -top-7 text-xs p-1 border-dashed rounded-sm">Change</span>
-                                                                {!watch("restaurantPreview") &&
-                                                                    <div className='border-2 border-dashed border-[#C2CDD6] w-full h-72  flex flex-col justify-center items-center rounded-md'>
-                                                                        <div className='border-2 flex flex-col items-center primary-color border-dashed rounded px-5 py-4'>
-                                                                            <PiCameraPlus size={45} />
-                                                                            <p className='font-bold text-center primary-color text-sm mt-2'>Add Photo</p>
-                                                                        </div>
-                                                                        <p className='font-normal text-xs mt-2'>or drop files to upload</p>
+                                                                {!watch("itemImagePreview") &&
+                                                                    <div className='border-2 mt-2 flex flex-col bg-[#F7FAFF] items-center justify-center primary-color w-40 h-40 rounded-md px-5 py-4'>
+                                                                        <FiUpload size={25} />
+                                                                        <p className='font-semibold text-center primary-color text-sm mt-2'>Upload</p>
                                                                     </div>
                                                                 }
+                                                                {watch("itemImagePreview")?.length > 0 && (
+                                                                    <div className="flex gap-4 flex-wrap">
+                                                                        {watch("itemImagePreview").map((image, index) => (
+                                                                            <img key={index} className="w-72" src={image} alt={`Preview ${index + 1}`} />
+                                                                        ))}
+                                                                    </div>
+                                                                )}
                                                             </FormLabel>
                                                             <FormControl className="hidden">
-                                                                <Input multiple={false} type="file" accept='.png,.jpeg,.jpg' {...restaurantRef} />
+                                                                <Input multiple={true} type="file" {...itemImageRef} />
                                                             </FormControl>
                                                             <FormMessage />
                                                         </FormItem>
                                                     )}
-                                                /> */}
+                                                />
                                             </div>
                                         </div>
                                     </div>
