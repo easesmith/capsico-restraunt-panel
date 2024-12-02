@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 import { FiPlusCircle } from "react-icons/fi";
 import RestaurantWrapper from "@/Restaurant/components/restaurantWrapper/RestaurantWrapper";
@@ -15,6 +15,9 @@ import { FaArrowLeft, FaArrowRight, FaPlus } from "react-icons/fa6";
 import Product from "@/Restaurant/components/orderMenu/Product";
 import AddItemModal from "@/Restaurant/components/orderMenu/AddItemModal";
 import AddOnGroups from "@/Restaurant/components/orderMenu/AddOnGroups";
+import useGetApiReq from "@/hooks/useGetApiReq";
+import DataNotFound from "@/Restaurant/components/DataNotFound";
+import Spinner from "@/Restaurant/components/Spinner";
 
 const Catalog = () => {
 
@@ -27,37 +30,29 @@ const Catalog = () => {
   const [isOpenSubCategoryModel, setIsOpenSubCategoryModel] = useState(false)
   const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
   const [isAddonGroupsModalOpen, setIsAddonGroupsModalOpen] = useState(false);
+  const [allCategories, setAllCategories] = useState([]);
 
   const toggleOpena = () => {
     setIsOpena(!isOpena);
   };
 
 
-  const tabs = ["Items", "Picture Gallery", "Add-ons"];
+  const { res, fetchData, isLoading } = useGetApiReq();
 
-  const data = [
-    {
-      category: "Combos"
-    },
-    {
-      category: "Main Course"
-    },
-    {
-      category: "Combos"
-    },
-    {
-      category: "Starter"
-    },
-    {
-      category: "Rice"
-    },
-    {
-      category: "Snacks"
-    },
-    {
-      category: "Bread"
+  const getCategories = () => {
+    fetchData("/restaurant/get-categories");
+  }
+
+  useEffect(() => {
+    getCategories();
+  }, [])
+
+  useEffect(() => {
+    if (res?.status === 200 || res?.status === 201) {
+      console.log("get category res", res);
+      setAllCategories(res?.data?.data);
     }
-  ]
+  }, [res])
 
   return (
     <RestaurantWrapper>
@@ -75,7 +70,17 @@ const Catalog = () => {
                 <h4 className="text-color class-sm1 py-4 px-6">Combas (3)</h4>
                 <button className={``}><IoIosArrowForward className="seven-color text-2xl" /></button>
                 </div> */}
-              <ItemComp title={'abc'} />
+              {allCategories?.map((category) => (
+                <ItemComp key={category?._id} />
+              ))}
+
+              {allCategories.length === 0 && isLoading &&
+                <Spinner />
+              }
+
+              {allCategories.length === 0 && !isLoading &&
+                <DataNotFound name="Categories" />
+              }
             </div>
             <button onClick={() => setIsAddonGroupsModalOpen(true)} className="primary-color mt-auto bg-white shadow-3xl absolute bottom-0 flex w-full justify-between items-center left-0 p-4">
               Go to Add Ons

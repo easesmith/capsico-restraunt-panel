@@ -33,13 +33,15 @@ const OnlineOrdering = lazy(() => import('./Restaurant/pages/online-ordering/Onl
 function App() {
   const { isLoading } = useSelector((state) => state.loading);
   const isAuthenticated = useAuth()
-  console.log("isAuthenticated", isAuthenticated);
 
   const { res, fetchData } = useGetApiReq();
-  const { res: refreshRes, fetchData: fetchRefreshData, } = usePostApiReq();
+  const { res: logoutRes, fetchData: fetchLogoutData, } = usePostApiReq();
 
   const getStatus = () => {
     fetchData("/user/status");
+  }
+  const logout = () => {
+    fetchData("/user/logout");
   }
 
   useEffect(() => {
@@ -48,23 +50,12 @@ function App() {
 
   useEffect(() => {
     if (res?.status === 200 || res?.status === 201) {
-      console.log("status response", res);
+      console.log("status response", res?.data?.isAuthenticated);
+      // !res?.data?.isAuthenticated && logout();
     }
   }, [res])
 
-  const refreshToken = () => {
-    fetchRefreshData("/user/refresh-token");
-  }
-
-  useEffect(() => {
-    !res?.data?.isAuthenticated && refreshToken();
-  }, [])
-
-  useEffect(() => {
-    if (refreshRes?.status === 200 || res?.status === 201) {
-      console.log("refreshRes response", refreshRes);
-    }
-  }, [refreshRes])
+  // res?.data?.isAuthenticated
 
   return (
     <>
@@ -75,7 +66,7 @@ function App() {
             <Route path='/' element={<RegisterAndLogin />} />
             <Route path='/restaurant/register' element={<Register />} />
 
-            <Route element={<ProtectedRoute isAuthenticated={true} />}>
+            <Route element={<ProtectedRoute isAuthenticated={res?.data?.isAuthenticated} />}>
               <Route path='/restaurant/online-ordering' element={<OnlineOrdering />} />
               <Route path='/restaurant/reporting/*' element={<Reporting />} />
               <Route path='/restaurant/offers' element={<Offers />} />

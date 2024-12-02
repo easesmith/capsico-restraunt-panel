@@ -37,16 +37,21 @@ import Property from "./Property"
 const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
     const [isItemImageUploadModalOpen, setIsItemImageUploadModalOpen] = useState(false);
     const [isVariant, setIsVariant] = useState(false);
+    const [isMapAddons, setIsMapAddons] = useState(false);
+    const [isAdditionalDetails, setIsAdditionalDetails] = useState(false);
+    const [isServingInfo, setIsServingInfo] = useState(false);
     const [isCreateVariantModalOpen, setIsCreateVariantModalOpen] = useState(false);
 
     const schema = z.object({
         itemName: z.string().min(1, "Item Name is required"),
         itemImage: z.any().refine(file => file && file.length > 0, "Item Image is required"),
         itemDescription: z.string().min(1, "Item Description is required"),
-        foodType: z.string().min(1, "Food Type is required"),
+        cuisine: z.string().min(1, "Cuisine is required"),
         menuCategory: z.string().min(1, "Menu Category is required"),
         basePrice: z.string().min(1, "Price cannot be 0"),
-        packagingCharges: z.string().min(1, "Packaging Charges cannot be 0"),
+        packagingCharges: z.string().min(1, "Packaging Charges is required"),
+        numberOfPeople: z.string().min(1, "Number of People is required"),
+        dishSize: z.string().min(1, "Dish Size is required"),
     });
 
     const form = useForm({
@@ -56,10 +61,12 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
             itemImage: "",
             itemImagePreview: "",
             itemDescription: "",
-            foodType: "",
+            cuisine: "",
             menuCategory: "",
             basePrice: "",
             packagingCharges: "",
+            numberOfPeople: "",
+            dishSize: "",
         }
     })
     const { register, control, watch, setValue, getValues } = form;
@@ -289,7 +296,7 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                         </div>
                                     </div>
                                     <div className="pb- border-b-2 border-dashed border-[#D3D3D3]">
-                                        <div className="p-5">
+                                        <div className="p-5 border-b border-[#C8C8C8]">
                                             <div onClick={() => setIsVariant(!isVariant)} className="cursor-pointer pb-6">
                                                 <div className="flex justify-between items-center">
                                                     <h3 className="text-black class-lg6">Variants</h3>
@@ -324,6 +331,137 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                                         <FaCirclePlus className="primary-color" size={25} />
                                                         <p className='font-semibold text-center primary-color class-base2 mt-3'>Create a new variant</p>
                                                     </div> */}
+                                                </div>
+                                            }
+                                        </div>
+                                        <div className="p-5 border-b border-[#C8C8C8]">
+                                            <div onClick={() => setIsMapAddons(!isMapAddons)} className="cursor-pointer pb-6">
+                                                <div className="flex justify-between items-center">
+                                                    <h3 className="text-black class-lg6">Map Addons</h3>
+                                                    {isMapAddons ? <FaMinus className="text-black" size={20} />
+                                                        : <FaPlus className="text-black" size={20} />}
+                                                </div>
+                                                <p>Add-ons enhance the customer experience by offering extra choices like toppings or desserts.</p>
+                                            </div>
+                                            {isMapAddons &&
+                                                <button className="bg-[#F8F9FC] text-[#4A67FF] p-5 w-full flex items-center gap-2 rounded-md">
+                                                    <FaPlus className="text-base" />
+                                                    <p className="font-semibold text-lg">Create new Add on group</p>
+                                                </button>
+                                            }
+                                        </div>
+                                        <div className="p-5 border-b border-[#C8C8C8]">
+                                            <div onClick={() => setIsAdditionalDetails(!isAdditionalDetails)} className="cursor-pointer pb-6">
+                                                <div className="flex justify-between items-center">
+                                                    <h3 className="text-black class-lg6">Additional Details</h3>
+                                                    {isAdditionalDetails ? <FaMinus className="text-black" size={20} />
+                                                        : <FaPlus className="text-black" size={20} />}
+                                                </div>
+                                                <p>Add Cuisine</p>
+                                            </div>
+                                            {isAdditionalDetails &&
+                                                <div className="border border-[#A8A8A8] p-5 w-full rounded-md">
+                                                    <h3 className="text-black class-lg6">Cuisine</h3>
+                                                    <div className="flex items-center gap-2">
+                                                        <FormField
+                                                            control={control}
+                                                            name="cuisine"
+                                                            render={({ field }) => (
+                                                                <FormItem>
+                                                                    <FormLabel></FormLabel>
+                                                                    <FormControl>
+                                                                        <RadioGroup
+                                                                            onValueChange={field.onChange}
+                                                                            defaultValue={field.value}
+                                                                            className="flex"
+                                                                        >
+                                                                            <FormItem className="flex items-center space-y-0">
+                                                                                <FormControl className="hidden">
+                                                                                    <RadioGroupItem value="Chinese cuisine" />
+                                                                                </FormControl>
+                                                                                <FormLabel className={`border border-[#B6B6B6] rounded p-4 py-2 flex items-center gap-2 cursor-pointer group hover:bg-[#EDF4FF] ${getValues("cuisine") === "Chinese cuisine" && "bg-[#EDF4FF] border border-[#3579F0]"}`}>
+                                                                                    <p>Chinese cuisine</p>
+                                                                                </FormLabel>
+                                                                            </FormItem>
+                                                                            <FormItem className="flex items-center space-y-0">
+                                                                                <FormControl className="hidden">
+                                                                                    <RadioGroupItem value="Indian cuisine" />
+                                                                                </FormControl>
+                                                                                <FormLabel className={`border border-[#B6B6B6] rounded p-4 py-2 flex items-center gap-2 cursor-pointer group hover:bg-[#EDF4FF] ${getValues("cuisine") === "Indian cuisine" && "bg-[#EDF4FF] border border-[#3579F0]"}`}>
+                                                                                    <p>Indian cuisine</p>
+                                                                                </FormLabel>
+                                                                            </FormItem>
+                                                                            <FormItem className="flex items-center space-y-0">
+                                                                                <FormControl className="hidden">
+                                                                                    <RadioGroupItem value="Jain" />
+                                                                                </FormControl>
+                                                                                <FormLabel className={`border border-[#B6B6B6] rounded p-4 py-2 flex items-center gap-2 cursor-pointer group hover:bg-[#EDF4FF] ${getValues("cuisine") === "Jain" && "bg-[#EDF4FF] border border-[#3579F0]"}`}>
+                                                                                    <p>Jain</p>
+                                                                                </FormLabel>
+                                                                            </FormItem>
+                                                                            <FormItem className="flex items-center space-y-0">
+                                                                                <FormControl className="hidden">
+                                                                                    <RadioGroupItem value="Italian cuisine" />
+                                                                                </FormControl>
+                                                                                <FormLabel className={`border border-[#B6B6B6] rounded p-4 py-2 flex items-center gap-2 cursor-pointer group hover:bg-[#EDF4FF] ${getValues("cuisine") === "Italian cuisine" && "bg-[#EDF4FF] border border-[#3579F0]"}`}>
+                                                                                    <p>Italian cuisine</p>
+                                                                                </FormLabel>
+                                                                            </FormItem>
+                                                                            <FormItem className="flex items-center space-y-0">
+                                                                                <FormControl className="hidden">
+                                                                                    <RadioGroupItem value="Vegan" />
+                                                                                </FormControl>
+                                                                                <FormLabel className={`border border-[#B6B6B6] rounded p-4 py-2 flex items-center gap-2 cursor-pointer group hover:bg-[#EDF4FF] ${getValues("cuisine") === "Vegan" && "bg-[#EDF4FF] border border-[#3579F0]"}`}>
+                                                                                    <p>Vegan</p>
+                                                                                </FormLabel>
+                                                                            </FormItem>
+                                                                        </RadioGroup>
+                                                                    </FormControl>
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                        <div className="p-5 border-b border-[#C8C8C8]">
+                                            <div onClick={() => setIsServingInfo(!isServingInfo)} className="cursor-pointer pb-6">
+                                                <div className="flex justify-between items-center">
+                                                    <h3 className="text-black class-lg6">Serving Info</h3>
+                                                    {isServingInfo ? <FaMinus className="text-black" size={20} />
+                                                        : <FaPlus className="text-black" size={20} />}
+                                                </div>
+                                                <p>Add serving sizes to improve customer experience.</p>
+                                            </div>
+                                            {isServingInfo &&
+                                                <div className="grid grid-cols-2 items-center gap-2 w-full">
+                                                    <FormField
+                                                        control={control}
+                                                        name="numberOfPeople"
+                                                        render={({ field }) => (
+                                                            <FormItem>
+                                                                <FormLabel>Number of people</FormLabel>
+                                                                <FormControl>
+                                                                    <Input placeholder="Select appropriate serving info"  {...field} />
+                                                                </FormControl>
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        )}
+                                                    />
+                                                    <FormField
+                                                        control={control}
+                                                        name="dishSize"
+                                                        render={({ field }) => (
+                                                            <FormItem>
+                                                                <FormLabel>Dish size</FormLabel>
+                                                                <FormControl>
+                                                                    <Input placeholder="Enter quantity"  {...field} />
+                                                                </FormControl>
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        )}
+                                                    />
                                                 </div>
                                             }
                                         </div>
