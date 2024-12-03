@@ -66,7 +66,7 @@ function App() {
             <Route path='/' element={<RegisterAndLogin />} />
             <Route path='/restaurant/register' element={<Register />} />
 
-            <Route element={<ProtectedRoute isAuthenticated={res?.data?.isAuthenticated} />}>
+            <Route element={<ProtectedRoute isAuthenticated={true} />}>
               <Route path='/restaurant/online-ordering' element={<OnlineOrdering />} />
               <Route path='/restaurant/reporting/*' element={<Reporting />} />
               <Route path='/restaurant/offers' element={<Offers />} />

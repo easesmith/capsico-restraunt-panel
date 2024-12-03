@@ -20,18 +20,18 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import { updateMultiplePreview } from "@/utils/updatePreview"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { X } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
+import { FaMinus, FaPlus } from "react-icons/fa6"
 import { FiUpload } from "react-icons/fi"
 import { z } from "zod"
 import EggIcon from "../customIcons/EggIcon"
 import NonVegIcon from "../customIcons/NonVegIcon"
 import VegIcon from "../customIcons/VegIcon"
-import ItemImageUploadModal from "./ItemImageUploadModal"
-import { X } from "lucide-react"
-import { FaCirclePlus, FaMinus, FaPlus } from "react-icons/fa6"
+import AddCustomizationCategoryModal from "./AddCustomizationCategoryModal"
 import CreateVariant from "./CreateVariant"
-import { TbRulerOff } from "react-icons/tb"
+import ItemImageUploadModal from "./ItemImageUploadModal"
 import Property from "./Property"
 
 const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
@@ -40,6 +40,8 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
     const [isMapAddons, setIsMapAddons] = useState(false);
     const [isAdditionalDetails, setIsAdditionalDetails] = useState(false);
     const [isServingInfo, setIsServingInfo] = useState(false);
+    const [isCustomization, setIsCustomization] = useState(false);
+    const [isCustomizationModalOpen, setIsCustomizationModalOpen] = useState(false);
     const [isCreateVariantModalOpen, setIsCreateVariantModalOpen] = useState(false);
 
     const schema = z.object({
@@ -465,6 +467,39 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                                 </div>
                                             }
                                         </div>
+                                        <div className="p-5 border-b border-[#C8C8C8]">
+                                            <div onClick={() => setIsCustomization(!isCustomization)} className="cursor-pointer pb-6">
+                                                <div className="flex justify-between items-center">
+                                                    <h3 className="text-black class-lg6">Customization</h3>
+                                                    {isCustomization ? <FaMinus className="text-black" size={20} />
+                                                        : <FaPlus className="text-black" size={20} />}
+                                                </div>
+                                                <p>Customization for category</p>
+                                            </div>
+                                            {isCustomization &&
+                                                <div className="w-full">
+                                                    <h3 className="font-inter text-lg text-[#969696] font-semibold">Category Name</h3>
+                                                    <div className="px-4">
+                                                        <div className="flex justify-between items-center gap-4">
+                                                            <h4 className="font-inter text-[#969696] font-semibold">Sub Category Name</h4>
+                                                            <Button onClick={() => setIsCustomizationModalOpen(true)} variant="outline" className="flex gap-1 items-center border-[#4A67FF] text-[#4A67FF] hover:border-[#4A67FF] hover:bg-transparent hover:text-[#4A67FF]">
+                                                                <FaPlus />
+                                                                Add More
+                                                            </Button>
+                                                        </div>
+                                                        <div className="grid grid-cols-[70%_28%] gap-[2%] mt-5 border-b border-[#DADADA] pb-2">
+                                                            <h4 className="font-inter text-[#969696] font-semibold">Customization Name</h4>
+                                                            <h4 className="font-inter text-[#969696] font-semibold">Price (In Rs)</h4>
+                                                        </div>
+                                                        <div className="grid grid-cols-[70%_28%] gap-[2%] border-b border-[#DADADA] py-2">
+                                                            <h4 className="font-inter text-[#969696] font-semibold">Name</h4>
+                                                            <h4 className="font-inter text-[#969696] font-semibold">Rs 299</h4>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
                                     </div>
                                 </div>
 
@@ -484,6 +519,13 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                     <CreateVariant
                                         isCreateVariantModalOpen={isCreateVariantModalOpen}
                                         setIsCreateVariantModalOpen={setIsCreateVariantModalOpen}
+                                    />
+                                }
+
+                                {isCustomizationModalOpen &&
+                                    <AddCustomizationCategoryModal
+                                        isCustomizationModalOpen={isCustomizationModalOpen}
+                                        setIsCustomizationModalOpen={setIsCustomizationModalOpen}
                                     />
                                 }
                             </form>
