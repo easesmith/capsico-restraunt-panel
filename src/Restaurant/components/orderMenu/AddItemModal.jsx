@@ -37,6 +37,7 @@ import ItemImageUploadModal from "./ItemImageUploadModal"
 import MapAddOnModel from "./MapAddOnModel"
 import CreateVariantModel from "./CreateVariantModel"
 import AddCustomizationModal from "./AddCustomizationModal"
+import { addItemSchema } from "@/schemas/AddItemSchema"
 
 const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
     const [isItemImageUploadModalOpen, setIsItemImageUploadModalOpen] = useState(false);
@@ -48,21 +49,15 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
     const [isCustomizationModalOpen, setIsCustomizationModalOpen] = useState(false);
     const [isCreateVariantModalOpen, setIsCreateVariantModalOpen] = useState(false);
     const [isAddCustomizationModalOpen, setIsAddCustomizationModalOpen] = useState(false);
+    const [currentIndex, setCurrentIndex] = useState(null);
 
-    const schema = z.object({
-        itemName: z.string().min(1, "Item Name is required"),
-        itemImage: z.any().refine(file => file && file.length > 0, "Item Image is required"),
-        itemDescription: z.string().min(1, "Item Description is required"),
-        cuisine: z.string().min(1, "Cuisine is required"),
-        menuCategory: z.string().min(1, "Menu Category is required"),
-        basePrice: z.string().min(1, "Price cannot be 0"),
-        packagingCharges: z.string().min(1, "Packaging Charges is required"),
-        numberOfPeople: z.string().min(1, "Number of People is required"),
-        dishSize: z.string().min(1, "Dish Size is required"),
-    });
+    const handleCustomization = (index) => {
+        setCurrentIndex(index);
+        setIsAddCustomizationModalOpen(true);
+    }
 
     const form = useForm({
-        resolver: zodResolver(schema),
+        resolver: zodResolver(addItemSchema),
         defaultValues: {
             itemName: "",
             itemImage: "",
@@ -74,8 +69,23 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
             packagingCharges: "",
             numberOfPeople: "",
             dishSize: "",
+            customizations: [],
         }
     })
+
+    // {
+    //     type: "",
+    //     categoryType: "",
+    //     categoryName: "",
+    //     customizationType: "",
+    //     customizationOptions: [
+    //         {
+    //             customizationName: "",
+    //             price: 0
+    //         },
+    //     ],
+    // },
+
     const { register, control, watch, setValue, getValues } = form;
 
     const restaurantRef = register("restaurant");
@@ -98,7 +108,7 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
         setIsAddItemModalOpen(false);
     }
 
-    console.log("foodType", watch("foodType"));
+    console.log("customizations", watch("customizations"));
 
 
     return (
@@ -470,7 +480,7 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                             <div onClick={() => setIsCustomization(!isCustomization)} className="cursor-pointer pb-6">
                                                 <div className="flex justify-between items-center">
                                                     <h3 className="text-black class-lg6">Customization</h3>
-                                                    <div className="flex gap-3">
+                                                    <div className="flex items-center gap-3">
                                                         <Button onClick={() => setIsCustomizationModalOpen(true)} variant="outline" className="flex gap-1 items-center border-[#4A67FF] text-[#4A67FF] hover:border-[#4A67FF] hover:bg-transparent hover:text-[#4A67FF]">
                                                             <FaPlus />
                                                             Add More
@@ -483,29 +493,39 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                             </div>
                                             {isCustomization &&
                                                 <div className="w-full">
-                                                    <h3 className="font-inter text-lg text-[#969696] font-semibold">Category Name</h3>
-                                                    <div className="px-4">
-                                                        <div className="flex justify-between items-center gap-4">
+                                                    {watch("customizations")?.map((customization, i) => (
+                                                        <div key={i} className="w-full">
+                                                            <div className="flex justify-between items-center gap-4">
+                                                                <h3 className="font-inter text-lg text-[#969696] font-semibold">{customization?.categoryName}</h3>
+                                                                <Button type="button" onClick={() => handleCustomization(i)} variant="outline" className="flex gap-1 items-center border-[#4A67FF] text-[#4A67FF] hover:border-[#4A67FF] hover:bg-transparent hover:text-[#4A67FF]">
+                                                                    <FaPlus />
+                                                                    Add Customization
+                                                                </Button>
+                                                            </div>
                                                             <h4 className="font-inter text-[#969696] font-semibold">Sub Category Name</h4>
-                                                            <Button type="button" onClick={() => setIsAddCustomizationModalOpen(true)} variant="outline" className="flex gap-1 items-center border-[#4A67FF] text-[#4A67FF] hover:border-[#4A67FF] hover:bg-transparent hover:text-[#4A67FF]">
-                                                                <FaPlus />
-                                                                Add Customization
-                                                            </Button>
+                                                            {customization?.customizationOptions &&
+                                                                customization?.customizationOptions.length > 0 &&
+                                                                <div className="px-4">
+                                                                    <div className="grid grid-cols-[70%_28%] gap-[2%] mt-5 border-b border-[#DADADA] pb-2">
+                                                                        <h4 className="font-inter text-[#969696] font-semibold">Customization Name</h4>
+                                                                        <h4 className="font-inter text-[#969696] font-semibold">Price (In Rs)</h4>
+                                                                    </div>
+                                                                    {customization?.customizationOptions?.map((option, i) => (
+                                                                        <div key={i} className="grid grid-cols-[70%_28%] gap-[2%] border-b border-[#DADADA] py-2">
+                                                                            <h4 className="font-inter text-[#969696] font-semibold">{option?.customizationName}</h4>
+                                                                            <h4 className="font-inter text-[#969696] font-semibold">Rs {option?.price}</h4>
+                                                                        </div>))}
+                                                                </div>}
                                                         </div>
-                                                        <div className="grid grid-cols-[70%_28%] gap-[2%] mt-5 border-b border-[#DADADA] pb-2">
-                                                            <h4 className="font-inter text-[#969696] font-semibold">Customization Name</h4>
-                                                            <h4 className="font-inter text-[#969696] font-semibold">Price (In Rs)</h4>
-                                                        </div>
-                                                        <div className="grid grid-cols-[70%_28%] gap-[2%] border-b border-[#DADADA] py-2">
-                                                            <h4 className="font-inter text-[#969696] font-semibold">Name</h4>
-                                                            <h4 className="font-inter text-[#969696] font-semibold">Rs 299</h4>
-                                                        </div>
-                                                    </div>
+                                                    ))}
 
                                                     {isAddCustomizationModalOpen &&
                                                         <AddCustomizationModal
                                                             isAddCustomizationModalOpen={isAddCustomizationModalOpen}
                                                             setIsAddCustomizationModalOpen={setIsAddCustomizationModalOpen}
+                                                            currentIndex={currentIndex}
+                                                            setValue1={setValue}
+                                                            getValues1={getValues}
                                                         />
                                                     }
                                                 </div>
@@ -537,6 +557,8 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                     <AddCustomizationCategoryModal
                                         isCustomizationModalOpen={isCustomizationModalOpen}
                                         setIsCustomizationModalOpen={setIsCustomizationModalOpen}
+                                        setValue={setValue}
+                                        getValues={getValues}
                                     />
                                 }
                             </form>

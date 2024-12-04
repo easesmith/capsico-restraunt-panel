@@ -16,8 +16,8 @@ import { useForm } from 'react-hook-form'
 import { FaArrowLeft, FaPlus } from 'react-icons/fa6'
 import AddCustomizationModal from './AddCustomizationModal'
 
-const AddCustomizationCategoryModal = ({ isCustomizationModalOpen, setIsCustomizationModalOpen }) => {
-    
+const AddCustomizationCategoryModal = ({ isCustomizationModalOpen, setIsCustomizationModalOpen, setValue, getValues }) => {
+
     const form = useForm({
         resolver: zodResolver(AddCustomizationCategorySchema),
         defaultValues: {
@@ -29,11 +29,16 @@ const AddCustomizationCategoryModal = ({ isCustomizationModalOpen, setIsCustomiz
     })
 
 
-    const { register, control, watch, setValue, getValues } = form;
+    const { register, control, watch } = form;
     console.log("type", watch("type"));
-
+    
     const onSubmit = (data) => {
         console.log("data", data);
+        
+        console.log("getValues", getValues("customizations"));
+        const array = getValues("customizations");
+        setValue("customizations", [...array, data])
+        
         setIsCustomizationModalOpen(false);
     }
 
@@ -83,7 +88,7 @@ const AddCustomizationCategoryModal = ({ isCustomizationModalOpen, setIsCustomiz
                                                     <FormItem className="w-full">
                                                         <FormLabel>Category Type</FormLabel>
                                                         <FormControl className="">
-                                                            <Select>
+                                                            <Select onValueChange={field.onChange} value={field.value}>
                                                                 <SelectTrigger className="flex justify-between items-center w-full h-10 text-[#1D1929] text-sm font-normal font-sans border-[#E9E9EA] border-[1px] rounded-lg">
                                                                     <SelectValue placeholder="Select Category" />
                                                                 </SelectTrigger>
@@ -125,7 +130,7 @@ const AddCustomizationCategoryModal = ({ isCustomizationModalOpen, setIsCustomiz
                                                     <FormItem className="w-full">
                                                         <FormLabel>Customization Type</FormLabel>
                                                         <FormControl>
-                                                            <Select>
+                                                            <Select onValueChange={field.onChange} value={field.value}>
                                                                 <SelectTrigger className="flex justify-between items-center w-full h-10 text-[#1D1929] text-sm font-normal font-sans border-[#E9E9EA] border-[1px] rounded-lg">
                                                                     <SelectValue placeholder="Select Customization Type" />
                                                                 </SelectTrigger>
@@ -151,7 +156,7 @@ const AddCustomizationCategoryModal = ({ isCustomizationModalOpen, setIsCustomiz
                             </form>
                         </Form>
 
-                        
+
                     </SheetDescription>
                 </SheetHeader>
             </SheetContent>

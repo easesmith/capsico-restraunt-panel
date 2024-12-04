@@ -10,10 +10,12 @@ import {
 } from "@/components/ui/sheet"
 import { AddCustomizationSchema } from '@/schemas/CustomizationSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { FaArrowLeft, FaPlus } from 'react-icons/fa6'
+import { toast } from 'sonner'
 
-const AddCustomizationModal = ({ isAddCustomizationModalOpen, setIsAddCustomizationModalOpen }) => {
+const AddCustomizationModal = ({ isAddCustomizationModalOpen, setIsAddCustomizationModalOpen, setValue1, getValues1, currentIndex }) => {
     const form = useForm({
         resolver: zodResolver(AddCustomizationSchema),
         defaultValues: {
@@ -22,12 +24,32 @@ const AddCustomizationModal = ({ isAddCustomizationModalOpen, setIsAddCustomizat
         }
     })
 
-
-    const { register, control, watch, setValue, getValues } = form;
+    const [customizations, setCustomizations] = useState([]);
+    const { register, control, watch, setValue, getValues, reset } = form;
 
     const onSubmit = (data) => {
         console.log("data", data);
-        setIsAddCustomizationModalOpen(false);
+        setCustomizations(prev => [
+            ...prev,
+            { customizationName: data.customizationName, price: data.price }
+        ]);
+        reset();
+    }
+
+    const sendArray = () => {
+        if (customizations.length === 0) {
+            toast.error("At least add one customization")
+            return;
+        }
+
+        const customization = getValues1("customizations");
+        customization[currentIndex].customizationOptions ? customization[currentIndex].customizationOptions = [...customization[currentIndex].customizationOptions, ...customizations] : customization[currentIndex].customizationOptions = customizations;
+        console.log("customization present", customization[currentIndex].customizationOptions);
+
+        // setValue1("customizations", [...array, data])
+
+        console.log("Final Customizations Array", customizations);
+        // setIsAddCustomizationModalOpen(false);
     }
 
     return (
@@ -39,10 +61,6 @@ const AddCustomizationModal = ({ isAddCustomizationModalOpen, setIsAddCustomizat
                             <FaArrowLeft onClick={() => setIsAddCustomizationModalOpen(false)} className="text-2xl cursor-pointer" />
                             Customization
                         </div>
-                        <Button onClick={() => { }} variant="outline" className="flex gap-1 items-center border-[#4A67FF] text-[#4A67FF] hover:border-[#4A67FF] hover:bg-transparent hover:text-[#4A67FF]">
-                            <FaPlus />
-                            Add More
-                        </Button>
                     </SheetTitle>
                     <SheetDescription>
                         <Form {...form}>
@@ -76,15 +94,28 @@ const AddCustomizationModal = ({ isAddCustomizationModalOpen, setIsAddCustomizat
                                                     </FormItem>
                                                 )}
                                             />
-                                            <Button onClick={() => { }} variant="capsico">
+                                            <Button type="submit" variant="capsico">
                                                 Add
                                             </Button>
                                         </div>
+                                        {customizations.length > 0 &&
+                                            <>
+                                                <div className="grid grid-cols-[70%_28%] gap-[2%] mt-10 border-b border-[#DADADA] pb-2">
+                                                    <h4 className="font-inter text-[#969696] font-semibold">Customization Name</h4>
+                                                    <h4 className="font-inter text-[#969696] font-semibold">Price (In Rs)</h4>
+                                                </div>
+                                                {customizations.map((item, i) => (
+                                                    <div key={i} className="grid grid-cols-[70%_28%] gap-[2%] border-b border-[#DADADA] py-2">
+                                                        <h4 className="font-inter text-[#969696] font-semibold">{item?.customizationName}</h4>
+                                                        <h4 className="font-inter text-[#969696] font-semibold">Rs {item?.price}</h4>
+                                                    </div>
+                                                ))}
+                                            </>}
                                     </div>
                                 </div>
 
                                 <div className="flex gap-2 fixed right-0 bottom-0 w-1/2 bg-white p-4 shadow-3xl">
-                                    <Button size="lg" variant="capsico" className="w-full class-base2">Submit</Button>
+                                    <Button onClick={sendArray} type="button" size="lg" variant="capsico" className="w-full class-base2">Submit</Button>
                                 </div>
                             </form>
                         </Form>

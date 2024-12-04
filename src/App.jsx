@@ -10,6 +10,7 @@ import BackdropLoader from './components/BackdropLoader';
 import useAuth from './protected-route/UserAuth';
 import useGetApiReq from './hooks/useGetApiReq';
 import usePostApiReq from './hooks/usePostApiReq';
+import { readCookie } from './utils/readCookie';
 
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Register = lazy(() => import('./Restaurant/pages/Register'));
@@ -38,25 +39,35 @@ function App() {
   const { res: logoutRes, fetchData: fetchLogoutData, } = usePostApiReq();
 
   const getStatus = () => {
-    fetchData("/user/status");
+    fetchData("/restaurant/status");
   }
-  const logout = () => {
-    fetchData("/user/logout");
+  const refreshToken = () => {
+    fetchData("/restaurant/refresh-token");
   }
+
+  const token = readCookie("userInfo");
+  console.log("token", token);
 
   useEffect(() => {
     getStatus();
+    // logout()
   }, [])
 
   useEffect(() => {
     if (res?.status === 200 || res?.status === 201) {
+      localStorage.setItem("restaurant-status", res?.data?.isAuthenticated);
       console.log("status response", res?.data?.isAuthenticated);
-      // !res?.data?.isAuthenticated && logout();
+      !res?.data?.isAuthenticated && refreshToken();
     }
   }, [res])
 
-  // res?.data?.isAuthenticated
+  useEffect(() => {
+    if (logoutRes?.status === 200 || logoutRes?.status === 201) {
+      localStorage.setItem("restaurant-status", false);
+    }
+  }, [logoutRes])
 
+  // res?.data?.isAuthenticated
   return (
     <>
       {isLoading && <BackdropLoader />}
@@ -66,7 +77,7 @@ function App() {
             <Route path='/' element={<RegisterAndLogin />} />
             <Route path='/restaurant/register' element={<Register />} />
 
-            <Route element={<ProtectedRoute isAuthenticated={true} />}>
+            <Route element={<ProtectedRoute />}>
               <Route path='/restaurant/online-ordering' element={<OnlineOrdering />} />
               <Route path='/restaurant/reporting/*' element={<Reporting />} />
               <Route path='/restaurant/offers' element={<Offers />} />
