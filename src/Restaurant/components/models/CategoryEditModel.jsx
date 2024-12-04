@@ -8,32 +8,38 @@ import {
 } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { categorySchema } from "@/schemas/OrderMenuSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 const CategoryEditModel = ({ isOpenCategoryModel, setIsOpenCategoryModel }) => {
-    
+
     const form = useForm({
         resolver: zodResolver(categorySchema),
-        defaultValues:{
-            category:""
+        defaultValues: {
+            category: "",
+            description: "",
         }
     })
-    
-    const { register, control, watch, setValue, getValues } = form;
 
-    const onSubmit = (data) =>{
-        console.log(data)
+    const { register, control, watch, setValue, getValues, reset } = form;
+
+    const onSubmit = (data) => {
+        console.log("data", data)
         console.log('submit form')
         setIsOpenCategoryModel(false)
+        reset({
+            category: "",
+            description: "",
+        })
     }
 
     return (
         <Dialog open={isOpenCategoryModel} onOpenChange={setIsOpenCategoryModel}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Edit Category</DialogTitle>
+                    <DialogTitle>Add Category</DialogTitle>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="w-full py-3">
                             <div className="w-full mt-5">
@@ -42,9 +48,24 @@ const CategoryEditModel = ({ isOpenCategoryModel, setIsOpenCategoryModel }) => {
                                     name="category"
                                     render={({ field }) => (
                                         <FormItem className="z-20">
-                                            <FormLabel className="">Category</FormLabel>
+                                            <FormLabel className="text-[#969696]">Category Name</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="Enter Category"  {...field} />
+                                                <Input type='text'  {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                            <div className="w-full mt-5">
+                                <FormField
+                                    control={control}
+                                    name="description"
+                                    render={({ field }) => (
+                                        <FormItem className="z-20">
+                                            <FormLabel className="text-[#969696]">Description</FormLabel>
+                                            <FormControl>
+                                                <Textarea className='resize-none' {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -52,9 +73,7 @@ const CategoryEditModel = ({ isOpenCategoryModel, setIsOpenCategoryModel }) => {
                                 />
                             </div>
 
-                            <div className="flex justify-end mt-3">
-                                <Button type="submit" variant="capsico" className="w-20">Submit</Button>
-                            </div>
+                            <Button type="submit" size="lg" variant="capsico" className="w-full mt-10">Add Category</Button>
                         </form>
                     </Form>
                     <DialogDescription></DialogDescription>
