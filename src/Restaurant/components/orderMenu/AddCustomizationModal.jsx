@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import {
     Sheet,
     SheetContent,
@@ -9,26 +8,22 @@ import {
     SheetHeader,
     SheetTitle
 } from "@/components/ui/sheet"
-import { AddCustomizationCategorySchema } from '@/schemas/CustomizationSchema'
+import { AddCustomizationSchema } from '@/schemas/CustomizationSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { FaArrowLeft, FaPlus } from 'react-icons/fa6'
 
 const AddCustomizationModal = ({ isAddCustomizationModalOpen, setIsAddCustomizationModalOpen }) => {
     const form = useForm({
-        resolver: zodResolver(AddCustomizationCategorySchema),
+        resolver: zodResolver(AddCustomizationSchema),
         defaultValues: {
-            type: "",
-            categoryType: "",
-            categoryName: "",
-            customizationType: "",
+            customizationName: "",
+            price: "",
         }
     })
 
 
     const { register, control, watch, setValue, getValues } = form;
-    console.log("type", watch("type"));
 
     const onSubmit = (data) => {
         console.log("data", data);

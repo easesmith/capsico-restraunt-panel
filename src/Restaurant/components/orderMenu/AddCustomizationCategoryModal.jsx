@@ -17,7 +17,7 @@ import { FaArrowLeft, FaPlus } from 'react-icons/fa6'
 import AddCustomizationModal from './AddCustomizationModal'
 
 const AddCustomizationCategoryModal = ({ isCustomizationModalOpen, setIsCustomizationModalOpen }) => {
-    const [isAddCustomizationModalOpen, setIsAddCustomizationModalOpen] = useState(false);
+    
     const form = useForm({
         resolver: zodResolver(AddCustomizationCategorySchema),
         defaultValues: {
@@ -142,12 +142,6 @@ const AddCustomizationCategoryModal = ({ isCustomizationModalOpen, setIsCustomiz
                                                 )}
                                             />
                                         </div>
-                                        <div className="flex justify-end items-center mt-5">
-                                            <Button type="button" onClick={() => setIsAddCustomizationModalOpen(true)} variant="outline" className="flex gap-1 items-center border-[#4A67FF] text-[#4A67FF] hover:border-[#4A67FF] hover:bg-transparent hover:text-[#4A67FF]">
-                                                <FaPlus />
-                                                Add Customization
-                                            </Button>
-                                        </div>
                                     </div>
                                 </div>
 
@@ -157,12 +151,7 @@ const AddCustomizationCategoryModal = ({ isCustomizationModalOpen, setIsCustomiz
                             </form>
                         </Form>
 
-                        {isAddCustomizationModalOpen &&
-                            <AddCustomizationModal
-                                isAddCustomizationModalOpen={isAddCustomizationModalOpen}
-                                setIsAddCustomizationModalOpen={setIsAddCustomizationModalOpen}
-                            />
-                        }
+                        
                     </SheetDescription>
                 </SheetHeader>
             </SheetContent>

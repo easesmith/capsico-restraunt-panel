@@ -38,6 +38,7 @@ import { FaMinus, FaPlus } from "react-icons/fa6"
 // import Property from "./Property"
 import MapAddOnModel from "./MapAddOnModel"
 import CreateVariantModel from "./CreateVariantModel"
+import AddCustomizationModal from "./AddCustomizationModal"
 
 const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
     const [isItemImageUploadModalOpen, setIsItemImageUploadModalOpen] = useState(false);
@@ -48,6 +49,7 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
     const [isCustomization, setIsCustomization] = useState(false);
     const [isCustomizationModalOpen, setIsCustomizationModalOpen] = useState(false);
     const [isCreateVariantModalOpen, setIsCreateVariantModalOpen] = useState(false);
+    const [isAddCustomizationModalOpen, setIsAddCustomizationModalOpen] = useState(false);
 
     const schema = z.object({
         itemName: z.string().min(1, "Item Name is required"),
@@ -335,7 +337,7 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                                 //         form={form}
                                                 //     />
                                                 // </div>
-                                                <CreateVariantModel/>
+                                                <CreateVariantModel />
                                             }
                                         </div>
                                         <div className="p-5 border-b border-[#C8C8C8]">
@@ -348,7 +350,7 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                                 <p>Add-ons enhance the customer experience by offering extra choices like toppings or desserts.</p>
                                             </div>
                                             {isMapAddons &&
-                                                <MapAddOnModel/>
+                                                <MapAddOnModel />
                                             }
                                         </div>
                                         <div className="p-5 border-b border-[#C8C8C8]">
@@ -470,8 +472,14 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                             <div onClick={() => setIsCustomization(!isCustomization)} className="cursor-pointer pb-6">
                                                 <div className="flex justify-between items-center">
                                                     <h3 className="text-black class-lg6">Customization</h3>
-                                                    {isCustomization ? <FaMinus className="text-black" size={20} />
-                                                        : <FaPlus className="text-black" size={20} />}
+                                                    <div className="flex gap-3">
+                                                        <Button onClick={() => setIsCustomizationModalOpen(true)} variant="outline" className="flex gap-1 items-center border-[#4A67FF] text-[#4A67FF] hover:border-[#4A67FF] hover:bg-transparent hover:text-[#4A67FF]">
+                                                            <FaPlus />
+                                                            Add More
+                                                        </Button>
+                                                        {isCustomization ? <FaMinus className="text-black" size={20} />
+                                                            : <FaPlus className="text-black" size={20} />}
+                                                    </div>
                                                 </div>
                                                 <p>Customization for category</p>
                                             </div>
@@ -481,9 +489,9 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                                     <div className="px-4">
                                                         <div className="flex justify-between items-center gap-4">
                                                             <h4 className="font-inter text-[#969696] font-semibold">Sub Category Name</h4>
-                                                            <Button onClick={() => setIsCustomizationModalOpen(true)} variant="outline" className="flex gap-1 items-center border-[#4A67FF] text-[#4A67FF] hover:border-[#4A67FF] hover:bg-transparent hover:text-[#4A67FF]">
+                                                            <Button type="button" onClick={() => setIsAddCustomizationModalOpen(true)} variant="outline" className="flex gap-1 items-center border-[#4A67FF] text-[#4A67FF] hover:border-[#4A67FF] hover:bg-transparent hover:text-[#4A67FF]">
                                                                 <FaPlus />
-                                                                Add More
+                                                                Add Customization
                                                             </Button>
                                                         </div>
                                                         <div className="grid grid-cols-[70%_28%] gap-[2%] mt-5 border-b border-[#DADADA] pb-2">
@@ -494,8 +502,14 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                                             <h4 className="font-inter text-[#969696] font-semibold">Name</h4>
                                                             <h4 className="font-inter text-[#969696] font-semibold">Rs 299</h4>
                                                         </div>
-
                                                     </div>
+
+                                                    {isAddCustomizationModalOpen &&
+                                                        <AddCustomizationModal
+                                                            isAddCustomizationModalOpen={isAddCustomizationModalOpen}
+                                                            setIsAddCustomizationModalOpen={setIsAddCustomizationModalOpen}
+                                                        />
+                                                    }
                                                 </div>
                                             }
                                         </div>
