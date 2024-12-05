@@ -110,10 +110,13 @@ const OrderMenu = () => {
                 <Product />
               </div>
 
-              <AddItemModal
-                isAddItemModalOpen={isAddItemModalOpen}
-                setIsAddItemModalOpen={setIsAddItemModalOpen}
-              />
+              {isAddItemModalOpen &&
+                <AddItemModal
+                  isAddItemModalOpen={isAddItemModalOpen}
+                  setIsAddItemModalOpen={setIsAddItemModalOpen}
+                />
+              }
+
             </div>
             {isOpenCategoryModel &&
               <CategoryEditModel
@@ -138,6 +141,7 @@ const OrderMenu = () => {
             }
           </>
         }
+        
         {isActiveTab === 'inventory' && <ManageInventory allCategories={allCategories}/>}
 
       </div>

@@ -38,6 +38,10 @@ import MapAddOnModel from "./MapAddOnModel"
 import CreateVariantModel from "./CreateVariantModel"
 import AddCustomizationModal from "./AddCustomizationModal"
 import { addItemSchema } from "@/schemas/AddItemSchema"
+import useGetApiReq from "@/hooks/useGetApiReq"
+import DataNotFound from "../DataNotFound"
+import Spinner from "../Spinner"
+import usePostApiReq from "@/hooks/usePostApiReq"
 
 const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
     const [isItemImageUploadModalOpen, setIsItemImageUploadModalOpen] = useState(false);
@@ -50,6 +54,7 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
     const [isCreateVariantModalOpen, setIsCreateVariantModalOpen] = useState(false);
     const [isAddCustomizationModalOpen, setIsAddCustomizationModalOpen] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(null);
+    const [cuisines, setCuisines] = useState([]);
 
     const handleCustomization = (index) => {
         setCurrentIndex(index);
@@ -103,12 +108,36 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
         updateMultiplePreview(itemImage, "itemImagePreview", setValue);
     }, [form, restaurant, itemImage, setValue]);
 
-    const onSubmit = (data) => {
-        console.log("data", data);
-        setIsAddItemModalOpen(false);
+    const { res, fetchData, isLoading } = useGetApiReq();
+
+    const getCuisines = () => {
+        fetchData("/restaurant/get-cuisines");
     }
 
-    console.log("customizations", watch("customizations"));
+    useEffect(() => {
+        getCuisines();
+    }, [])
+
+    useEffect(() => {
+        if (res?.status === 200 || res?.status === 201) {
+            console.log("get cuisines res", res);
+            setCuisines(res?.data?.data?.cuisines);
+        }
+    }, [res])
+
+    const { res: addItemRes, fetchData: fetchAddItemData, isLoading: isAddItemLoading } = usePostApiReq();
+
+    const onSubmit = (data) => {
+        console.log("data", data);
+        fetchAddItemData("/restaurant/add-menu-item");
+    }
+
+    useEffect(() => {
+        if (addItemRes?.status === 200 || addItemRes?.status === 201) {
+            console.log("add item res", addItemRes);
+            setIsAddItemModalOpen(false);
+        }
+    }, [addItemRes])
 
 
     return (
@@ -373,66 +402,80 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                             {isAdditionalDetails &&
                                                 <div className="border border-[#A8A8A8] p-5 w-full rounded-md">
                                                     <h3 className="text-black class-lg6">Cuisine</h3>
-                                                    <div className="flex items-center gap-2">
-                                                        <FormField
-                                                            control={control}
-                                                            name="cuisine"
-                                                            render={({ field }) => (
-                                                                <FormItem>
-                                                                    <FormLabel></FormLabel>
-                                                                    <FormControl>
-                                                                        <RadioGroup
-                                                                            onValueChange={field.onChange}
-                                                                            defaultValue={field.value}
-                                                                            className="flex"
-                                                                        >
-                                                                            <FormItem className="flex items-center space-y-0">
-                                                                                <FormControl className="hidden">
-                                                                                    <RadioGroupItem value="Chinese cuisine" />
-                                                                                </FormControl>
-                                                                                <FormLabel className={`border border-[#B6B6B6] rounded p-4 py-2 flex items-center gap-2 cursor-pointer group hover:bg-[#EDF4FF] ${getValues("cuisine") === "Chinese cuisine" && "bg-[#EDF4FF] border border-[#3579F0]"}`}>
-                                                                                    <p>Chinese cuisine</p>
-                                                                                </FormLabel>
-                                                                            </FormItem>
-                                                                            <FormItem className="flex items-center space-y-0">
-                                                                                <FormControl className="hidden">
-                                                                                    <RadioGroupItem value="Indian cuisine" />
-                                                                                </FormControl>
-                                                                                <FormLabel className={`border border-[#B6B6B6] rounded p-4 py-2 flex items-center gap-2 cursor-pointer group hover:bg-[#EDF4FF] ${getValues("cuisine") === "Indian cuisine" && "bg-[#EDF4FF] border border-[#3579F0]"}`}>
-                                                                                    <p>Indian cuisine</p>
-                                                                                </FormLabel>
-                                                                            </FormItem>
-                                                                            <FormItem className="flex items-center space-y-0">
-                                                                                <FormControl className="hidden">
-                                                                                    <RadioGroupItem value="Jain" />
-                                                                                </FormControl>
-                                                                                <FormLabel className={`border border-[#B6B6B6] rounded p-4 py-2 flex items-center gap-2 cursor-pointer group hover:bg-[#EDF4FF] ${getValues("cuisine") === "Jain" && "bg-[#EDF4FF] border border-[#3579F0]"}`}>
-                                                                                    <p>Jain</p>
-                                                                                </FormLabel>
-                                                                            </FormItem>
-                                                                            <FormItem className="flex items-center space-y-0">
-                                                                                <FormControl className="hidden">
-                                                                                    <RadioGroupItem value="Italian cuisine" />
-                                                                                </FormControl>
-                                                                                <FormLabel className={`border border-[#B6B6B6] rounded p-4 py-2 flex items-center gap-2 cursor-pointer group hover:bg-[#EDF4FF] ${getValues("cuisine") === "Italian cuisine" && "bg-[#EDF4FF] border border-[#3579F0]"}`}>
-                                                                                    <p>Italian cuisine</p>
-                                                                                </FormLabel>
-                                                                            </FormItem>
-                                                                            <FormItem className="flex items-center space-y-0">
-                                                                                <FormControl className="hidden">
-                                                                                    <RadioGroupItem value="Vegan" />
-                                                                                </FormControl>
-                                                                                <FormLabel className={`border border-[#B6B6B6] rounded p-4 py-2 flex items-center gap-2 cursor-pointer group hover:bg-[#EDF4FF] ${getValues("cuisine") === "Vegan" && "bg-[#EDF4FF] border border-[#3579F0]"}`}>
-                                                                                    <p>Vegan</p>
-                                                                                </FormLabel>
-                                                                            </FormItem>
-                                                                        </RadioGroup>
-                                                                    </FormControl>
-                                                                    <FormMessage />
-                                                                </FormItem>
-                                                            )}
-                                                        />
-                                                    </div>
+
+                                                    {cuisines.length === 0 && isLoading &&
+                                                        <Spinner />
+                                                    }
+
+                                                    {cuisines.length === 0 && !isLoading &&
+                                                        <DataNotFound name="Cuisines" />
+                                                    }
+
+                                                    {cuisines.length > 0 &&
+                                                        <div className="flex items-center gap-2">
+                                                            <FormField
+                                                                control={control}
+                                                                name="cuisine"
+                                                                render={({ field }) => (
+                                                                    <FormItem>
+                                                                        <FormLabel></FormLabel>
+                                                                        <FormControl>
+                                                                            <RadioGroup
+                                                                                onValueChange={field.onChange}
+                                                                                defaultValue={field.value}
+                                                                                className="flex flex-wrap gap-3"
+                                                                            >
+                                                                                {cuisines?.map((cuisine) => (
+                                                                                    <FormItem key={cuisine?._id} className="flex items-center space-y-0">
+                                                                                        <FormControl className="hidden">
+                                                                                            <RadioGroupItem value={cuisine?._id} />
+                                                                                        </FormControl>
+                                                                                        <FormLabel className={`border border-[#B6B6B6] rounded p-4 py-2 flex items-center gap-2 cursor-pointer group hover:bg-[#EDF4FF] ${getValues("cuisine") === cuisine?._id && "bg-[#EDF4FF] border border-[#3579F0]"}`}>
+                                                                                            <p>{cuisine?.name}</p>
+                                                                                        </FormLabel>
+                                                                                    </FormItem>
+                                                                                ))}
+
+                                                                                <FormItem className="flex items-center space-y-0">
+                                                                                    <FormControl className="hidden">
+                                                                                        <RadioGroupItem value="Indian cuisine" />
+                                                                                    </FormControl>
+                                                                                    <FormLabel className={`border border-[#B6B6B6] rounded p-4 py-2 flex items-center gap-2 cursor-pointer group hover:bg-[#EDF4FF] ${getValues("cuisine") === "Indian cuisine" && "bg-[#EDF4FF] border border-[#3579F0]"}`}>
+                                                                                        <p>Indian cuisine</p>
+                                                                                    </FormLabel>
+                                                                                </FormItem>
+                                                                                <FormItem className="flex items-center space-y-0">
+                                                                                    <FormControl className="hidden">
+                                                                                        <RadioGroupItem value="Jain" />
+                                                                                    </FormControl>
+                                                                                    <FormLabel className={`border border-[#B6B6B6] rounded p-4 py-2 flex items-center gap-2 cursor-pointer group hover:bg-[#EDF4FF] ${getValues("cuisine") === "Jain" && "bg-[#EDF4FF] border border-[#3579F0]"}`}>
+                                                                                        <p>Jain</p>
+                                                                                    </FormLabel>
+                                                                                </FormItem>
+                                                                                <FormItem className="flex items-center space-y-0">
+                                                                                    <FormControl className="hidden">
+                                                                                        <RadioGroupItem value="Italian cuisine" />
+                                                                                    </FormControl>
+                                                                                    <FormLabel className={`border border-[#B6B6B6] rounded p-4 py-2 flex items-center gap-2 cursor-pointer group hover:bg-[#EDF4FF] ${getValues("cuisine") === "Italian cuisine" && "bg-[#EDF4FF] border border-[#3579F0]"}`}>
+                                                                                        <p>Italian cuisine</p>
+                                                                                    </FormLabel>
+                                                                                </FormItem>
+                                                                                <FormItem className="flex items-center space-y-0">
+                                                                                    <FormControl className="hidden">
+                                                                                        <RadioGroupItem value="Vegan" />
+                                                                                    </FormControl>
+                                                                                    <FormLabel className={`border border-[#B6B6B6] rounded p-4 py-2 flex items-center gap-2 cursor-pointer group hover:bg-[#EDF4FF] ${getValues("cuisine") === "Vegan" && "bg-[#EDF4FF] border border-[#3579F0]"}`}>
+                                                                                        <p>Vegan</p>
+                                                                                    </FormLabel>
+                                                                                </FormItem>
+                                                                            </RadioGroup>
+                                                                        </FormControl>
+                                                                        <FormMessage />
+                                                                    </FormItem>
+                                                                )}
+                                                            />
+                                                        </div>
+                                                    }
                                                 </div>
                                             }
                                         </div>
@@ -481,7 +524,7 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                                 <div className="flex justify-between items-center">
                                                     <h3 className="text-black class-lg6">Customization</h3>
                                                     <div className="flex items-center gap-3">
-                                                        <Button onClick={() => setIsCustomizationModalOpen(true)} variant="outline" className="flex gap-1 items-center border-[#4A67FF] text-[#4A67FF] hover:border-[#4A67FF] hover:bg-transparent hover:text-[#4A67FF]">
+                                                        <Button type="button" onClick={() => setIsCustomizationModalOpen(true)} variant="outline" className="flex gap-1 items-center border-[#4A67FF] text-[#4A67FF] hover:border-[#4A67FF] hover:bg-transparent hover:text-[#4A67FF]">
                                                             <FaPlus />
                                                             Add More
                                                         </Button>
@@ -492,7 +535,7 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                                 <p>Customization for category</p>
                                             </div>
                                             {isCustomization &&
-                                                <div className="w-full">
+                                                <div className="w-full flex flex-col gap-4">
                                                     {watch("customizations")?.map((customization, i) => (
                                                         <div key={i} className="w-full">
                                                             <div className="flex justify-between items-center gap-4">
@@ -502,7 +545,7 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                                                     Add Customization
                                                                 </Button>
                                                             </div>
-                                                            <h4 className="font-inter text-[#969696] font-semibold">Sub Category Name</h4>
+                                                            {/* <h4 className="font-inter text-[#969696] font-semibold">Sub Category Name</h4> */}
                                                             {customization?.customizationOptions &&
                                                                 customization?.customizationOptions.length > 0 &&
                                                                 <div className="px-4">
@@ -536,7 +579,7 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
 
                                 <div className="flex gap-2 fixed right-0 bottom-0 w-1/2 bg-white p-4 shadow-3xl">
                                     <Button onClick={() => setIsAddItemModalOpen(false)} type="button" size="lg" variant="ghost" className="w-1/2 class-base2 hover:bg-[#FFF5F6] text-[#e85362] hover:text-[#e85362]">Discard</Button>
-                                    <Button type="submit" size="lg" variant="capsico" className="w-1/2 class-base2">Save Changes</Button>
+                                    <Button disabled={isAddItemLoading} type="submit" size="lg" variant="capsico" className="w-1/2 class-base2">{isAddItemLoading ? <Spinner size={30} /> : "Save Changes"}</Button>
                                 </div>
 
                                 {isItemImageUploadModalOpen &&
