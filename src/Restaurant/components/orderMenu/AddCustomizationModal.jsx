@@ -43,13 +43,18 @@ const AddCustomizationModal = ({ isAddCustomizationModalOpen, setIsAddCustomizat
         }
 
         const customization = getValues1("customizations");
-        customization[currentIndex].customizationOptions ? customization[currentIndex].customizationOptions = [...customization[currentIndex].customizationOptions, ...customizations] : customization[currentIndex].customizationOptions = customizations;
         console.log("customization present", customization[currentIndex].customizationOptions);
+        if (customization[currentIndex].customizationOptions) {
+            customizations.forEach((element) => {
+                customization[currentIndex].customizationOptions.push(element);
+            });
+        }
+        else {
+            customization[currentIndex].customizationOptions = customizations
+        }
 
-        // setValue1("customizations", [...array, data])
-
-        console.log("Final Customizations Array", customizations);
-        // setIsAddCustomizationModalOpen(false);
+        console.log("Final Customizations Array", customization[currentIndex].customizationOptions);
+        setIsAddCustomizationModalOpen(false);
     }
 
     return (

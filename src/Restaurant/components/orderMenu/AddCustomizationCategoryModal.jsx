@@ -21,8 +21,6 @@ const AddCustomizationCategoryModal = ({ isCustomizationModalOpen, setIsCustomiz
     const form = useForm({
         resolver: zodResolver(AddCustomizationCategorySchema),
         defaultValues: {
-            type: "",
-            categoryType: "",
             categoryName: "",
             customizationType: "",
         }
@@ -31,14 +29,14 @@ const AddCustomizationCategoryModal = ({ isCustomizationModalOpen, setIsCustomiz
 
     const { register, control, watch } = form;
     console.log("type", watch("type"));
-    
+
     const onSubmit = (data) => {
         console.log("data", data);
-        
+
         console.log("getValues", getValues("customizations"));
         const array = getValues("customizations");
         setValue("customizations", [...array, data])
-        
+
         setIsCustomizationModalOpen(false);
     }
 
@@ -55,58 +53,6 @@ const AddCustomizationCategoryModal = ({ isCustomizationModalOpen, setIsCustomiz
                             <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
                                 <div className="mb-16 h-full">
                                     <div className="py-6 px-5">
-                                        <div className='w-full'>
-                                            <FormField
-                                                control={control}
-                                                name="type"
-                                                render={({ field }) => (
-                                                    <FormItem className="w-full">
-                                                        <FormLabel>Type</FormLabel>
-                                                        <FormControl className="">
-                                                            <Select onValueChange={field.onChange} value={field.value}>
-                                                                <SelectTrigger className="flex justify-between items-center w-full h-10 text-[#1D1929] text-sm font-normal font-sans border-[#E9E9EA] border-[1px] rounded-lg">
-                                                                    <SelectValue placeholder="Select Type" />
-                                                                </SelectTrigger>
-                                                                <SelectContent>
-                                                                    <SelectGroup>
-                                                                        <SelectItem value="category">Category</SelectItem>
-                                                                        <SelectItem value="sub-category">Sub Category</SelectItem>
-                                                                    </SelectGroup>
-                                                                </SelectContent>
-                                                            </Select>
-                                                        </FormControl>
-                                                        <FormMessage />
-                                                    </FormItem>
-                                                )}
-                                            />
-                                        </div>
-                                        {watch("type") === "sub-category" && <div className='w-full mt-5'>
-                                            <FormField
-                                                control={control}
-                                                name="categoryType"
-                                                render={({ field }) => (
-                                                    <FormItem className="w-full">
-                                                        <FormLabel>Category Type</FormLabel>
-                                                        <FormControl className="">
-                                                            <Select onValueChange={field.onChange} value={field.value}>
-                                                                <SelectTrigger className="flex justify-between items-center w-full h-10 text-[#1D1929] text-sm font-normal font-sans border-[#E9E9EA] border-[1px] rounded-lg">
-                                                                    <SelectValue placeholder="Select Category" />
-                                                                </SelectTrigger>
-                                                                <SelectContent>
-                                                                    <SelectGroup>
-                                                                        <SelectItem value="category1">Category1</SelectItem>
-                                                                        <SelectItem value="category2">Category2</SelectItem>
-                                                                        <SelectItem value="category3">Category3</SelectItem>
-                                                                    </SelectGroup>
-                                                                </SelectContent>
-                                                            </Select>
-                                                        </FormControl>
-                                                        <FormMessage />
-                                                    </FormItem>
-                                                )}
-                                            />
-                                        </div>}
-
                                         <div className='w-full mt-5'>
                                             <FormField
                                                 control={control}

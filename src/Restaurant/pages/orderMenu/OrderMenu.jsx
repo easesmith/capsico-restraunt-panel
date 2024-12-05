@@ -110,10 +110,13 @@ const Catalog = () => {
                 <Product />
               </div>
 
-              <AddItemModal
-                isAddItemModalOpen={isAddItemModalOpen}
-                setIsAddItemModalOpen={setIsAddItemModalOpen}
-              />
+              {isAddItemModalOpen &&
+                <AddItemModal
+                  isAddItemModalOpen={isAddItemModalOpen}
+                  setIsAddItemModalOpen={setIsAddItemModalOpen}
+                />
+              }
+
             </div>
             {isOpenCategoryModel &&
               <CategoryEditModel
@@ -137,7 +140,7 @@ const Catalog = () => {
             }
           </>
         }
-        {isActiveTab === 'inventory' && <ManageInventory/>}
+        {isActiveTab === 'inventory' && <ManageInventory />}
 
       </div>
     </RestaurantWrapper>
