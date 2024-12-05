@@ -22,7 +22,7 @@ import { Input } from "@/components/ui/input";
 import { IoSearchOutline } from "react-icons/io5";
 import ManageInventory from "@/Restaurant/components/orderMenu/ManageInventory";
 
-const Catalog = () => {
+const OrderMenu = () => {
 
   const [activeTab, setActiveTab] = useState("Items");
   const [isExpanded, setIsExpanded] = useState(false)
@@ -85,7 +85,7 @@ const Catalog = () => {
                 <button className={``}><IoIosArrowForward className="seven-color text-2xl" /></button>
                 </div> */}
                   {allCategories?.map((category) => (
-                    <ItemComp key={category?._id} category={category} getCategories={getCategories} />
+                    <ItemComp key={category?._id} category={category} getCategories={getCategories} show={true} />
                   ))}
 
                   {allCategories.length === 0 && isLoading &&
@@ -141,11 +141,12 @@ const Catalog = () => {
             }
           </>
         }
-        {isActiveTab === 'inventory' && <ManageInventory />}
+        
+        {isActiveTab === 'inventory' && <ManageInventory allCategories={allCategories}/>}
 
       </div>
     </RestaurantWrapper>
   );
 };
 
-export default Catalog;
+export default OrderMenu;
