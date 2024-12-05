@@ -85,7 +85,7 @@ const Catalog = () => {
                 <button className={``}><IoIosArrowForward className="seven-color text-2xl" /></button>
                 </div> */}
                   {allCategories?.map((category) => (
-                    <ItemComp key={category?._id} />
+                    <ItemComp key={category?._id} category={category} getCategories={getCategories} />
                   ))}
 
                   {allCategories.length === 0 && isLoading &&
@@ -122,6 +122,7 @@ const Catalog = () => {
               <CategoryEditModel
                 isOpenCategoryModel={isOpenCategoryModel}
                 setIsOpenCategoryModel={setIsOpenCategoryModel}
+                getCategories={getCategories}
               />
             }
 
