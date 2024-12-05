@@ -54,17 +54,22 @@ const ItemComp = ({ title, category, getCategories }) => {
             </div>
 
             {isOpenb &&
-                <div className="">
-                    <div className="w-full flex items-center justify-between pl-20 pr-5 py-4 border-b-2 group hover:bg-[#F7FAFF]">
-                        <h3 className="seven-color class-base1">{subcategories.map((e) => e.name)}</h3>
-                        <div className='flex items-center gap-8'>
-                            <div className='hidden group-hover:flex gap-4'>
-                                <FiEdit2 onClick={() => setIsOpenSubCategoryModel(true)} className="seven-color text-lg cursor-pointer" />
-                                <BiTrash onClick={() => { }} className="text-[#E4626F] text-xl cursor-pointer" />
+                <div className="flex flex-col">
+                    {subcategories.map((subcategory, index) => {
+                        return (
+                            <div key={subcategory.id} className="w-full flex items-center justify-between pl-20 pr-5 py-4 border-b-2 group hover:bg-[#F7FAFF]">
+                                <h3 className="seven-color class-base1">{subcategory.name}</h3>
+                                <div className='flex items-center gap-8'>
+                                    <div className='hidden group-hover:flex gap-4'>
+                                        <FiEdit2 onClick={() => setIsOpenSubCategoryModel(true)} className="seven-color text-lg cursor-pointer" />
+                                        <BiTrash onClick={() => { }} className="text-[#E4626F] text-xl cursor-pointer" />
+                                    </div>
+                                    {/* <IoIosArrowForward onClick={() => setIsOpenb(!isOpenb)} className="seven-color text-2xl cursor-pointer" /> */}
+                                </div>
+                                {/* <h3 className="seven-color class-base1">{subcategories.map((e) => e.name)}</h3> */}
                             </div>
-                            {/* <IoIosArrowForward onClick={() => setIsOpenb(!isOpenb)} className="seven-color text-2xl cursor-pointer" /> */}
-                        </div>
-                    </div>
+                        )
+                    })}
                     <button className="flex w-full items-center gap-3 px-5 py-4 pl-10 border-b" onClick={haddleSubCategory}>
                         <FiPlusCircle className="primary-color text-lg" />
                         <span className="class-base1 primary-color">Add SubCategory</span>
