@@ -8,7 +8,9 @@ import SubCategoryEditModel from '../models/SubCategoryEditModel'
 import { FaTrash } from 'react-icons/fa6'
 import { BiTrash } from 'react-icons/bi'
 
-const ItemComp = ({ title }) => {
+const ItemComp = ({ title, category, getCategories }) => {
+
+    const { name, id, subcategories } = category
 
     const [addFoodBtn, setAddFoodBtn] = useState(true)
     const [exitingBtn, setExitingBtn] = useState(true)
@@ -33,11 +35,15 @@ const ItemComp = ({ title }) => {
         setIsOpenc(!isOpenc);
     };
 
+    const haddleSubCategory = () => {
+        setIsOpenSubCategoryModel(true)
+    }
+
     return (
         <div>
             {/* #F2F4F7 */}
             <div onClick={() => setIsOpenb(!isOpenb)} className="w-full flex items-center hover:bg-[#F7FAFF]  justify-between border-b-2 pl-10 pr-5 py-5 group cursor-pointer">
-                <h3 className="seven-color class-base1">{title}</h3>
+                <h3 className="seven-color class-base1">{name}</h3>
                 <div className='flex items-center gap-8'>
                     <div className='hidden group-hover:flex gap-4'>
                         <FiEdit2 onClick={() => setIsOpenCategoryModel(true)} className="seven-color text-lg cursor-pointer" />
@@ -50,7 +56,7 @@ const ItemComp = ({ title }) => {
             {isOpenb &&
                 <div className="">
                     <div className="w-full flex items-center justify-between pl-20 pr-5 py-4 border-b-2 group hover:bg-[#F7FAFF]">
-                        <h3 className="seven-color class-base1">{title}</h3>
+                        <h3 className="seven-color class-base1">{subcategories.map((e) => e.name)}</h3>
                         <div className='flex items-center gap-8'>
                             <div className='hidden group-hover:flex gap-4'>
                                 <FiEdit2 onClick={() => setIsOpenSubCategoryModel(true)} className="seven-color text-lg cursor-pointer" />
@@ -59,7 +65,7 @@ const ItemComp = ({ title }) => {
                             {/* <IoIosArrowForward onClick={() => setIsOpenb(!isOpenb)} className="seven-color text-2xl cursor-pointer" /> */}
                         </div>
                     </div>
-                    <button className="flex w-full items-center gap-3 px-5 py-4 pl-10 border-b" onClick={() => setIsOpenSubCategoryModel(true)}>
+                    <button className="flex w-full items-center gap-3 px-5 py-4 pl-10 border-b" onClick={haddleSubCategory}>
                         <FiPlusCircle className="primary-color text-lg" />
                         <span className="class-base1 primary-color">Add SubCategory</span>
                     </button>
@@ -78,6 +84,8 @@ const ItemComp = ({ title }) => {
                 <SubCategoryEditModel
                     isOpenSubCategoryModel={isOpenSubCategoryModel}
                     setIsOpenSubCategoryModel={setIsOpenSubCategoryModel}
+                    id={id}
+                    getCategories={getCategories}
                 />
             }
         </div>

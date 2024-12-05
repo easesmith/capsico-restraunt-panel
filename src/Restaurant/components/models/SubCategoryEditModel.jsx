@@ -1,6 +1,6 @@
 import { subCategorySchema } from '@/schemas/OrderMenuSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form';
 import { Button } from "@/components/ui/button";
 import {
@@ -13,13 +13,19 @@ import {
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from "@/components/ui/input";
 import { Textarea } from '@/components/ui/textarea';
+import { toast } from 'sonner';
+import usePostApiReq from '@/hooks/usePostApiReq';
+import Spinner from '../Spinner';
 
-const SubCategoryEditModel = ({ isOpenSubCategoryModel, setIsOpenSubCategoryModel }) => {
+const SubCategoryEditModel = ({ isOpenSubCategoryModel, setIsOpenSubCategoryModel, id, getCategories }) => {
+
+    const {res, isLoading, fetchData} = usePostApiReq()
+    console.log(id)
 
     const form = useForm({
         resolver: zodResolver(subCategorySchema),
         defaultValues: {
-            category: "",
+            subCategory: "",
             description: "",
         }
     })
@@ -27,14 +33,23 @@ const SubCategoryEditModel = ({ isOpenSubCategoryModel, setIsOpenSubCategoryMode
     const { register, control, watch, setValue, reset, getValues } = form;
 
     const onSubmit = (data) => {
+        fetchData(`/restaurant/post-add-subcategory/${id}`, {
+            name: data.subCategory,
+            description: data.description,
+        })
         console.log("data", data);
         console.log('submit form')
-        setIsOpenSubCategoryModel(false)
-        reset({
-            category: "",
-            description: "",
-        })
     }
+    
+    useEffect(()=>{
+        if (res?.status === 200 || res?.status === 201) {
+            console.log("Add sub-category res", res);
+            toast.success(res?.data?.message)
+            getCategories()
+            setIsOpenSubCategoryModel(false)
+            reset()
+        }
+    }, [res])
 
     return (
         <Dialog open={isOpenSubCategoryModel} onOpenChange={setIsOpenSubCategoryModel}>
@@ -73,7 +88,7 @@ const SubCategoryEditModel = ({ isOpenSubCategoryModel, setIsOpenSubCategoryMode
                                     )}
                                 />
                             </div>
-                            <Button type="submit" size="lg" variant="capsico" className="w-full mt-10">Add SubCategory</Button>
+                            <Button disabled={isLoading} type="submit" size="lg" variant="capsico" className="w-full mt-10">{isLoading?<Spinner/>:"Add SubCategory"}</Button>
                         </form>
                     </Form>
                     <DialogDescription></DialogDescription>

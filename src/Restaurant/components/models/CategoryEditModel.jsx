@@ -9,11 +9,16 @@ import {
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import usePostApiReq from "@/hooks/usePostApiReq";
 import { categorySchema } from "@/schemas/OrderMenuSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
-const CategoryEditModel = ({ isOpenCategoryModel, setIsOpenCategoryModel }) => {
+const CategoryEditModel = ({ isOpenCategoryModel, setIsOpenCategoryModel, getCategories }) => {
+
+    const { res, isLoading, fetchData } = usePostApiReq()
 
     const form = useForm({
         resolver: zodResolver(categorySchema),
@@ -27,13 +32,24 @@ const CategoryEditModel = ({ isOpenCategoryModel, setIsOpenCategoryModel }) => {
 
     const onSubmit = (data) => {
         console.log("data", data)
-        console.log('submit form')
-        setIsOpenCategoryModel(false)
-        reset({
-            category: "",
-            description: "",
+        fetchData("/restaurant/post-add-category", {
+            name: data.category,
+            description: data.description
         })
+        console.log('submit form')
     }
+
+
+    useEffect(() => {
+        if (res?.status === 200 || res?.status === 201) {
+            console.log("Add category res", res);
+            toast.success(res?.data?.message)
+            getCategories()
+            reset()
+            setIsOpenCategoryModel(false)
+        }
+    }, [res])
+
 
     return (
         <Dialog open={isOpenCategoryModel} onOpenChange={setIsOpenCategoryModel}>

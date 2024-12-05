@@ -38,7 +38,7 @@ function App() {
   const { res: logoutRes, fetchData: fetchLogoutData, } = usePostApiReq();
 
   const getStatus = () => {
-    fetchData("/user/status");
+    fetchData("/restaurant/status");
   }
   const logout = () => {
     fetchData("/user/logout");
