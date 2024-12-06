@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form'
 import { FaPlus } from 'react-icons/fa6'
 import { z } from 'zod'
 
-const MapAddOnModel = () => {
+const MapAddOnModel = ({ setValue, getValues, isMapAddonsModalOpen, setIsMapAddonsModalOpen }) => {
 
     const AddonSchema = z.object({
         name: z.string().min(3, "Minium 3 char is required").max(50, "Name cannot exceed 50 characters"),
@@ -30,18 +30,15 @@ const MapAddOnModel = () => {
     const { register, handleSubmit, formState: { errors }, reset, control } = form;
 
     const onsubmit = (data) => {
-        console.log("data ", data),
-            form.reset()
+        console.log("data ", data);
+        const prev = getValues("addOns");
+        setValue("addOns", [...prev, data])
+        form.reset()
+        setIsMapAddonsModalOpen(false);
     }
 
     return (
-        <Sheet>
-            <SheetTrigger asChild>
-                <button className="bg-[#F8F9FC] text-[#4A67FF] p-5 w-full flex items-center gap-2 rounded-md">
-                    <FaPlus className="text-base" />
-                    <p className="font-semibold text-lg">Create new Add on group</p>
-                </button>
-            </SheetTrigger>
+        <Sheet open={isMapAddonsModalOpen} onOpenChange={setIsMapAddonsModalOpen}>
             <SheetContent className="h-full max-w-[770px] w-full">
                 <Form {...form}>
                     <form onSubmit={handleSubmit(onsubmit)} className='flex flex-col justify-between h-full'>
@@ -68,7 +65,7 @@ const MapAddOnModel = () => {
                                         <FormItem className="z-20">
                                             <FormLabel className='text-[#969696] text-base font-medium font-inter'>Price ( In Rs)</FormLabel>
                                             <FormControl>
-                                                <Input type="text" className='border-[1.5px] border-[#B6B6B6] rounded-lg'  {...field} />
+                                                <Input type="number" className='border-[1.5px] border-[#B6B6B6] rounded-lg'  {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>

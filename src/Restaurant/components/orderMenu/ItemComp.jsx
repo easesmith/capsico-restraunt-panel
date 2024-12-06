@@ -8,7 +8,7 @@ import SubCategoryEditModel from '../models/SubCategoryEditModel'
 import { FaTrash } from 'react-icons/fa6'
 import { BiTrash } from 'react-icons/bi'
 
-const ItemComp = ({ title, category, getCategories, show }) => {
+const ItemComp = ({ title, category, getCategories, show, setCategoryId = () => { } }) => {
 
     const { name, id, subcategories } = category
 
@@ -41,7 +41,7 @@ const ItemComp = ({ title, category, getCategories, show }) => {
     }
 
     return (
-        <div>
+        <div onClick={() => setCategoryId(id)}>
             <div onClick={() => setIsOpenb(!isOpenb)} className="w-full flex items-center hover:bg-[#F7FAFF]  justify-between border-b-2 pl-10 pr-5 py-5 group cursor-pointer">
                 <h3 className="seven-color class-base1">{name}</h3>
                 <div className='flex items-center gap-8'>

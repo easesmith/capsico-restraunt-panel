@@ -25,16 +25,27 @@ const AddCustomizationModal = ({ isAddCustomizationModalOpen, setIsAddCustomizat
     })
 
     const [customizations, setCustomizations] = useState([]);
-    const { register, control, watch, setValue, getValues, reset } = form;
+    const { register, control, watch, setValue,trigger, getValues, reset,handleSubmit } = form;
 
     const onSubmit = (data) => {
         console.log("data", data);
         setCustomizations(prev => [
             ...prev,
-            { customizationName: data.customizationName, price: data.price }
+            { name: data.customizationName, price: data.price }
         ]);
         reset();
     }
+
+    const validateAndSubmit = async () => {
+        // Validate form fields manually
+        const isValid = await trigger(); // Triggers validation for all fields
+        if (isValid) {
+          const values = getValues(); // Retrieve validated form values
+          console.log("Form Data:", values);
+        } else {
+          console.log("Validation Failed");
+        }
+      };
 
     const sendArray = () => {
         if (customizations.length === 0) {
@@ -69,7 +80,7 @@ const AddCustomizationModal = ({ isAddCustomizationModalOpen, setIsAddCustomizat
                     </SheetTitle>
                     <SheetDescription>
                         <Form {...form}>
-                            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+                            <form onSubmit={handleSubmit(onSubmit)} className="w-full">
                                 <div className="mb-16 h-full">
                                     <div className="py-6 px-5">
                                         <div className='w-full grid grid-cols-[1fr_1fr_10%] items-end gap-5 border p-4 rounded-md'>
@@ -111,7 +122,7 @@ const AddCustomizationModal = ({ isAddCustomizationModalOpen, setIsAddCustomizat
                                                 </div>
                                                 {customizations.map((item, i) => (
                                                     <div key={i} className="grid grid-cols-[70%_28%] gap-[2%] border-b border-[#DADADA] py-2">
-                                                        <h4 className="font-inter text-[#969696] font-semibold">{item?.customizationName}</h4>
+                                                        <h4 className="font-inter text-[#969696] font-semibold">{item?.name}</h4>
                                                         <h4 className="font-inter text-[#969696] font-semibold">Rs {item?.price}</h4>
                                                     </div>
                                                 ))}

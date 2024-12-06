@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect } from 'react';
 import './App.css'
 
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes, useNavigate } from "react-router-dom";
 import { Toaster } from './components/ui/sonner';
 import MainMenu from './Restaurant/components/orderMenu/MainMenu';
 import ProtectedRoute from './protected-route/ProtectedRoute';
@@ -33,37 +33,50 @@ const OnlineOrdering = lazy(() => import('./Restaurant/pages/online-ordering/Onl
 
 function App() {
   const { isLoading } = useSelector((state) => state.loading);
-  const isAuthenticated = useAuth()
 
   const { res, fetchData } = useGetApiReq();
+  const { res: refreshRes, fetchData: fetchRefreshData, } = usePostApiReq();
   const { res: logoutRes, fetchData: fetchLogoutData, } = usePostApiReq();
 
   const getStatus = () => {
     fetchData("/restaurant/status");
   }
-  const refreshToken = () => {
-    fetchData("/restaurant/refresh-token");
-  }
 
   const token = readCookie("userInfo");
-  console.log("token", token);
+
+  const refreshToken = () => {
+    fetchRefreshData("/restaurant/refresh-token");
+  }
+
+  const logout = () => {
+    fetchLogoutData("/restaurant/logout-all", { phone: token?.phone, role: "restaurant" });
+  }
 
   useEffect(() => {
     getStatus();
-    // logout()
   }, [])
 
   useEffect(() => {
     if (res?.status === 200 || res?.status === 201) {
-      localStorage.setItem("restaurant-status", res?.data?.isAuthenticated);
-      console.log("status response", res?.data?.isAuthenticated);
+      localStorage.setItem("restaurant-status", `${res?.data?.isAuthenticated}`);
+      console.log("status response", res);
+      res?.data?.shouldLoggOut && logout();
       !res?.data?.isAuthenticated && refreshToken();
     }
   }, [res])
 
+
+  useEffect(() => {
+    if (refreshRes?.status === 200 || refreshRes?.status === 201) {
+      localStorage.setItem("restaurant-status", true);
+      window.location.reload();
+    }
+  }, [refreshRes])
+
   useEffect(() => {
     if (logoutRes?.status === 200 || logoutRes?.status === 201) {
-      localStorage.setItem("restaurant-status", false);
+      localStorage.setItem("restaurant-status", "false");
+      window.location.reload();
     }
   }, [logoutRes])
 

@@ -34,7 +34,8 @@ const OtpModal = ({ isOtpModalOpen, setIsOtpModalOpen, phone, resendOtp, isEmail
             setTimeLeft(60);
             fetchData("/restaurant/verify-login-otp", {
                 phone,
-                otp
+                otp,
+                role: "restaurant"
             });
         }
     };

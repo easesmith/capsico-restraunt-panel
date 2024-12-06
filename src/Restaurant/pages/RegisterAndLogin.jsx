@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import registerAndLoginImg from '@/assets/Rectangle 6103.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Separator } from "@/components/ui/separator"
 import { useState } from 'react'
 import Login from '../components/Login'
@@ -8,6 +8,12 @@ import { GoogleOAuthProvider } from '@react-oauth/google'
 
 const RegisterAndLogin = () => {
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+    const navigate = useNavigate();
+    const isAuthenticated = localStorage.getItem("restaurant-status") === "true";
+    if (isAuthenticated) {
+        navigate("/restaurant/orders")
+    }
+    
     return (
         <div className='max-w-[1350px] w-full py-5 mx-auto'>
             <div>

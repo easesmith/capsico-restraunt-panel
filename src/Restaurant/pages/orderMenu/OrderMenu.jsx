@@ -35,6 +35,7 @@ const OrderMenu = () => {
   const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
   const [isAddonGroupsModalOpen, setIsAddonGroupsModalOpen] = useState(false);
   const [allCategories, setAllCategories] = useState([]);
+  const [categoryId, setCategoryId] = useState("");
 
   const toggleOpena = () => {
     setIsOpena(!isOpena);
@@ -85,7 +86,7 @@ const OrderMenu = () => {
                 <button className={``}><IoIosArrowForward className="seven-color text-2xl" /></button>
                 </div> */}
                   {allCategories?.map((category) => (
-                    <ItemComp key={category?._id} category={category} getCategories={getCategories} show={true} />
+                    <ItemComp setCategoryId={setCategoryId} key={category?._id} category={category} getCategories={getCategories} show={true} />
                   ))}
 
                   {allCategories.length === 0 && isLoading &&
@@ -114,6 +115,7 @@ const OrderMenu = () => {
                 <AddItemModal
                   isAddItemModalOpen={isAddItemModalOpen}
                   setIsAddItemModalOpen={setIsAddItemModalOpen}
+                  categoryId={categoryId}
                 />
               }
 
@@ -141,8 +143,8 @@ const OrderMenu = () => {
             }
           </>
         }
-        
-        {isActiveTab === 'inventory' && <ManageInventory allCategories={allCategories}/>}
+
+        {isActiveTab === 'inventory' && <ManageInventory allCategories={allCategories} />}
 
       </div>
     </RestaurantWrapper>

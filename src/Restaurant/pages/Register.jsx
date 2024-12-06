@@ -5,6 +5,7 @@ import Register1 from '../components/register/Register1';
 import Register2 from '../components/register/Register2';
 import Register3 from '../components/register/Register3';
 import RegisterSuccessModal from '../components/RegisterSuccessModal';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const [step, setStep] = useState(3);
@@ -12,6 +13,12 @@ const Register = () => {
     const [isRegisterSuccessModalOpen, setIsRegisterSuccessModalOpen] = useState(false);
     const [isCreateOrRegisterRestaurantModalOpen, setIsCreateOrRegisterRestaurantModalOpen] = useState(true);
     const [isChecked, setIsChecked] = useState(true);
+
+    const navigate = useNavigate();
+    const isAuthenticated = localStorage.getItem("restaurant-status") === "true";
+    if (isAuthenticated) {
+        navigate("/restaurant/orders")
+    }
 
     return (
         <div className='max-w-7xl mx-auto p-6'>

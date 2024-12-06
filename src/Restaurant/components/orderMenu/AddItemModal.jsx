@@ -42,11 +42,14 @@ import useGetApiReq from "@/hooks/useGetApiReq"
 import DataNotFound from "../DataNotFound"
 import Spinner from "../Spinner"
 import usePostApiReq from "@/hooks/usePostApiReq"
+import AvailabilityForFoodItem from "./AvailabilityForFoodItem"
 
-const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
+const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen, categoryId }) => {
     const [isItemImageUploadModalOpen, setIsItemImageUploadModalOpen] = useState(false);
     const [isVariant, setIsVariant] = useState(false);
+    const [isVariantModalOpen, setIsVariantModalOpen] = useState(false);
     const [isMapAddons, setIsMapAddons] = useState(false);
+    const [isMapAddonsModalOpen, setIsMapAddonsModalOpen] = useState(false);
     const [isAdditionalDetails, setIsAdditionalDetails] = useState(false);
     const [isServingInfo, setIsServingInfo] = useState(false);
     const [isCustomization, setIsCustomization] = useState(false);
@@ -55,6 +58,7 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
     const [isAddCustomizationModalOpen, setIsAddCustomizationModalOpen] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(null);
     const [cuisines, setCuisines] = useState([]);
+    const [availabilityForFoodItem, setAvailabilityForFoodItem] = useState(false);
 
     const handleCustomization = (index) => {
         setCurrentIndex(index);
@@ -69,12 +73,21 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
             itemImagePreview: "",
             itemDescription: "",
             cuisine: "",
+            foodType: "",
             menuCategory: "",
             basePrice: "",
             packagingCharges: "",
             numberOfPeople: "",
             dishSize: "",
+            preparationTime: "",
+            restaurant: "",
+            variations: [],
+            addOns: [],
             customizations: [],
+            timingType: "sameAsRestaurant",
+            openingTime: "",
+            closingTime: "",
+            days: []
         }
     })
 
@@ -99,9 +112,6 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
     const restaurant = watch("restaurant");
     const itemImage = watch("itemImage");
 
-    console.log("itemImage", itemImage);
-    console.log("itemImagePreview", watch("itemImagePreview"));
-
 
     useEffect(() => {
         updateMultiplePreview(restaurant, "restaurantPreview", setValue);
@@ -113,6 +123,8 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
     const getCuisines = () => {
         fetchData("/restaurant/get-cuisines");
     }
+
+    console.log("getvalues data", getValues());
 
     useEffect(() => {
         getCuisines();
@@ -128,9 +140,45 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
     const { res: addItemRes, fetchData: fetchAddItemData, isLoading: isAddItemLoading } = usePostApiReq();
 
     const onSubmit = (data) => {
-        console.log("data", data);
-        fetchAddItemData("/restaurant/add-menu-item");
+        console.log("submit data", data);
+
+        const availableTimings = {
+            sameAsRestaurant: data.timingType === "sameAsRestaurant",
+            start: data.openingTime,
+            end: data.closingTime,
+            days: data.days,
+        }
+
+        const modifiedCustomizations = getValues("customizations")?.map((customization) => {
+            return {
+                name: customization.categoryName,
+                type: customization.customizationType,
+                options: customization.customizationOptions,
+            }
+        })
+
+        const formData = new FormData();
+        formData.append("name", data.itemName);
+        formData.append("description", data.itemDescription);
+        formData.append("price", data.basePrice);
+        formData.append("FoodType", data.foodType);
+        formData.append("cuisine", data.cuisine);
+        formData.append("preparationTime", data.preparationTime);
+        formData.append("categoryId", categoryId);
+        formData.append("availableTimings", JSON.stringify(availableTimings));
+        formData.append("variations", JSON.stringify(getValues("variations")));
+        formData.append("addOns", JSON.stringify(getValues("addOns")));
+        formData.append("customizations", JSON.stringify(modifiedCustomizations));
+        Array.from(data.itemImage).forEach((image) => {
+            formData.append("images", image);
+        });
+        fetchAddItemData("/restaurant/add-menu-item", formData);
     }
+    // menuCategory: "",
+    // packagingCharges: "",
+    // numberOfPeople: "",
+    // dishSize: "",
+    // customizations: [],
 
     useEffect(() => {
         if (addItemRes?.status === 200 || addItemRes?.status === 201) {
@@ -258,6 +306,22 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                                 />
                                             </div>
 
+                                            <div className="w-full mt-5">
+                                                <FormField
+                                                    control={control}
+                                                    name="preparationTime"
+                                                    render={({ field }) => (
+                                                        <FormItem className="z-20">
+                                                            <FormLabel>Preparation Time</FormLabel>
+                                                            <FormControl>
+                                                                <Input type="number" placeholder="Preparation Time (in minutes)"  {...field} />
+                                                            </FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                            </div>
+
                                             <div className="mt-5">
                                                 <Label>Item Photos</Label>
                                                 {/* <div onClick={() => setIsItemImageUploadModalOpen(true)} className='border-2 mt-2 flex flex-col bg-[#F7FAFF] items-center justify-center primary-color w-40 h-40 rounded-md px-5 py-4'>
@@ -278,9 +342,9 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                                                     </div>
                                                                 }
                                                                 {watch("itemImagePreview")?.length > 0 && (
-                                                                    <div className="flex gap-4 flex-wrap">
+                                                                    <div className="flex gap-4 flex-wrap mt-5">
                                                                         {watch("itemImagePreview").map((image, index) => (
-                                                                            <img key={index} className="w-72" src={image} alt={`Preview ${index + 1}`} />
+                                                                            <img key={index} className="w-40" src={image} alt={`Preview ${index + 1}`} />
                                                                         ))}
                                                                     </div>
                                                                 )}
@@ -352,29 +416,33 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                                 <p>You can offer variations of a item, such as size/ base/ crust, etc. When customers place an order, they must choose at least one from the defined variants.</p>
                                             </div>
                                             {isVariant &&
-                                                // <div className="bg-[#F8F9FC] p-5 grid grid-cols-2 gap-5 rounded-md">
-                                                //     <Property
-                                                //         title="Size"
-                                                //         example="E.g. Small, Medium, Large"
-                                                //         form={form}
-                                                //     />
-                                                //     <Property
-                                                //         title="Quantity"
-                                                //         example="E.g. Quarter, Half, Full"
-                                                //         form={form}
-                                                //     />
-                                                //     <Property
-                                                //         title="Preparation Type"
-                                                //         example="E.g. Halal, Non halal"
-                                                //         form={form}
-                                                //     />
-                                                //     <Property
-                                                //         title="Base"
-                                                //         example="E.g. Thin, thick crust"
-                                                //         form={form}
-                                                //     />
-                                                // </div>
-                                                <CreateVariantModel />
+                                                <>
+                                                    <button onClick={() => setIsVariantModalOpen(true)} type="button" className="bg-[#F8F9FC] text-[#4A67FF] p-5 w-full flex items-center gap-2 rounded-md">
+                                                        <FaPlus className="text-base" />
+                                                        <p className="font-semibold text-lg">Create new Variant</p>
+                                                    </button>
+                                                    {watch("variations").length > 0 &&
+                                                        <div className="mt-5">
+                                                            <div className="grid grid-cols-[70%_28%] gap-[2%] mt-5 border-b border-[#DADADA] pb-2">
+                                                                <h4 className="font-inter text-[#969696] font-semibold">Variant Name</h4>
+                                                                <h4 className="font-inter text-[#969696] font-semibold">Price (In Rs)</h4>
+                                                            </div>
+                                                            {watch("variations")?.map((variation, i) => (
+                                                                <div key={i} className="grid grid-cols-[70%_28%] gap-[2%] border-b border-[#DADADA] py-2">
+                                                                    <h4 className="font-inter text-[#969696] font-semibold">{variation?.name}</h4>
+                                                                    <h4 className="font-inter text-[#969696] font-semibold">Rs {variation?.price}</h4>
+                                                                </div>))}
+                                                        </div>
+                                                    }
+                                                    {isVariantModalOpen &&
+                                                        <CreateVariantModel
+                                                            isVariantModalOpen={isVariantModalOpen}
+                                                            setIsVariantModalOpen={setIsVariantModalOpen}
+                                                            setValue={setValue}
+                                                            getValues={getValues}
+                                                        />
+                                                    }
+                                                </>
                                             }
                                         </div>
                                         <div className="p-5 border-b border-[#C8C8C8]">
@@ -387,7 +455,33 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                                 <p>Add-ons enhance the customer experience by offering extra choices like toppings or desserts.</p>
                                             </div>
                                             {isMapAddons &&
-                                                <MapAddOnModel />
+                                                <>
+                                                    <button onClick={() => setIsMapAddonsModalOpen(true)} type="button" className="bg-[#F8F9FC] text-[#4A67FF] p-5 w-full flex items-center gap-2 rounded-md">
+                                                        <FaPlus className="text-base" />
+                                                        <p className="font-semibold text-lg">Create new Add on group</p>
+                                                    </button>
+                                                    {watch("addOns").length > 0 &&
+                                                        <div className="mt-5">
+                                                            <div className="grid grid-cols-[70%_28%] gap-[2%] mt-5 border-b border-[#DADADA] pb-2">
+                                                                <h4 className="font-inter text-[#969696] font-semibold">AddOn Name</h4>
+                                                                <h4 className="font-inter text-[#969696] font-semibold">Price (In Rs)</h4>
+                                                            </div>
+                                                            {watch("addOns")?.map((variation, i) => (
+                                                                <div key={i} className="grid grid-cols-[70%_28%] gap-[2%] border-b border-[#DADADA] py-2">
+                                                                    <h4 className="font-inter text-[#969696] font-semibold">{variation?.name}</h4>
+                                                                    <h4 className="font-inter text-[#969696] font-semibold">Rs {variation?.price}</h4>
+                                                                </div>))}
+                                                        </div>
+                                                    }
+                                                    {isMapAddonsModalOpen &&
+                                                        <MapAddOnModel
+                                                            isMapAddonsModalOpen={isMapAddonsModalOpen}
+                                                            setIsMapAddonsModalOpen={setIsMapAddonsModalOpen}
+                                                            setValue={setValue}
+                                                            getValues={getValues}
+                                                        />
+                                                    }
+                                                </>
                                             }
                                         </div>
                                         <div className="p-5 border-b border-[#C8C8C8]">
@@ -555,7 +649,7 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                                                     </div>
                                                                     {customization?.customizationOptions?.map((option, i) => (
                                                                         <div key={i} className="grid grid-cols-[70%_28%] gap-[2%] border-b border-[#DADADA] py-2">
-                                                                            <h4 className="font-inter text-[#969696] font-semibold">{option?.customizationName}</h4>
+                                                                            <h4 className="font-inter text-[#969696] font-semibold">{option?.name}</h4>
                                                                             <h4 className="font-inter text-[#969696] font-semibold">Rs {option?.price}</h4>
                                                                         </div>))}
                                                                 </div>}
@@ -572,6 +666,21 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                                                         />
                                                     }
                                                 </div>
+                                            }
+                                        </div>
+                                        <div className="p-5 border-b border-[#C8C8C8]">
+                                            <div onClick={() => setAvailabilityForFoodItem(!availabilityForFoodItem)} className="cursor-pointer pb-6">
+                                                <div className="flex justify-between items-center">
+                                                    <h3 className="text-black class-lg6">Availability for  food item</h3>
+                                                    {availabilityForFoodItem ? <FaMinus className="text-black" size={20} />
+                                                        : <FaPlus className="text-black" size={20} />}
+
+                                                </div>
+                                                <p>Availability for <b>food item</b></p>
+                                            </div>
+
+                                            {availabilityForFoodItem &&
+                                                <AvailabilityForFoodItem form={form} />
                                             }
                                         </div>
                                     </div>
@@ -609,7 +718,7 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen }) => {
                     </SheetDescription>
                 </SheetHeader>
             </SheetContent>
-        </Sheet>
+        </Sheet >
     )
 }
 

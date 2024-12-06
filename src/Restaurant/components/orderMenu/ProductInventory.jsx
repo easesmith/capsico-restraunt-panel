@@ -4,8 +4,10 @@ import outletIcon from "@/assets/outlet.png"
 import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
 
-const ProductInventory = () => {
-    const [isOn, setIsOn] = useState(false);
+const ProductInventory = ({ foodItem }) => {
+    const { name, price, isAvailable, veg } = foodItem;
+
+    const [isOn, setIsOn] = useState(isAvailable);
     return (
         <div className='px-5 py-3 flex justify-between items-center group gap-2 border-b hover:bg-[#F7FAFF] cursor-pointer'>
             <div className='flex gap-3 items-center'>
@@ -14,8 +16,8 @@ const ProductInventory = () => {
                     <VegIcon />
                     {/* <NonVegIcon /> */}
                     {/* <EggIcon /> */}
-                    <h3 className='eleven-color class-base1 mt-2'>Product 1</h3>
-                    <p className='class-base1'>₹99+</p>
+                    <h3 className='eleven-color class-base1 mt-2'>{name}</h3>
+                    <p className='class-base1'>₹{price}</p>
                 </div>
             </div>
             <div className="flex flex-col items-center space-y-2">

@@ -1,12 +1,43 @@
 import { Input } from '@/components/ui/input'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { IoSearchOutline } from 'react-icons/io5'
 import ProductInventory from './ProductInventory'
 import ItemComp from './ItemComp'
 import Spinner from '../Spinner'
 import DataNotFound from '../DataNotFound'
+import useGetApiReq from '@/hooks/useGetApiReq'
 
-const ManageInventory = ({allCategories}) => {
+const ManageInventory = ({ allCategories }) => {
+    const [foodItemsInfo, setFoodItemsInfo] = useState("");
+    const [categoryId, setCategoryId] = useState(allCategories[0]?._id || "");
+
+    const { res, fetchData, isLoading } = useGetApiReq();
+
+    const getFoodItems = () => {
+        fetchData(`/restaurant/category/${categoryId}/food`);
+    }
+
+    useEffect(() => {
+        categoryId && getFoodItems();
+    }, [categoryId])
+
+    useEffect(() => {
+        if (res?.status === 200 || res?.status === 201) {
+            console.log("get food items res", res);
+            // setFoodItems(res?.data?.data);
+            const { categoryInfo, itemsByCategory, totalItems } = res?.data?.data;
+
+            setFoodItemsInfo({
+                categoryInfo,
+                totalItems,
+                itemsByCategory: itemsByCategory[categoryInfo.name],
+            });
+        }
+    }, [res])
+
+    console.log("foodItems", foodItemsInfo);
+
+
     return (
         <div>
             <div className='w-[500px] relative mt-4'>
@@ -18,7 +49,7 @@ const ManageInventory = ({allCategories}) => {
                     <h3 className=" class-base5 p-5 bg-[#F2F4F7] border-b border-b-[#CED7DE]">Categories</h3>
                     <div className="overflow-y-auto h-full pb-[180px]">
                         {allCategories?.map((category) => (
-                            <ItemComp key={category?._id} category={category} />
+                            <ItemComp setCategoryId={setCategoryId} key={category?._id} category={category} />
                         ))}
 
                         {allCategories.length === 0 && isLoading &&
@@ -30,10 +61,16 @@ const ManageInventory = ({allCategories}) => {
                         }
                     </div>
                 </div>
-                <div className="right-section w-2/3 bg-white h-full">
-                    <h3 className=" class-base5 p-5 bg-[#F2F4F7] border-b border-b-[#CED7DE]">Combos (3)</h3>
-                    <ProductInventory/>
-                </div>
+                {categoryId &&
+                    <div className="right-section w-2/3 bg-white h-full">
+                        {foodItemsInfo && <h3 className=" class-base5 p-5 bg-[#F2F4F7] border-b border-b-[#CED7DE]">{foodItemsInfo?.categoryInfo?.name} ({foodItemsInfo?.totalItems})</h3>}
+                        {foodItemsInfo?.itemsByCategory?.map((foodItem) => (
+                            <ProductInventory
+                                key={foodItem?._id}
+                                foodItem={foodItem}
+                            />
+                        ))}
+                    </div>}
             </div>
         </div>
     )

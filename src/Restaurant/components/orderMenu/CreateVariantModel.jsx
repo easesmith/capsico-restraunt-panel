@@ -4,12 +4,11 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { zodResolver } from '@hookform/resolvers/zod'
-import React from 'react'
 import { useForm } from 'react-hook-form'
 import { FaPlus } from 'react-icons/fa6'
 import { z } from 'zod'
 
-const CreateVariantModel = () => {
+const CreateVariantModel = ({ setValue, getValues, isVariantModalOpen, setIsVariantModalOpen }) => {
     const AddonSchema = z.object({
         name: z.string().min(3, "Minium 3 char is required").max(50, "Name cannot exceed 50 characters"),
         price: z
@@ -29,17 +28,14 @@ const CreateVariantModel = () => {
     const { register, handleSubmit, formState: { errors }, reset, control } = form;
 
     const onsubmit = (data) => {
-        console.log("data ", data),
-            form.reset()
+        console.log("data ", data)
+        const prev = getValues("variations");
+        setValue("variations", [...prev, data])
+        form.reset()
+        setIsVariantModalOpen(false);
     }
     return (
-        <Sheet>
-            <SheetTrigger asChild>
-                <button className="bg-[#F8F9FC] text-[#4A67FF] p-5 w-full flex items-center gap-2 rounded-md">
-                    <FaPlus className="text-base" />
-                    <p className="font-semibold text-lg">Create new Variant</p>
-                </button>
-            </SheetTrigger>
+        <Sheet open={isVariantModalOpen} onOpenChange={setIsVariantModalOpen}>
             <SheetContent className="h-full max-w-[770px] w-full">
                 <Form {...form}>
                     <form onSubmit={handleSubmit(onsubmit)} className='flex flex-col justify-between h-full'>
@@ -66,7 +62,7 @@ const CreateVariantModel = () => {
                                         <FormItem className="z-20">
                                             <FormLabel className='text-[#969696] text-base font-medium font-inter'>Price ( In Rs)</FormLabel>
                                             <FormControl>
-                                                <Input type="text" className='border-[1.5px] border-[#B6B6B6] rounded-lg'  {...field} />
+                                                <Input type="number" className='border-[1.5px] border-[#B6B6B6] rounded-lg'  {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
