@@ -23,10 +23,6 @@ import { IoSearchOutline } from "react-icons/io5";
 import ManageInventory from "@/Restaurant/components/orderMenu/ManageInventory";
 
 const OrderMenu = () => {
-
-  const [activeTab, setActiveTab] = useState("Items");
-  const [isExpanded, setIsExpanded] = useState(false)
-  const [addCategory, setAddCategory] = useState(true)
   const [isActiveTab, setIsActiveTab] = useState("editor")
 
   const [isOpena, setIsOpena] = useState(true);
@@ -36,6 +32,7 @@ const OrderMenu = () => {
   const [isAddonGroupsModalOpen, setIsAddonGroupsModalOpen] = useState(false);
   const [allCategories, setAllCategories] = useState([]);
   const [categoryId, setCategoryId] = useState("");
+  const [foodItemsInfo, setFoodItemsInfo] = useState("");
 
   const toggleOpena = () => {
     setIsOpena(!isOpena);
@@ -58,6 +55,30 @@ const OrderMenu = () => {
       setAllCategories(res?.data?.data);
     }
   }, [res])
+
+  const { res: foodItemRes, fetchData: fetchFoodItemData, isLoading: isFoodItemLoading } = useGetApiReq();
+
+  const getFoodItems = () => {
+    fetchFoodItemData(`/restaurant/category/${categoryId}/food`);
+  }
+
+  useEffect(() => {
+    categoryId && getFoodItems();
+  }, [categoryId])
+
+  useEffect(() => {
+    if (foodItemRes?.status === 200 || foodItemRes?.status === 201) {
+      console.log("get food items res", foodItemRes);
+      // setFoodItems(res?.data?.data);
+      const { categoryInfo, itemsByCategory, totalItems } = foodItemRes?.data?.data;
+
+      setFoodItemsInfo({
+        categoryInfo,
+        totalItems,
+        itemsByCategory: itemsByCategory[categoryInfo.name],
+      });
+    }
+  }, [foodItemRes])
 
   return (
     <RestaurantWrapper>
@@ -102,14 +123,20 @@ const OrderMenu = () => {
                   <FaArrowRight className="primary-color" />
                 </button>
               </div>
-              <div className="right-section w-2/3 bg-white h-full">
-                <h3 className=" class-base5 p-5 bg-[#F2F4F7] border-b border-b-[#CED7DE]">Combos (3)</h3>
-                <button className="flex w-full items-center gap-3 p-5 border-b" onClick={() => setIsAddItemModalOpen(true)}>
-                  <FaPlus className="primary-color" />
-                  <span className="class-base1 primary-color">Add New Item</span>
-                </button>
-                <Product />
-              </div>
+              {categoryId &&
+                <div className="right-section w-2/3 bg-white h-full">
+                  {foodItemsInfo && <h3 className=" class-base5 p-5 bg-[#F2F4F7] border-b border-b-[#CED7DE]">{foodItemsInfo?.categoryInfo?.name} ({foodItemsInfo?.totalItems})</h3>}
+                  <button className="flex w-full items-center gap-3 p-5 border-b" onClick={() => setIsAddItemModalOpen(true)}>
+                    <FaPlus className="primary-color" />
+                    <span className="class-base1 primary-color">Add New Item</span>
+                  </button>
+                  {foodItemsInfo?.itemsByCategory?.map((foodItem) => (
+                    <Product
+                      key={foodItem?._id}
+                      foodItem={foodItem}
+                    />
+                  ))}
+                </div>}
 
               {isAddItemModalOpen &&
                 <AddItemModal

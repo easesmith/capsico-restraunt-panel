@@ -89,9 +89,9 @@ function App() {
           <Routes>
             <Route path='/' element={<RegisterAndLogin />} />
             <Route path='/restaurant/register' element={<Register />} />
+            <Route path='/restaurant/online-ordering' element={<OnlineOrdering />} />
 
             <Route element={<ProtectedRoute />}>
-              <Route path='/restaurant/online-ordering' element={<OnlineOrdering />} />
               <Route path='/restaurant/reporting/*' element={<Reporting />} />
               <Route path='/restaurant/offers' element={<Offers />} />
               <Route path='/restaurant/outlet-info' element={<OutletInfo />} />

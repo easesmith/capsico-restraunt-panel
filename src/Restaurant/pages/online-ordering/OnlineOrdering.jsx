@@ -3,13 +3,10 @@ import { Form } from '@/components/ui/form';
 import OnlineOrdering1 from '@/Restaurant/components/online-ordering/OnlineOrdering1';
 import OnlineOrdering2 from '@/Restaurant/components/online-ordering/OnlineOrdering2';
 import OnlineOrdering3 from '@/Restaurant/components/online-ordering/OnlineOrdering3';
-import Register1 from '@/Restaurant/components/register/Register1';
-import Register3 from '@/Restaurant/components/register/Register3';
 import RegisterSuccessModal from '@/Restaurant/components/RegisterSuccessModal';
 import { OnlineOrderingSchema, OnlineOrderingSchema1, OnlineOrderingSchema2, OnlineOrderingSchema3 } from '@/schemas/OnlineOrderingSchema';
-import { RegisterSchema, RegisterSchema1, RegisterSchema2, RegisterSchema3 } from '@/schemas/registerSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React, { useState } from 'react'
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaCheck } from 'react-icons/fa6';
 
@@ -33,12 +30,14 @@ const OnlineOrdering = () => {
                 break;
         }
 
-        const valid = await form.trigger(Object.keys(schema.shape));
+        // const valid = await form.trigger(Object.keys(schema.shape));
+        
         setStep(step + 1);
-        if (valid) {
-        }
+        // if (valid) {
+        // }
     };
-
+    
+    console.log("step",step);
 
     const form = useForm({
         resolver: zodResolver(OnlineOrderingSchema),

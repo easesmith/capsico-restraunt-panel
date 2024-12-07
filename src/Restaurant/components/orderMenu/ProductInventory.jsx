@@ -1,17 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import VegIcon from '../customIcons/VegIcon'
 import outletIcon from "@/assets/outlet.png"
 import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
+import usePostApiReq from '@/hooks/usePostApiReq'
 
 const ProductInventory = ({ foodItem }) => {
     const { name, price, isAvailable, veg } = foodItem;
-
     const [isOn, setIsOn] = useState(isAvailable);
+
+    const { res, fetchData, isLoading } = usePostApiReq();
+
+    const toggleFoodAvailability = (value) => {
+        fetchData(`/restaurant/food-availability/${foodItem?.id}`);
+    }
+
+    useEffect(() => {
+        if (res?.status === 200 || res?.status === 201) {
+            console.log("toggleFoodAvailability res", res);
+            setIsOn(res?.data?.data?.isAvailable)
+        }
+    }, [res])
+
     return (
         <div className='px-5 py-3 flex justify-between items-center group gap-2 border-b hover:bg-[#F7FAFF] cursor-pointer'>
             <div className='flex gap-3 items-center'>
-                <img className='w-28 rounded' src={outletIcon} alt="" />
+                <img className='w-20 rounded' src={`${import.meta.env.VITE_IMAGE_URL}/${foodItem?.image}`} alt="item" />
                 <div className=''>
                     <VegIcon />
                     {/* <NonVegIcon /> */}
@@ -24,7 +38,7 @@ const ProductInventory = ({ foodItem }) => {
                 <Switch
                     id="custom-switch"
                     checked={isOn}
-                    onCheckedChange={(value) => setIsOn(value)}
+                    onCheckedChange={(value) => toggleFoodAvailability(value)}
                     className={isOn ? "bg-green-500" : "bg-gray-300"}
                 />
                 <Label htmlFor="airplane-mode">In Stock</Label>
