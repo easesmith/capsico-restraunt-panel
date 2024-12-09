@@ -1,9 +1,29 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import OfferDetails from './OfferDetails'
+import useGetApiReq from '@/hooks/useGetApiReq'
+import Spinner from '../Spinner'
+import DataNotFound from '../DataNotFound'
 
 const TrackOffer = () => {
     const [selected, setSelected] = useState("All")
-    const [offerActiveTab, setOfferActiveTab] = useState(false)
+
+    const [coupons, setCoupons] = useState([]);
+    const { res, fetchData, isLoading } = useGetApiReq();
+
+    const getCoupons = () => {
+        fetchData("/restaurant/get-coupons");
+    }
+
+    useEffect(() => {
+        getCoupons();
+    }, [])
+
+    useEffect(() => {
+        if (res?.status === 200 || res?.status === 201) {
+            console.log("get coupons res", res);
+            setCoupons(res?.data?.data?.coupons);
+        }
+    }, [res])
 
     return (
         <div className='px-5 py-5'>
@@ -15,29 +35,21 @@ const TrackOffer = () => {
             </div>
 
             <div className='mt-5 flex flex-col gap-5'>
-                {
-                    selected === "All" && <>
-                        <OfferDetails offerActiveTab={offerActiveTab} setOfferActiveTab={setOfferActiveTab} />
-                        <OfferDetails offerActiveTab={offerActiveTab} setOfferActiveTab={setOfferActiveTab} />
-                    </>
+                {coupons.length === 0 && isLoading &&
+                    <Spinner />
                 }
-                {
-                    selected === "Active" && <>
-                        <OfferDetails offerActiveTab={offerActiveTab} setOfferActiveTab={setOfferActiveTab} />
-                        <OfferDetails offerActiveTab={offerActiveTab} setOfferActiveTab={setOfferActiveTab} />
-                    </>
+
+                {coupons.length === 0 && !isLoading &&
+                    <DataNotFound name="Coupons" />
                 }
-                {
-                    selected === "Inactive" && <>
-                        <OfferDetails offerActiveTab={offerActiveTab} setOfferActiveTab={setOfferActiveTab} />
-                        <OfferDetails offerActiveTab={offerActiveTab} setOfferActiveTab={setOfferActiveTab} />
-                    </>
-                }
-                {
-                    selected === "Scheduled" && <>
-                        <OfferDetails offerActiveTab={offerActiveTab} setOfferActiveTab={setOfferActiveTab} />
-                        <OfferDetails offerActiveTab={offerActiveTab} setOfferActiveTab={setOfferActiveTab} />
-                    </>
+
+                {coupons.length > 0 &&
+                    coupons.map((coupon) => (
+                        <OfferDetails
+                            key={coupon?.id}
+                            coupon={coupon}
+                        />
+                    ))
                 }
             </div>
         </div>

@@ -34,6 +34,7 @@ const CreateVariantModel = ({ setValue, getValues, isVariantModalOpen, setIsVari
         form.reset()
         setIsVariantModalOpen(false);
     }
+    
     return (
         <Sheet open={isVariantModalOpen} onOpenChange={setIsVariantModalOpen}>
             <SheetContent className="h-full max-w-[770px] w-full">

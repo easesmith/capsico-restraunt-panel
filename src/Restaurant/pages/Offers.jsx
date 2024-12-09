@@ -4,7 +4,7 @@ import CreateOffer from '../components/offer/CreateOffer';
 import TrackOffer from '../components/offer/TrackOffer';
 
 const Offers = () => {
-    const [isCreateOffer, setIsCreateOffer] = useState(true);
+    const [isCreateOffer, setIsCreateOffer] = useState(false);
     return (
         <RestaurantWrapper>
             <div>
