@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import RestaurantWrapper from '../components/restaurantWrapper/RestaurantWrapper'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { MdOutlineKeyboardArrowRight } from 'react-icons/md'
 import AboutOutlet from '../components/outletInfo/AboutOutlet'
 import ContactInfo from '../components/outletInfo/ContactInfo'
@@ -8,11 +8,28 @@ import OutletWorkingTime from '../components/outletInfo/OutletWorkingTime'
 import RestaurantAddress from '../components/outletInfo/RestaurantAddress'
 // import ControlDeliveryDistance from '../components/outletInfo/ControlDeliveryDistance'
 import ControlDeliveryDistanceModel from '../components/models/ControlDeliveryDistanceModel'
+import useGetApiReq from '@/hooks/useGetApiReq'
 
 const OutletInfo = () => {
     const [selcected, setSelcected] = useState("About-Outlet");
 
     const [isControlDeliveryModel, setIsControlDeliveryModel] = useState(false)
+
+    const { res, fetchData, isLoading } = useGetApiReq();
+
+    const getRestaurantProfile = () => {
+        fetchData("/restaurant/restaurant-profile");
+    }
+
+    useEffect(() => {
+        getRestaurantProfile();
+    }, [])
+
+    useEffect(() => {
+        if (res?.status === 200 || res?.status === 201) {
+            console.log("restaurant profile response", res);
+        }
+    }, [res])
 
     return (
         <RestaurantWrapper>
@@ -45,9 +62,9 @@ const OutletInfo = () => {
                         </div>
                     </div>
                     <div>
-                        {selcected === "About-Outlet" && <AboutOutlet />}
+                        {selcected === "About-Outlet" && <AboutOutlet getRestaurantProfile={getRestaurantProfile} profile={res?.data?.data?.profile} />}
                         {selcected === "Contact-Info" && <ContactInfo />}
-                        {selcected === "Outlet-Working-time" && <OutletWorkingTime />}
+                        {selcected === "Outlet-Working-time" && <OutletWorkingTime getRestaurantProfile={getRestaurantProfile} operatingHours={res?.data?.data?.profile?.operatingHours} />}
                         {/* {selcected === "Control-delivery-distance" && <ControlDeliveryDistance/>} */}
                         {/* {selcected === "Control-delivery-distance" && isControlDeliveryModel ? <ControlDeliveryDistanceModel/> : 'bh'} */}
                         {/* {isControlDeliveryModel ?<ControlDeliveryDistanceModel/>: ''} */}
@@ -58,7 +75,7 @@ const OutletInfo = () => {
                     <ControlDeliveryDistanceModel
                         isControlDeliveryModel={isControlDeliveryModel}
                         setIsControlDeliveryModel={setIsControlDeliveryModel}
-                    /> 
+                    />
                 }
             </div>
         </RestaurantWrapper>

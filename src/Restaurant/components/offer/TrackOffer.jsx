@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import OfferDetails from './OfferDetails'
 import useGetApiReq from '@/hooks/useGetApiReq'
 import Spinner from '../Spinner'
@@ -10,13 +10,13 @@ const TrackOffer = () => {
     const [coupons, setCoupons] = useState([]);
     const { res, fetchData, isLoading } = useGetApiReq();
 
-    const getCoupons = () => {
+    const getCoupons = useCallback(() => {
         fetchData("/restaurant/get-coupons");
-    }
+    }, []);
 
     useEffect(() => {
         getCoupons();
-    }, [])
+    }, [getCoupons])
 
     useEffect(() => {
         if (res?.status === 200 || res?.status === 201) {

@@ -6,6 +6,7 @@ import useGetApiReq from "@/hooks/useGetApiReq";
 const OfferDetails = ({ coupon }) => {
     const [couponsDetails, setCouponDetails] = useState("");
     const { res, fetchData, isLoading } = useGetApiReq();
+    const { res: statusRes, fetchData: fetchStatusData, isLoading: isStatusLoading } = useGetApiReq();
 
     const getCouponDetails = () => {
         fetchData(`/restaurant/coupons-details/${coupon.id}`);
@@ -22,9 +23,20 @@ const OfferDetails = ({ coupon }) => {
         }
     }, [res])
 
+    const handleStatusChange = () => {
+        fetchStatusData(`/restaurant/coupons-toggle-status/${coupon.id}?status=${couponsDetails.status === "Active" ? "inactive" : "active"}`);
+    }
+
+    useEffect(() => {
+        if (statusRes?.status === 200 || statusRes?.status === 201) {
+            console.log("get statusRes res", statusRes);
+            getCouponDetails();
+        }
+    }, [statusRes])
+
     const { completedOrders, discountGiven, effectiveDiscount, netSales } = couponsDetails.metrics || {};
     const { fundingSource } = couponsDetails.details || {};
-    const { starts,ends } = couponsDetails.duration || {};
+    const { starts, ends } = couponsDetails.duration || {};
 
     return (
         <div className='bg-white rounded-xl'>
@@ -34,9 +46,9 @@ const OfferDetails = ({ coupon }) => {
                     <p className='text-white class-sm5 mt-1'>Begins on {starts}, Ends on {ends}</p>
                 </div>
                 <div className="flex gap-1">
-                    <div style={{ backgroundImage: `url(${greenBadge})` }} className="text-white w-24 bg-no-repeat bg-center py-1 px-5 text-center flex flex-col items-center justify-center">
+                    {/* <div style={{ backgroundImage: `url(${greenBadge})` }} className="text-white w-24 bg-no-repeat bg-center py-1 px-5 text-center flex flex-col items-center justify-center">
                         <div className="text-[11px] font-medium leading-3">new users only</div>
-                    </div>
+                    </div> */}
                     <button className='class-xl6 text-white px-2'>{couponsDetails?.status}</button>
                 </div>
             </div>
@@ -67,7 +79,7 @@ const OfferDetails = ({ coupon }) => {
                         <li key={i} className="ml-5 class-base1 text-[#637D92]">{term}</li>
                     ))}
                 </ul>}
-                <Button variant="destructive" className="w-full bg-[#E4626F] hover:bg-[#e85362] class-base1 mt-4 h-[51px] mb-5">{coupon ? 'Activate Offer' : 'Deactivate Offer'}</Button>
+                <Button onClick={handleStatusChange} className={`w-full ${couponsDetails.status === "Active" ? 'bg-[#E4626F] hover:bg-[#e85362]' : 'bg-[#26f271] hover:bg-[#28d668]'} class-base1 mt-4 h-[51px] mb-5`}>{couponsDetails.status === "Active" ? 'Deactivate Offer' : 'Activate Offer'}</Button>
             </div>
         </div>
     )

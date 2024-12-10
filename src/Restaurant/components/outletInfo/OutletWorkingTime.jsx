@@ -7,43 +7,56 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Form } from '@/components/ui/form'
 import { WorkingDayFormSchema } from '@/schemas/workingDaySchema'
 
-const OutletWorkingTime = () => {
+const OutletWorkingTime = ({ operatingHours, getRestaurantProfile }) => {
+  const { monday, tuesday, wednesday, thursday, friday, saturday, sunday } = operatingHours || {};
+  console.log("operatingHours", operatingHours);
+
+  const daysOfWeek = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+  ];
+
   const form = useForm({
     resolver: zodResolver(WorkingDayFormSchema),
     defaultValues: {
       monday: {
-        timings: [{ startTime: "", endTime: "" }],
-        outletOpen: false,
+        timings: [{ startTime: monday?.open || "", endTime: monday?.close || "" }],
+        outletOpen: monday?.isOpen || false,
         timingToAllDays: false,
       },
       tuesday: {
-        timings: [{ startTime: "", endTime: "" }],
-        outletOpen: false,
+        timings: [{ startTime: tuesday?.open || "", endTime: tuesday?.close || "" }],
+        outletOpen: tuesday?.isOpen || false,
         timingToAllDays: false,
       },
       wednesday: {
-        timings: [{ startTime: "", endTime: "" }],
-        outletOpen: false,
+        timings: [{ startTime: wednesday?.open || "", endTime: wednesday?.close || "" }],
+        outletOpen: wednesday?.isOpen || false,
         timingToAllDays: false,
       },
       thursday: {
-        timings: [{ startTime: "", endTime: "" }],
-        outletOpen: false,
+        timings: [{ startTime: thursday?.open || "", endTime: thursday?.close || "" }],
+        outletOpen: thursday?.isOpen || false,
         timingToAllDays: false,
       },
       friday: {
-        timings: [{ startTime: "", endTime: "" }],
-        outletOpen: false,
+        timings: [{ startTime: friday?.open || "", endTime: friday?.close || "" }],
+        outletOpen: friday?.isOpen || false,
         timingToAllDays: false,
       },
       saturday: {
-        timings: [{ startTime: "", endTime: "" }],
-        outletOpen: false,
+        timings: [{ startTime: saturday?.open || "", endTime: saturday?.close || "" }],
+        outletOpen: saturday?.isOpen || false,
         timingToAllDays: false,
       },
       sunday: {
-        timings: [{ startTime: "", endTime: "" }],
-        outletOpen: false,
+        timings: [{ startTime: sunday?.open || "", endTime: sunday?.close || "" }],
+        outletOpen: sunday?.isOpen || false,
         timingToAllDays: false,
       },
     }
@@ -73,34 +86,14 @@ const OutletWorkingTime = () => {
 
       <div className="mt-5">
 
-        <WorkingDay
-          day="Monday"
-          form={form}
-        />
-        <WorkingDay
-          day="Tuesday"
-          form={form}
-        />
-        <WorkingDay
-          day="Wednesday"
-          form={form}
-        />
-        <WorkingDay
-          day="Thursday"
-          form={form}
-        />
-        <WorkingDay
-          day="Friday"
-          form={form}
-        />
-        <WorkingDay
-          day="Saturday"
-          form={form}
-        />
-        <WorkingDay
-          day="Sunday"
-          form={form}
-        />
+        {daysOfWeek.map((day, i) => (
+          <WorkingDay
+            key={i}
+            day={day}
+            form={form}
+            getRestaurantProfile={getRestaurantProfile}
+          />
+        ))}
 
       </div>
     </div>

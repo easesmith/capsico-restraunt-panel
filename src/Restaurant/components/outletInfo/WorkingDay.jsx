@@ -4,6 +4,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import useGetApiReq from "@/hooks/useGetApiReq";
+import usePostApiReq from "@/hooks/usePostApiReq";
 import { generateTimeOptions } from "@/utils/generateTimeOptions";
 import { useEffect, useState } from "react";
 import { useFieldArray } from "react-hook-form";
@@ -24,6 +26,8 @@ const WorkingDay = ({ day, form }) => {
 
     const { control, setValue, getValues, handleSubmit } = form;
     const timeOptions = generateTimeOptions();
+    const { res, fetchData, isLoading } = usePostApiReq();
+
     const { fields, append, remove } = useFieldArray({
         control,
         name: `${day.toLowerCase()}.timings`,
@@ -56,20 +60,39 @@ const WorkingDay = ({ day, form }) => {
                 setValue(item.toLowerCase(), {
                     timings: selectedDay.timings,
                     outletOpen: selectedDay.outletOpen,
+                    timingToAllDays: false
                 })
             })
         }
-        else {
-            daysOfWeek.forEach((item) => {
-                setValue(item.toLowerCase(), {
-                    timings: [],
-                    outletOpen: false,
-                    timingToAllDays: false,
-                })
-            })
-        }
+        // else {
+        //     daysOfWeek.forEach((item) => {
+        //         setValue(item.toLowerCase(), {
+        //             timings: [],
+        //             outletOpen: false,
+        //             timingToAllDays: false,
+        //         })
+        //     })
+        // }
 
+        const data = form.getValues();
+        console.log("data: ", data);
+        const operatingHours = {};
+
+        Object.keys(data).forEach((item) => {
+            operatingHours[item] = { isOpen: data[item].outletOpen, open: data[item].timings[0].startTime, close: data[item].timings[0].endTime }
+
+        });
+
+        console.log("operatingHours: ", operatingHours);
+
+        fetchData("/restaurant/update-operating-hours", { operatingHours });
     }
+
+    useEffect(() => {
+        if (res?.status === 200 || res?.status === 201) {
+            console.log("update-operating-hours response", res);
+        }
+    }, [res])
 
 
     return (
@@ -98,7 +121,7 @@ const WorkingDay = ({ day, form }) => {
                                                 control={control}
                                                 name={`${day.toLowerCase()}.timings.${index}.startTime`}
                                                 render={({ field }) => (
-                                                    <FormItem className="z-20">
+                                                    <FormItem>
                                                         <div className="flex gap-2 items-center">
                                                             <FormLabel className="text-[#4A5E6D] class-sm1">Start time</FormLabel>
                                                             <FormControl>
@@ -133,7 +156,7 @@ const WorkingDay = ({ day, form }) => {
                                                 control={control}
                                                 name={`${day.toLowerCase()}.timings.${index}.endTime`}
                                                 render={({ field }) => (
-                                                    <FormItem className="z-20">
+                                                    <FormItem>
                                                         <div className="flex gap-2 items-center">
                                                             <FormLabel className="text-[#4A5E6D] class-sm1">End time</FormLabel>
                                                             <FormControl>

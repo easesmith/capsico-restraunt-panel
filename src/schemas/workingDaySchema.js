@@ -13,4 +13,10 @@ export const DaySchema = z.object({
 
 export const WorkingDayFormSchema = z.object({
     monday: DaySchema,
+    tuesday: DaySchema,
+    wednesday: DaySchema,
+    thursday: DaySchema,
+    friday: DaySchema,
+    saturday: DaySchema,
+    sunday: DaySchema,
 });

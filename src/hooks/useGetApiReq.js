@@ -19,6 +19,8 @@ const useGetApiReq = () => {
                 setRes(response);
             }
         } catch (error) {
+            console.log("error",error);
+            
             await dispatch(handleErrorModal({ isOpen: true, message: error.response?.data?.message || "An error occurred.", isLogoutBtn: true }));
         } finally {
             setIsLoading(false);
