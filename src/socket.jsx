@@ -9,7 +9,7 @@ const SocketProvider = ({ children }) => {
     const socket = useMemo(() => io(server, {
         withCredentials: true,
         auth: {
-            token: localStorage.getItem("accessToken")  // JWT access token
+            token: localStorage.getItem("accessToken")
         },
         transports: ['websocket', 'polling']
 

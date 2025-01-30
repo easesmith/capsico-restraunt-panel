@@ -10,6 +10,7 @@ import usePostApiReq from './hooks/usePostApiReq';
 import ProtectedRoute from './protected-route/ProtectedRoute';
 import MainMenu from './Restaurant/components/orderMenu/MainMenu';
 import { readCookie } from './utils/readCookie';
+import { getSocket } from './socket';
 
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Register = lazy(() => import('./Restaurant/pages/Register'));
@@ -67,7 +68,9 @@ function App() {
 
   useEffect(() => {
     if (refreshRes?.status === 200 || refreshRes?.status === 201) {
+      console.log("refreshRes", refreshRes);
       localStorage.setItem("restaurant-status", true);
+      localStorage.setItem("accessToken", refreshRes?.data?.accessToken)
       window.location.reload();
     }
   }, [refreshRes])
@@ -75,7 +78,7 @@ function App() {
   useEffect(() => {
     if (logoutRes?.status === 200 || logoutRes?.status === 201) {
       localStorage.setItem("restaurant-status", "false");
-      window.location.reload();
+      // window.location.reload();
     }
   }, [logoutRes])
 

@@ -1,18 +1,36 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { hideNotification, showNotification } from '../redux/notificationSlice';
+import { getSocket } from '@/socket';
 
 const Switch = () => {
-
+  const socket = getSocket();
   const dispatch = useDispatch()
-  const isVisible = useSelector((state) => state.notification.isVisible);
-  console.log(useSelector((state)=> state.notification.isVisible))
+  const { isVisible } = useSelector((state) => state.notification);
+  console.log("isVisible", isVisible)
 
   const [isOn, setIsOn] = useState(false);
 
+  socket.on("connection", (socket) => {
+    console.log("connection", socket);
+
+  })
+
   const toggleSwitch = () => {
     setIsOn(!isOn);
+    socket.emit('update_restaurant_status', {
+      isOpen: !isOn,
+      reason: ''
+    });
+
   };
+
+  socket.on('restaurant_status_updated', (response) => {
+    console.log("restaurant_status_updated response", response);
+    setIsOn(response.status === "open" ? true : false);
+  });
+
+
   isOn ? dispatch(hideNotification()) : dispatch(showNotification())
 
   return (
