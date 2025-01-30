@@ -16,9 +16,9 @@ const Register = () => {
 
     const navigate = useNavigate();
     const isAuthenticated = localStorage.getItem("restaurant-status") === "true";
-    if (isAuthenticated) {
-        navigate("/restaurant/orders")
-    }
+    // if (isAuthenticated) {
+    //     navigate("/restaurant/orders")
+    // }
 
     return (
         <div className='max-w-7xl mx-auto p-6'>

@@ -1,3 +1,4 @@
+import { SocketProvider } from '@/socket';
 import { Navigate, Outlet } from 'react-router-dom';
 
 const ProtectedRoute = () => {
@@ -9,7 +10,11 @@ const ProtectedRoute = () => {
         return <Navigate to="/" replace />;
     }
 
-    return <Outlet />;
+    return (
+        <SocketProvider>
+            <Outlet />
+        </SocketProvider>
+    )
 };
 
 export default ProtectedRoute;

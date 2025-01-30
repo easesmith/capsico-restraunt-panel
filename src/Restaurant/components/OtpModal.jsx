@@ -49,6 +49,7 @@ const OtpModal = ({ isOtpModalOpen, setIsOtpModalOpen, phone, resendOtp, isEmail
         if (res?.status === 200 || res?.status === 201) {
             localStorage.setItem("restaurant-status", true);
             toast.success(res?.data.message);
+            localStorage.setItem("accessToken",res?.data?.accessToken)
             navigate("/restaurant/orders")
             setIsOtpModalOpen(false)
         }

@@ -1,26 +1,18 @@
-import { Button } from "@/components/ui/button";
-import React, { useEffect, useState } from "react";
-import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
-import { FiPlusCircle } from "react-icons/fi";
-import RestaurantWrapper from "@/Restaurant/components/restaurantWrapper/RestaurantWrapper";
-import DownImg from '@/assets/down.png'
-import MaskGroupInput2 from '../../../assets/toppng.com-veg-1180x1172 1.png'
-import { BiSolidRightArrow } from "react-icons/bi";
-import ItemComp from "@/Restaurant/components/orderMenu/ItemComp";
-import { RiDeleteBinLine } from "react-icons/ri";
-import { IoIosArrowForward } from "react-icons/io";
-import CategoryEditModel from "@/Restaurant/components/models/CategoryEditModel";
-import SubCategoryEditModel from "@/Restaurant/components/models/SubCategoryEditModel";
-import { FaArrowLeft, FaArrowRight, FaPlus } from "react-icons/fa6";
-import Product from "@/Restaurant/components/orderMenu/Product";
-import AddItemModal from "@/Restaurant/components/orderMenu/AddItemModal";
-import AddOnGroups from "@/Restaurant/components/orderMenu/AddOnGroups";
-import useGetApiReq from "@/hooks/useGetApiReq";
 import DataNotFound from "@/Restaurant/components/DataNotFound";
 import Spinner from "@/Restaurant/components/Spinner";
-import { Input } from "@/components/ui/input";
-import { IoSearchOutline } from "react-icons/io5";
+import CategoryEditModel from "@/Restaurant/components/models/CategoryEditModel";
+import SubCategoryEditModel from "@/Restaurant/components/models/SubCategoryEditModel";
+import AddItemModal from "@/Restaurant/components/orderMenu/AddItemModal";
+import AddOnGroups from "@/Restaurant/components/orderMenu/AddOnGroups";
+import ItemComp from "@/Restaurant/components/orderMenu/ItemComp";
 import ManageInventory from "@/Restaurant/components/orderMenu/ManageInventory";
+import Product from "@/Restaurant/components/orderMenu/Product";
+import RestaurantWrapper from "@/Restaurant/components/restaurantWrapper/RestaurantWrapper";
+import { Input } from "@/components/ui/input";
+import useGetApiReq from "@/hooks/useGetApiReq";
+import { useEffect, useState } from "react";
+import { FaArrowRight, FaPlus } from "react-icons/fa6";
+import { IoSearchOutline } from "react-icons/io5";
 
 const OrderMenu = () => {
   const [isActiveTab, setIsActiveTab] = useState("editor")

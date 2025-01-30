@@ -14,8 +14,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { hideNotification, showNotification } from '../redux/notificationSlice';
 import SingleOrder from '../components/SingleOrder'
 import OrderAlertModal from '../components/OrderAlertModal'
+import { getSocket } from '@/socket'
 
 const Order = () => {
+  const socket = getSocket();
+
+  socket.on("connect", () => {
+    console.log("Connected to Socket.IO server");
+  });
 
   const dispatch = useDispatch()
   // const isVisible = useSelector((state) => state.notification.isVisible);

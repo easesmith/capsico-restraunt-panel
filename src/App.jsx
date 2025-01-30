@@ -1,15 +1,14 @@
 import { lazy, Suspense, useEffect } from 'react';
-import './App.css'
+import './App.css';
 
-import { Route, BrowserRouter as Router, Routes, useNavigate } from "react-router-dom";
-import { Toaster } from './components/ui/sonner';
-import MainMenu from './Restaurant/components/orderMenu/MainMenu';
-import ProtectedRoute from './protected-route/ProtectedRoute';
 import { useSelector } from 'react-redux';
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import BackdropLoader from './components/BackdropLoader';
-import useAuth from './protected-route/UserAuth';
+import { Toaster } from './components/ui/sonner';
 import useGetApiReq from './hooks/useGetApiReq';
 import usePostApiReq from './hooks/usePostApiReq';
+import ProtectedRoute from './protected-route/ProtectedRoute';
+import MainMenu from './Restaurant/components/orderMenu/MainMenu';
 import { readCookie } from './utils/readCookie';
 
 const NotFound = lazy(() => import('./pages/NotFound'));
@@ -79,6 +78,7 @@ function App() {
       window.location.reload();
     }
   }, [logoutRes])
+
 
   // res?.data?.isAuthenticated
   return (
