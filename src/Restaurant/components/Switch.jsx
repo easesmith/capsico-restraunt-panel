@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { hideNotification, showNotification } from '../redux/notificationSlice';
 import { getSocket } from '@/socket';
+import useGetApiReq from '@/hooks/useGetApiReq';
 
 const Switch = () => {
   const socket = getSocket();
   const dispatch = useDispatch()
   const { isVisible } = useSelector((state) => state.notification);
-  console.log("isVisible", isVisible)
+  const { res, fetchData, isLoading } = useGetApiReq();
+  // console.log("isVisible", isVisible)
 
   const [isOn, setIsOn] = useState(false);
 
   socket.on("connection", (socket) => {
     console.log("connection", socket);
-
   })
 
   const toggleSwitch = () => {
@@ -22,16 +23,41 @@ const Switch = () => {
       isOpen: !isOn,
       reason: ''
     });
-
   };
 
-  socket.on('restaurant_status_updated', (response) => {
-    console.log("restaurant_status_updated response", response);
-    setIsOn(response.status === "open" ? true : false);
-  });
+  useEffect(() => {
+    socket.on('restaurant_status_updated', (response) => {
+      setIsOn(response.status === "open" ? true : false);
+    });
 
+    return () => {
+      socket.off('restaurant_status_updated'); // Cleanup listener
+    };
+  }, []);
 
-  isOn ? dispatch(hideNotification()) : dispatch(showNotification())
+  const getRestaurantStatus = useCallback(() => {
+    fetchData("/restaurant/get-isonline");
+  }, [])
+
+  useEffect(() => {
+    getRestaurantStatus();
+  }, [])
+
+  useEffect(() => {
+    if (res?.status === 200 || res?.status === 201) {
+      // console.log("restaurant status response", res);
+      setIsOn(res?.data?.isopen);
+    }
+  }, [res])
+
+  useEffect(() => {
+    if (isOn) {
+      dispatch(hideNotification());
+    } else {
+      dispatch(showNotification());
+    }
+  }, [isOn, dispatch]);
+
 
   return (
     <div onClick={toggleSwitch} className={`${isOn ? 'bg-[#22C55E]' : 'bg-[#A3ABAD]'} relative inline-flex h-[50px] w-[138px] rounded-[50px] justify-between p-[2px] pr-5 items-center cursor-pointer transition-colors duration-300 ease-in-out`}>

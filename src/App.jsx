@@ -59,7 +59,7 @@ function App() {
   useEffect(() => {
     if (res?.status === 200 || res?.status === 201) {
       localStorage.setItem("restaurant-status", `${res?.data?.isAuthenticated}`);
-      console.log("status response", res);
+      // console.log("status response", res);
       res?.data?.shouldLoggOut && logout();
       !res?.data?.isAuthenticated && refreshToken();
     }
@@ -68,7 +68,7 @@ function App() {
 
   useEffect(() => {
     if (refreshRes?.status === 200 || refreshRes?.status === 201) {
-      console.log("refreshRes", refreshRes);
+      // console.log("refreshRes", refreshRes);
       localStorage.setItem("restaurant-status", true);
       localStorage.setItem("accessToken", refreshRes?.data?.accessToken)
       window.location.reload();
