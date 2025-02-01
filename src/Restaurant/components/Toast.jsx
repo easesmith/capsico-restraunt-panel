@@ -1,8 +1,10 @@
 import React from 'react'
 import { FaXmark } from "react-icons/fa6";
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const Toast = () => {
+    const dispatch = useDispatch();
 
     return (
         <div className=' relative max-w-[900px] w-full mx-auto bg-[#22C55E]  rounded-[25px] py-3'>

@@ -20,6 +20,7 @@ import Spinner from '../components/Spinner'
 import DataNotFound from '../components/DataNotFound'
 
 const Order = () => {
+  const { isOpen } = useSelector((state) => state.notification);
   const socket = getSocket();
   const [orders, setOrders] = useState([]);
   const [dbOrders, setDbOrders] = useState([]);
@@ -70,7 +71,7 @@ const Order = () => {
   return (
     <RestaurantWrapper>
       <>
-        <div>
+       {isOpen && <div>
           <div className=' bg-[#D9F1FD66] flex justify-between items-center px-10 py-4 mb-4'>
             <div >
               <h6 className='five-color class-base1'>Order</h6>
@@ -140,18 +141,17 @@ const Order = () => {
               getOrders={getOrders}
             />
           }
-
-          {/* <div className='w-full h-[456px] flex flex-col justify-between items-center mt-40'>
-            <div className='flex justify-center relative w-[577px]'>
-              <img src={OutletImg} alt="" />
-              <img src={CloseCartImg} alt="" className=' absolute bottom-[-4%] right-[-7%]' />
-            </div>
-            <div className=' w-[521px] max-w-[521px] flex flex-col items-center gap-6'>
-              <span className='eight-color class-xl3 text-center'>You are offline</span>
-              <p className='five-color class-xl3 text-center'>Click <span className='primary-color font-semibold'>Help center</span> for more Information.</p>
-            </div>
-          </div> */}
-        </div>
+        </div>}
+        {!isOpen && <div className='w-full h-[456px] flex flex-col justify-between items-center mt-20'>
+          <div className='flex justify-center relative w-[577px]'>
+            <img src={OutletImg} alt="" />
+            <img src={CloseCartImg} alt="" className=' absolute bottom-[-4%] right-[-7%]' />
+          </div>
+          <div className=' w-[521px] max-w-[521px] flex flex-col items-center gap-6'>
+            <span className='eight-color class-xl3 text-center'>You are offline</span>
+            <p className='five-color class-xl3 text-center'>Click <span className='primary-color font-semibold'>Help center</span> for more Information.</p>
+          </div>
+        </div>}
         {/* <OrdersModel /> */}
       </>
     </RestaurantWrapper>
