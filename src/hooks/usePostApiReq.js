@@ -1,9 +1,8 @@
-import { useState } from "react";
-import { axiosInstance } from "../utils/axiosInstance";
-import { useDispatch } from "react-redux";
-import { handleErrorModal, handleUnautorizedModalOpen } from "@/store/slices/errorSlice";
 import { handleLoading } from "@/store/slices/loadingSlice";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { toast } from "sonner";
+import { axiosInstance } from "../utils/axiosInstance";
 
 const usePostApiReq = () => {
     const [res, setRes] = useState(null);
@@ -24,12 +23,12 @@ const usePostApiReq = () => {
         } catch (error) {
             console.log("post api error =>", error);
             console.log("post api error status =>", error.response);
-            if (error?.response?.status === 403) {
-                await dispatch(handleUnautorizedModalOpen({ isUnautorizedModalOpen: true }));
-            }
-            else {
-                await dispatch(handleErrorModal({ isOpen: true, message: error.response?.data?.message || "An error occurred.", isLogoutBtn: true }));
-            }
+            toast.error(error.response?.data?.message || "An error occurred.")
+            // if (error?.response?.status === 403) {
+            //     await dispatch(handleUnautorizedModalOpen({ isUnautorizedModalOpen: true }));
+            // }
+            // else {
+            // }
         } finally {
             setIsLoading(false);
             await dispatch(handleLoading(false));

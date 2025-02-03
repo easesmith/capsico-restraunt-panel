@@ -135,6 +135,7 @@ const OrderMenu = () => {
                   isAddItemModalOpen={isAddItemModalOpen}
                   setIsAddItemModalOpen={setIsAddItemModalOpen}
                   categoryId={categoryId}
+                  getFoodItems={getFoodItems}
                 />
               }
 

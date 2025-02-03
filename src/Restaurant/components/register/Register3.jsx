@@ -11,6 +11,7 @@ import { useForm } from 'react-hook-form';
 import { PiCameraPlus } from "react-icons/pi";
 import { toast } from 'sonner';
 import RegisterSuccessModal from '../RegisterSuccessModal';
+import usePostApiReq from '@/hooks/usePostApiReq';
 
 const Register3 = ({ restaurant, setStep }) => {
     const [isRegisterSuccessModalOpen, setIsRegisterSuccessModalOpen] = useState(false);
@@ -25,7 +26,7 @@ const Register3 = ({ restaurant, setStep }) => {
     })
 
     const { register, control, watch, setValue, getValues } = form;
-    const { res, fetchData, isLoading } = usePatchApiReq();
+    const { res, fetchData, isLoading } = usePostApiReq();
 
     const menuImagesRef = register("menuImages");
     const restaurantImagesRef = register("restaurantImages");
@@ -71,7 +72,7 @@ const Register3 = ({ restaurant, setStep }) => {
             });
         }
 
-        fetchData(`/restaurant/restraunt-registration-upload-images/${restaurant?._id}`, formData);
+        fetchData(`/restaurant/restraunt-registration-upload-images/${restaurant?._id || restaurant?.id}`, formData);
     }
 
 

@@ -44,7 +44,7 @@ import Spinner from "../Spinner"
 import usePostApiReq from "@/hooks/usePostApiReq"
 import AvailabilityForFoodItem from "./AvailabilityForFoodItem"
 
-const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen, categoryId }) => {
+const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen, categoryId,getFoodItems }) => {
     const [isItemImageUploadModalOpen, setIsItemImageUploadModalOpen] = useState(false);
     const [isVariant, setIsVariant] = useState(false);
     const [isVariantModalOpen, setIsVariantModalOpen] = useState(false);
@@ -184,6 +184,7 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen, categoryId })
         if (addItemRes?.status === 200 || addItemRes?.status === 201) {
             console.log("add item res", addItemRes);
             setIsAddItemModalOpen(false);
+            getFoodItems();
         }
     }, [addItemRes])
 

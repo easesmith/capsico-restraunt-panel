@@ -124,7 +124,7 @@ const Register2 = ({ setStep, restaurant }) => {
         console.log("restaurantTypes", restaurantTypes);
 
 
-        fetchData(`/restaurant/restraunt-registration2/${restaurant?._id}`, {
+        fetchData(`/restaurant/restraunt-registration2/${restaurant?._id || restaurant?.id}`, {
             priceForOne: data.priceForOne,
             vegType: data.restaurantType,
             restaurantTypes: restaurantTypes,

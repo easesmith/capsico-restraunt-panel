@@ -33,12 +33,12 @@ const SubCategoryEditModel = ({ isOpenSubCategoryModel, setIsOpenSubCategoryMode
     const { register, control, watch, setValue, reset, getValues } = form;
 
     const onSubmit = (data) => {
-        fetchData(`/restaurant/post-add-subcategory/${id}`, {
+        fetchData(`/restaurant/post-add-subcategory`, {
             name: data.subCategory,
             description: data.description,
+            categoryId:id
         })
         console.log("data", data);
-        console.log('submit form')
     }
     
     useEffect(()=>{

@@ -12,6 +12,7 @@ const ProductInventory = ({ foodItem }) => {
     const { res, fetchData, isLoading } = usePostApiReq();
 
     const toggleFoodAvailability = (value) => {
+        setIsOn(value)
         fetchData(`/restaurant/food-availability/${foodItem?.id}`);
     }
 

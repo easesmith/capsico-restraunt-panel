@@ -20,8 +20,8 @@ import EggIcon from "./customIcons/EggIcon";
 import NonVegIcon from "./customIcons/NonVegIcon";
 import VegIcon from "./customIcons/VegIcon";
 
-const OrderAlertModal = ({ isOrderAlertModalOpen, setIsOrderAlertModalOpen, newOrder1, getOrders }) => {
-    const newOrder = JSON.parse(localStorage.getItem("newOrder")).order;
+const OrderAlertModal = ({ isOrderAlertModalOpen, setIsOrderAlertModalOpen, newOrder, getOrders }) => {
+    // const newOrder = JSON.parse(localStorage.getItem("newOrder")).order;
     console.log("newOrder", newOrder);
     const socket = getSocket();
 
