@@ -4,10 +4,14 @@ import { GoBell } from "react-icons/go";
 import { FaAngleDown } from "react-icons/fa6";
 import ProfileImg from '../../assets/Rectangle 3.png'
 import Switch from './Switch';
+import { readCookie } from '@/utils/readCookie';
 // import { Switch } from '@/components/ui/switch';
 // import { Label } from '@/components/ui/label';
 
 const Header = () => {
+  const userInfo = readCookie("userInfo");
+  console.log("userInfo: ", userInfo);
+
   return (
     <header className='bg-[#E7EBEF] h-[105px] sticky top-0 z-20'>
       <nav className=' w-[100%] flex justify-between items-center px-12 py-4'>
@@ -21,11 +25,11 @@ const Header = () => {
             <IoSettingsOutline className='text-[24px]' />
             <GoBell className='text-[24px]' />
           </div>
-          <Switch/>
+          <Switch />
           <div className=' flex justify-center items-center gap-4 px-[10px]'>
             <div>
-              <p className='text-[#323F49] text-[17.9px] font-medium font-inter'>Samuel Marves</p>
-              <p className='text-[#637D92] text-[15.36px] font-medium font-inter'>Super admin</p>
+              <p className='text-[#323F49] text-[17.9px] font-medium font-inter'>{userInfo?.name}</p>
+              <p className='text-[#637D92] text-[15.36px] font-medium font-inter'>{userInfo?.role}</p>
             </div>
             <img src={ProfileImg} alt="" />
             <FaAngleDown />

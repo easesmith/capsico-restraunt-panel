@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import RestaurantWrapper from '../components/restaurantWrapper/RestaurantWrapper'
 import OutletImg from "../../assets/outlet.png"
 import CloseCartImg from '../../assets/Mask group.png'
@@ -15,40 +15,66 @@ import { hideNotification, showNotification } from '../redux/notificationSlice';
 import SingleOrder from '../components/SingleOrder'
 import OrderAlertModal from '../components/OrderAlertModal'
 import { getSocket } from '@/socket'
+import useGetApiReq from '@/hooks/useGetApiReq'
+import Spinner from '../components/Spinner'
+import DataNotFound from '../components/DataNotFound'
 
 const Order = () => {
+  const { isOpen } = useSelector((state) => state.notification);
   const socket = getSocket();
-
-  socket.on("connect", () => {
-    console.log("Connected to Socket.IO server");
-  });
-
-  const dispatch = useDispatch()
-  // const isVisible = useSelector((state) => state.notification.isVisible);
-  console.log(useSelector((state) => state.notification.isVisible))
-
-  // isOn ? dispatch(hideNotification()) : dispatch(showNotification())
-
-
+  const [orders, setOrders] = useState([]);
+  const [dbOrders, setDbOrders] = useState([]);
+  const { res, fetchData, isLoading } = useGetApiReq();
   const [selectedDateRange, setSelectedDateRange] = useState("");
-  const [orderStatus, setOrderStatus] = useState("preparing")
-  const [isOrderAlertModalOpen, setIsOrderAlertModalOpen] = useState(true);
+  const [orderStatus, setOrderStatus] = useState("INPROGRESS")
+  const [isOrderAlertModalOpen, setIsOrderAlertModalOpen] = useState(false);
+  const [newOrder, setNewOrder] = useState("");
 
   const handleSelectChange = (value) => {
     setSelectedDateRange(value);
   };
 
-  socket.on('error', (error) => {
-    console.log(error);
-  })
+  const getOrders = useCallback(() => {
+    fetchData(`/restaurant/get-order-bystatus?status=${orderStatus}`);
+  }, [orderStatus])
+
+  useEffect(() => {
+    getOrders();
+  }, [orderStatus])
+
+  // console.log("orderStatus",orderStatus);
+
+
+  useEffect(() => {
+    if (res?.status === 200 || res?.status === 201) {
+      console.log("orders response", res);
+      setDbOrders(res?.data?.data);
+    }
+  }, [res])
+
+  useEffect(() => {
+    socket.on('new_order_received', (response) => {
+      console.log('New order received:', response);
+      localStorage.setItem("newOrder", JSON.stringify(response));
+      setNewOrder(response?.order);
+      setIsOrderAlertModalOpen(true);
+    });
+  }, [])
+
+
+  socket.on('get-orders', (response) => {
+    console.log("orders received", response.orders);
+    setOrders(response?.orders);
+  });
+
 
   return (
     <RestaurantWrapper>
       <>
-        <div>
+       {isOpen && <div>
           <div className=' bg-[#D9F1FD66] flex justify-between items-center px-10 py-4 mb-4'>
             <div >
-              <h6 className='five-color class-base1'>Order History</h6>
+              <h6 className='five-color class-base1'>Order</h6>
             </div>
             <div className=' flex justify-center items-center gap-5'>
               <div className='w-[324px] flex items-center'>
@@ -77,33 +103,56 @@ const Order = () => {
 
           {/* <Toast /> */}
           <div className="flex items-center gap-5 p-5">
-            <button onClick={() => setOrderStatus("preparing")} className={`px-6 py-1 rounded-lg ${orderStatus == "preparing" ? "bg-[#4A67FF] text-white" : "border border-[#8B8B8B] text-[#8B8B8B]"}`}>Preparing</button>
-            <button onClick={() => setOrderStatus("ready")} className={`px-6 py-1 rounded-md ${orderStatus == "ready" ? "bg-[#4A67FF] text-white" : "border border-[#8B8B8B] text-[#8B8B8B]"}`}>Ready</button>
-            <button onClick={() => setOrderStatus("collected")} className={`px-6 py-1 rounded-md ${orderStatus == "collected" ? "bg-[#4A67FF] text-white" : "border border-[#8B8B8B] text-[#8B8B8B]"}`}>Collected</button>
+            <button onClick={() => setOrderStatus("INPROGRESS")} className={`px-6 py-1 rounded-lg ${orderStatus === "INPROGRESS" ? "bg-[#4A67FF] text-white" : "border border-[#8B8B8B] text-[#8B8B8B]"}`}>Preparing</button>
+            <button onClick={() => setOrderStatus("READY")} className={`px-6 py-1 rounded-md ${orderStatus === "READY" ? "bg-[#4A67FF] text-white" : "border border-[#8B8B8B] text-[#8B8B8B]"}`}>Ready</button>
+            <button onClick={() => setOrderStatus("COLLECTED")} className={`px-6 py-1 rounded-md ${orderStatus === "COLLECTED" ? "bg-[#4A67FF] text-white" : "border border-[#8B8B8B] text-[#8B8B8B]"}`}>Collected</button>
           </div>
 
           <div className="flex flex-col gap-3 p-5">
-            <SingleOrder />
+            {/* {orders.map((order, i) => (
+              <SingleOrder
+                key={order?._id}
+                order={order}
+              />
+            ))} */}
+
+            {dbOrders.map((order) => (
+              <SingleOrder
+                key={order?._id}
+                order={order}
+                status={orderStatus}
+                getOrders={getOrders}
+              />
+            ))}
+
+            {dbOrders.length === 0 && isLoading &&
+              <Spinner />
+            }
+
+            {dbOrders.length === 0 && !isLoading &&
+              <DataNotFound name="Order" />
+            }
           </div>
           {isOrderAlertModalOpen &&
             <OrderAlertModal
               isOrderAlertModalOpen={isOrderAlertModalOpen}
               setIsOrderAlertModalOpen={setIsOrderAlertModalOpen}
+              newOrder={newOrder}
+              getOrders={getOrders}
             />
           }
-
-          {/* <div className='w-full h-[456px] flex flex-col justify-between items-center mt-40'>
-            <div className='flex justify-center relative w-[577px]'>
-              <img src={OutletImg} alt="" />
-              <img src={CloseCartImg} alt="" className=' absolute bottom-[-4%] right-[-7%]' />
-            </div>
-            <div className=' w-[521px] max-w-[521px] flex flex-col items-center gap-6'>
-              <span className='eight-color class-xl3 text-center'>You are offline</span>
-              <p className='five-color class-xl3 text-center'>Click <span className='primary-color font-semibold'>Help center</span> for more Information.</p>
-            </div>
-          </div> */}
-        </div>
-        <OrdersModel />
+        </div>}
+        {!isOpen && <div className='w-full h-[456px] flex flex-col justify-between items-center mt-20'>
+          <div className='flex justify-center relative w-[577px]'>
+            <img src={OutletImg} alt="" />
+            <img src={CloseCartImg} alt="" className=' absolute bottom-[-4%] right-[-7%]' />
+          </div>
+          <div className=' w-[521px] max-w-[521px] flex flex-col items-center gap-6'>
+            <span className='eight-color class-xl3 text-center'>You are offline</span>
+            <p className='five-color class-xl3 text-center'>Click <span className='primary-color font-semibold'>Help center</span> for more Information.</p>
+          </div>
+        </div>}
+        {/* <OrdersModel /> */}
       </>
     </RestaurantWrapper>
   )

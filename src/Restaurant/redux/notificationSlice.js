@@ -4,6 +4,7 @@ const notificationSlice = createSlice({
     name: 'notification',
     initialState: {
         isVisible: false, // Initially hidden
+        isOpen: false,
     },
     reducers:{
         showNotification(state) {
@@ -12,9 +13,12 @@ const notificationSlice = createSlice({
         },
         hideNotification(state) {
             state.isVisible = false
+        },
+        handleIsOpen(state,action) {
+            state.isOpen = action.payload;
         }
     }
 })
 
-export const {showNotification, hideNotification} = notificationSlice.actions
+export const {showNotification, hideNotification,handleIsOpen} = notificationSlice.actions
 export default notificationSlice.reducer

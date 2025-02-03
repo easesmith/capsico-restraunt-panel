@@ -34,7 +34,7 @@ const CreateOfferModal3 = ({ setStep, setIsCreateCouponModalOpen, apiData }) => 
         console.log("rest", { ...data, ...apiData });
         setStep(3);
         fetchData("/restaurant/create-coupons", { ...data, ...apiData });
-        // setIsCreateCouponModalOpen(false);
+        setIsCreateCouponModalOpen(false);
     }
 
     useEffect(() => {
