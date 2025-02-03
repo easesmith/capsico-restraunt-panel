@@ -38,6 +38,10 @@ const Order = () => {
     setSelectedDateRange(value);
   };
 
+  socket.on('error', (error) => {
+    console.log(error);
+  })
+
   return (
     <RestaurantWrapper>
       <>
