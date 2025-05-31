@@ -221,7 +221,8 @@ const Register3 = ({ restaurant, setStep }) => {
                             </div>
                         </div>
                     </div>
-                    <div className="flex justify-end mt-5">
+                    <div className="flex justify-end gap-4 mt-5">
+                        <Button onClick={()=> setStep(2)} type="button" variant="capsico" className="w-20">Previous</Button>
                         <Button type="submit" variant="capsico" className="w-20">Submit</Button>
                     </div>
                 </div>

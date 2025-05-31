@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { FaCheck } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import CreateOrRegisterRestaurantModal from '../components/CreateOrRegisterRestaurantModal';
 import Register1 from '../components/register/Register1';
 import Register2 from '../components/register/Register2';
 import Register3 from '../components/register/Register3';
-import RegisterSuccessModal from '../components/RegisterSuccessModal';
-import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const [step, setStep] = useState(1);
@@ -25,7 +24,7 @@ const Register = () => {
             <h1 className='font-semibold text-4xl text-[#4A5E6D] text-center'>Create your restaurant page</h1>
             <div className='border border-[#C2CDD6] mt-12 rounded-md w-full py-8 px-36'>
                 <div className='flex justify-between gap-10'>
-                    <div onClick={()=>setStep(1)} className={`${step === 1 ? "border-t-4 border-[#1AA6F1]" : "border-t-4 border-transparent"} py-4 w-[240px] h-[170px] px-2 flex flex-col`}>
+                    <div className={`${step === 1 ? "border-t-4 border-[#1AA6F1]" : "border-t-4 border-transparent"} py-4 w-[240px] h-[170px] px-2 flex flex-col`}>
                         <h3 className='font-bold text-[19px] text-[#4A5E6D]'>Restaurant Information</h3>
                         <p className='font-normal text-[19px] text-[#92A5B5]'>Restaurant name. address. contact no., owner details</p>
                         <div className={`w-10 h-10 mt-auto mx-auto rounded-full ${isChecked && step === 1 ? "bg-[#22C55E]" : step === 1 ? "bg-[#1AA6F1]" : "bg-[#AEAEB0]"} flex justify-center items-center text-2xl text-white`}>
@@ -34,7 +33,7 @@ const Register = () => {
                                 : 1}
                         </div>
                     </div>
-                    <div onClick={()=>setStep(2)} className={`${step === 2 ? "border-t-4 border-[#1AA6F1]" : "border-t-4 border-transparent"} py-4 w-[260px] px-2 h-[170px] flex flex-col`}>
+                    <div className={`${step === 2 ? "border-t-4 border-[#1AA6F1]" : "border-t-4 border-transparent"} py-4 w-[260px] px-2 h-[170px] flex flex-col`}>
                         <h3 className='font-bold text-[19px] text-[#4A5E6D]'>Restaurant Type & Timings</h3>
                         <p className='font-normal text-[19px] text-[#92A5B5]'>Cuisine type. opening hours</p>
                         <div className={`w-10 h-10 mt-auto mx-auto rounded-full ${isChecked && step === 2 ? "bg-[#22C55E]" : step === 1 ? "bg-[#1AA6F1]" : "bg-[#AEAEB0]"} flex justify-center items-center text-2xl text-white`}>
@@ -43,7 +42,7 @@ const Register = () => {
                                 : 2}
                         </div>
                     </div>
-                    <div onClick={()=>setStep(3)} className={`${step === 3 ? "border-t-4 border-[#1AA6F1]" : "border-t-4 border-transparent"} py-4 w-[240px] px-2 h-[170px] flex flex-col`}>
+                    <div className={`${step === 3 ? "border-t-4 border-[#1AA6F1]" : "border-t-4 border-transparent"} py-4 w-[240px] px-2 h-[170px] flex flex-col`}>
                         <h3 className='font-bold text-[19px] text-[#4A5E6D]'>Upload Images</h3>
                         <p className='font-normal text-[19px] text-[#92A5B5]'>Menu, restaurant. food images</p>
                         <div className={`w-10 h-10 mt-auto mx-auto rounded-full ${isChecked && step === 3 ? "bg-[#22C55E]" : step === 1 ? "bg-[#1AA6F1]" : "bg-[#AEAEB0]"} flex justify-center items-center text-2xl text-white`}>

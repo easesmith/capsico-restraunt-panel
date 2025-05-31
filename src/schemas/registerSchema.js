@@ -23,10 +23,10 @@ export const RegisterSchema1 = z.object({
     pinCode: z.string().length(6, {
         message: "PinCode must be exactly 6 digits long",
     }),
-    latitude: z.number().min(1, {
+    latitude: z.coerce.number().min(1, {
         message: "Latitude is required",
     }),
-    longitude: z.number().min(1, {
+    longitude: z.coerce.number().min(1, {
         message: "Longitude is required",
     }),
     phoneNumber: z.string()
@@ -39,26 +39,8 @@ export const RegisterSchema1 = z.object({
         .regex(/^\d+$/, {
             message: "Phone number must contain only digits",
         }),
-    STDCode: z.string()
-        .min(2, {
-            message: "STD code must be at least 2 digits",
-        })
-        .max(5, {
-            message: "STD code cannot exceed 5 digits",
-        })
-        .regex(/^\d+$/, {
-            message: "STD code must contain only digits",
-        }),
-    landlineNumber: z.string()
-        .min(5, {
-            message: "Landline number must be at least 5 digits",
-        })
-        .max(15, {
-            message: "Landline number cannot exceed 15 digits",
-        })
-        .regex(/^\d+$/, {
-            message: "Landline number must contain only digits",
-        }),
+    STDCode: z.string().optional(),
+    landlineNumber: z.string().optional(),
     fullName: z.string().min(1, {
         message: "Full name is required",
     }),

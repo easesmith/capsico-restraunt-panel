@@ -260,7 +260,7 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen, categoryId,ge
                                                                     </FormItem>
                                                                     <FormItem className="flex items-center space-y-0">
                                                                         <FormControl className="hidden">
-                                                                            <RadioGroupItem value="non-veg" />
+                                                                            <RadioGroupItem value="Non-veg" />
                                                                         </FormControl>
                                                                         <FormLabel className={`border rounded p-4 flex items-center gap-2 cursor-pointer group hover:bg-[#EDF4FF] ${getValues("foodType") === "non-veg" && "bg-[#EDF4FF] border border-[#3579F0]"}`}>
                                                                             <NonVegIcon />
@@ -269,7 +269,7 @@ const AddItemModal = ({ isAddItemModalOpen, setIsAddItemModalOpen, categoryId,ge
                                                                     </FormItem>
                                                                     <FormItem className="flex items-center space-y-0">
                                                                         <FormControl className="hidden">
-                                                                            <RadioGroupItem value="egg" />
+                                                                            <RadioGroupItem value="Egg" />
                                                                         </FormControl>
                                                                         <FormLabel className={`border rounded p-4 flex items-center gap-2 cursor-pointer group hover:bg-[#EDF4FF] ${getValues("foodType") === "egg" && "bg-[#EDF4FF] border border-[#3579F0]"}`}>
                                                                             <EggIcon />

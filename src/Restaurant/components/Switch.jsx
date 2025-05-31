@@ -11,7 +11,7 @@ const Switch = () => {
   const { res, fetchData, isLoading } = useGetApiReq();
   // console.log("isVisible", isVisible)
 
-  socket.on("connection", (socket) => {
+  socket?.on("connection", (socket) => {
     console.log("connection", socket);
   })
 
@@ -24,12 +24,12 @@ const Switch = () => {
   };
 
   useEffect(() => {
-    socket.on('restaurant_status_updated', (response) => {
+    socket?.on('restaurant_status_updated', (response) => {
       dispatch(handleIsOpen(response.status === "open" ? true : false));
     });
 
     return () => {
-      socket.off('restaurant_status_updated'); // Cleanup listener
+      socket?.off('restaurant_status_updated'); // Cleanup listener
     };
   }, []);
 

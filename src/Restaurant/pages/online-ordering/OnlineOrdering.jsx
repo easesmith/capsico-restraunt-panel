@@ -32,11 +32,14 @@ const OnlineOrdering = () => {
 
         // const valid = await form.trigger(Object.keys(schema.shape));
         
-        setStep(step + 1);
         // if (valid) {
+            setStep(step + 1);
         // }
     };
     
+    const handleBack = () => {
+        setStep(step - 1);
+    }
     console.log("step",step);
 
     const form = useForm({
@@ -74,7 +77,7 @@ const OnlineOrdering = () => {
 
     return (
         <div className='max-w-7xl mx-auto p-6'>
-            <h1 className='font-semibold text-4xl text-[#4A5E6D] text-center'>Registeration for online ordering</h1>
+            <h1 className='font-semibold text-4xl text-[#4A5E6D] text-center'>Registration for online ordering</h1>
             <div className='border border-[#C2CDD6] mt-12 rounded-md w-full py-8 px-36'>
                 <div className='flex justify-between gap-10'>
                     <div className={`${step === 1 ? "border-t-4 border-[#1AA6F1]" : "border-t-4 border-transparent"} py-4 w-[240px] h-[170px] px-2 flex flex-col`}>
@@ -122,7 +125,7 @@ const OnlineOrdering = () => {
                         }
 
                         <div className="flex justify-end gap-2 mt-10">
-                            {/* {step > 1 && <Button type="button" className="bg-[#95C22B] hover:bg-[#a2d825] px-14" onClick={handleBack}>Previous</Button>} */}
+                            {step > 1 && <Button type="button" variant="capsico" onClick={handleBack}>Previous</Button>}
                             {step < 3 && <Button type="button" variant="capsico" className="w-20" onClick={handleNext}>Next</Button>}
                             {step === 3 && <Button variant="capsico" className="w-20" type="submit">Done</Button>}
                         </div>
