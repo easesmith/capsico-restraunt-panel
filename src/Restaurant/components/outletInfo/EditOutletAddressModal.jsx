@@ -21,16 +21,19 @@ import { Label } from "@/components/ui/label";
 const libraries = ["places", "marker"];
 
 const EditOutletAddressModal = ({ isEditOutletAddressInfoModalOpen, setIsEditOutletAddressModalOpen, profile, getRestaurantProfile }) => {
+    console.log("profile", profile);
+    const { address,city, state, pinCode,coordinates } = profile.location || {};
+    
     const { res, fetchData, isLoading } = usePostApiReq();
     const form = useForm({
         resolver: zodResolver(addressSchema),
         defaultValues: {
-            addressLine: "",
-            city: "",
-            state: "",
-            pinCode: "",
-            latitude: "",
-            longitude: "",
+            addressLine: address || "",
+            city: city || "",
+            state:state || "",
+            pinCode: pinCode || "",
+            latitude: coordinates[1] || "",
+            longitude: coordinates[0] ||"",
         }
     })
 
