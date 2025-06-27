@@ -58,7 +58,7 @@ const Register1 = ({ setStep, setRestaurant, restaurant }) => {
   });
 
   const { register, control, watch, setValue, getValues } = form;
-  const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
+  const [isOtpModalOpen, setIsOtpModalOpen] = useState(true);
   const [isPhoneNumberVerified, setIsPhoneNumberVerified] = useState(true);
   const [isPhoneNumber2Verified, setIsPhoneNumber2Verified] = useState(true);
   const [isPhone1, setIsPhone1] = useState(false);
@@ -536,51 +536,6 @@ const Register1 = ({ setStep, setRestaurant, restaurant }) => {
                   </FormItem>
                 )}
               />
-
-              <p className="class-lg4 text-[#666666] text-center mt-5">
-                Or Want to share Landline number
-              </p>
-
-              <div className="mt-5 grid grid-cols-[20%_80%] gap-4">
-                <FormField
-                  control={control}
-                  name="STDCode"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className=" text-[#344054] font-inter"></FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="STD Code"
-                          className="placeholder:text-[#667085] placeholder:font-inter border-[#E4E6EE]"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={control}
-                  name="landlineNumber"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className=" text-[#344054] font-inter"></FormLabel>
-                      <FormControl>
-                        <div className="flex gap-4">
-                          <Input
-                            placeholder="Landline number"
-                            className="placeholder:text-[#667085] placeholder:font-inter border-[#E4E6EE]"
-                            {...field}
-                          />
-                          {/* <Button disabled={true} variant="capsico" className="disabled:bg-[#E1E1E1]">Verify</Button> */}
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
             </div>
           </div>
 

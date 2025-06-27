@@ -7,7 +7,7 @@ import Spinner from "../Spinner";
 import DataNotFound from "../DataNotFound";
 import useGetApiReq from "@/hooks/useGetApiReq";
 
-const ManageInventory = ({ allCategories }) => {
+const ManageInventory = ({ allCategories, setSearchQuery, searchQuery }) => {
   const [foodItemsInfo, setFoodItemsInfo] = useState("");
   const [categoryId, setCategoryId] = useState(allCategories[0]?._id || "");
 
@@ -42,6 +42,8 @@ const ManageInventory = ({ allCategories }) => {
       <div className="w-[500px] relative mt-4">
         <IoSearchOutline className="absolute top-1/2 -translate-y-1/2 left-4 z-10 text-2xl text-[#8B8A8A]" />
         <Input
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
           type="search"
           placeholder="Search"
           className="px-4 pl-12 pt-1 w-full h-[52px] text-[#8B8A8A] placeholder:text-[#8B8A8A] text-xl border-[1.5px] border-[#B6B6B6]"

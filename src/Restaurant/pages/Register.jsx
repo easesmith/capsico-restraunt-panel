@@ -7,7 +7,7 @@ import Register2 from '../components/register/Register2';
 import Register3 from '../components/register/Register3';
 
 const Register = () => {
-    const [step, setStep] = useState(1);
+    const [step, setStep] = useState(2);
     const [restaurant, setRestaurant] = useState({ _id: "673c6c4737e46cc800e45e15" });
     const [isRegisterSuccessModalOpen, setIsRegisterSuccessModalOpen] = useState(false);
     const [isCreateOrRegisterRestaurantModalOpen, setIsCreateOrRegisterRestaurantModalOpen] = useState(true);

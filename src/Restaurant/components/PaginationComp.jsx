@@ -12,7 +12,6 @@ import {
 
 export function PaginationComp({
     pageCount,
-    totalCount,
     page,
     setPage
 }) {

@@ -104,7 +104,7 @@ const AddCustomizationModal = ({ isAddCustomizationModalOpen, setIsAddCustomizat
                                                     <FormItem className="w-full">
                                                         <FormLabel>Price (In Rs)</FormLabel>
                                                         <FormControl>
-                                                            <Input placeholder="Price (In Rs)"  {...field} />
+                                                            <Input type="number" placeholder="Price (In Rs)"  {...field} />
                                                         </FormControl>
                                                         <FormMessage />
                                                     </FormItem>

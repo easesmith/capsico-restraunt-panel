@@ -199,7 +199,7 @@ const OnlineOrdering1 = ({ form }) => {
       </div>
 
       <div className='border border-[#C2CDD6] rounded-md px-8 py-6 mt-7'>
-        <h3 className='text-lg font-bold font-inter text-[#4A5E6D]'>Receiving banking / accounting noyifications (invoices)</h3>
+        <h3 className='text-lg font-bold font-inter text-[#4A5E6D]'>Receiving banking / accounting notifications (invoices)</h3>
         <p className='text-xs font-semibold text-[#ABABAB]'>These will be used for billing related communication</p>
         <div className='mt-5 flex flex-col gap-5'>
           <FormField

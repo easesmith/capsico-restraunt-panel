@@ -11,6 +11,7 @@ import ProtectedRoute from "./protected-route/ProtectedRoute";
 import MainMenu from "./Restaurant/components/orderMenu/MainMenu";
 import { readCookie } from "./utils/readCookie";
 import { getSocket } from "./socket";
+import { toast } from "sonner";
 
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Register = lazy(() => import("./Restaurant/pages/Register"));
@@ -40,6 +41,7 @@ const OnlineOrdering = lazy(
 function App() {
   const { isLoading } = useSelector((state) => state.loading);
 
+  // toast.success("hello this is success toast");
   const { res, fetchData } = useGetApiReq();
   const { res: refreshRes, fetchData: fetchRefreshData } = usePostApiReq();
   const { res: logoutRes, fetchData: fetchLogoutData } = usePostApiReq();

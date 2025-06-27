@@ -1,101 +1,152 @@
-import React, { useState } from 'react'
-import { FiEdit2, FiPlusCircle } from 'react-icons/fi'
-import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io'
-import { RiDeleteBinLine } from 'react-icons/ri'
-import MaskGroupInput from '../../../assets/Mask group Input.png'
-import CategoryEditModel from '../models/CategoryEditModel'
-import SubCategoryEditModel from '../models/SubCategoryEditModel'
-import { FaTrash } from 'react-icons/fa6'
-import { BiTrash } from 'react-icons/bi'
+import { useEffect, useState } from "react";
+import { FiEdit2, FiPlusCircle } from "react-icons/fi";
+import { IoIosArrowDown } from "react-icons/io";
+import CategoryEditModel from "../models/CategoryEditModel";
+import SubCategoryEditModel from "../models/SubCategoryEditModel";
+import useDeleteApiReq from "@/hooks/useDeleteApiReq";
+import { BiTrash } from "react-icons/bi";
+import { useParams } from "react-router-dom";
+import AlertModal from "../AlertModal";
+import SubCategory from "./SubCategory";
 
-const ItemComp = ({ title, category, getCategories, show, setCategoryId = () => { } }) => {
+const ItemComp = ({
+  category,
+  getCategories,
+  categoryId,
+  setCategoryId = () => {},
+}) => {
+  const { name, id, subcategories, itemCount } = category;
 
-    const { name, id, subcategories } = category
+  const [isOpenb, setIsOpenb] = useState(false);
 
-    const [addFoodBtn, setAddFoodBtn] = useState(true)
-    const [exitingBtn, setExitingBtn] = useState(true)
-    const [addSublevel, setAddSublevel] = useState(true)
-    const [showSubCategory, setShowSubCategory] = useState(show)
+  const [isOpenCategoryModel, setIsOpenCategoryModel] = useState(false);
+  const [isOpenSubCategoryModel, setIsOpenSubCategoryModel] = useState(false);
 
-    const [isOpena, setIsOpena] = useState(true);
-    const [isOpenb, setIsOpenb] = useState(false);
-    const [isOpenc, setIsOpenc] = useState(false);
+  const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
+  const params = useParams();
 
-    const [isOpenCategoryModel, setIsOpenCategoryModel] = useState(false)
-    const [isOpenSubCategoryModel, setIsOpenSubCategoryModel] = useState(false)
+  const handleCategoryEdit = (e) => {
+    e.stopPropagation();
+    setIsOpenCategoryModel(true);
+  };
 
-    const toggleOpena = () => {
-        setIsOpena(!isOpena);
-    };
+  const handleCategoryDelete = (e) => {
+    e.stopPropagation();
+    setIsAlertModalOpen(true);
+  };
 
-    const toggleOpenb = () => {
-        setIsOpenb(!isOpenb);
-    };
+  const { res, fetchData, isLoading } = useDeleteApiReq();
 
-    const toggleOpenc = () => {
-        setIsOpenc(!isOpenc);
-    };
+  const deleteCategoroy = () => {
+    fetchData(`/restaurant/delete-category?categoryId=${id}`);
+  };
 
-    const haddleSubCategory = () => {
-        setIsOpenSubCategoryModel(true)
+  useEffect(() => {
+    if (res?.status === 200 || res?.status === 201) {
+      getCategories();
+      setCategoryId("");
     }
+  }, [res, getCategories]);
 
-    return (
-        <div onClick={() => setCategoryId(id)}>
-            <div onClick={() => setIsOpenb(!isOpenb)} className="w-full flex items-center hover:bg-[#F7FAFF]  justify-between border-b-2 pl-10 pr-5 py-5 group cursor-pointer">
-                <h3 className="seven-color class-base1">{name}</h3>
-                <div className='flex items-center gap-8'>
-                    {show === true &&
-                        <div className='hidden group-hover:flex gap-4'>
-                            <FiEdit2 onClick={() => setIsOpenCategoryModel(true)} className="seven-color text-lg cursor-pointer" />
-                            <BiTrash onClick={() => { }} className="text-[#E4626F] text-xl cursor-pointer" />
-                        </div>}
-                    <IoIosArrowDown className={`seven-color text-xl cursor-pointer transform transition-transform duration-200 ${isOpenb && "rotate-180 duration-200"}`} />
-                </div>
-            </div>
+  const haddleSubCategory = () => {
+    setIsOpenSubCategoryModel(true);
+  };
 
-            {isOpenb &&
-                <div className="flex flex-col">
-                    {subcategories.map((subcategory, index) => {
-                        return (
-                            <div key={subcategory.id} className="w-full flex items-center justify-between pl-20 pr-5 py-4 border-b-2 group hover:bg-[#F7FAFF]">
-                                <h3 className="seven-color class-base1">{subcategory.name}</h3>
-                                {show === true &&
-                                    <div className='flex items-center gap-8'>
-                                        <div className='hidden group-hover:flex gap-4'>
-                                            <FiEdit2 onClick={() => setIsOpenSubCategoryModel(true)} className="seven-color text-lg cursor-pointer" />
-                                            <BiTrash onClick={() => { }} className="text-[#E4626F] text-xl cursor-pointer" />
-                                        </div>
-                                    </div>}
-                            </div>
-                        )
-                    })}
-                    {show === true &&
-                        <button className="flex w-full items-center gap-3 px-5 py-4 pl-10 border-b" onClick={haddleSubCategory}>
-                            <FiPlusCircle className="primary-color text-lg" />
-                            <span className="class-base1 primary-color">Add SubCategory</span>
-                        </button>}
-                </div>
-            }
+  const handleClick = () => {
+    setIsOpenb(!isOpenb);
+    setCategoryId(id);
+  };
 
+  const handleSubcategoryClick = (value) => {
+    // setIsOpenb(!isOpenb);
+    setCategoryId(value);
+  };
 
-            {isOpenCategoryModel &&
-                <CategoryEditModel
-                    isOpenCategoryModel={isOpenCategoryModel}
-                    setIsOpenCategoryModel={setIsOpenCategoryModel}
-                />
-            }
-
-            {isOpenSubCategoryModel &&
-                <SubCategoryEditModel
-                    isOpenSubCategoryModel={isOpenSubCategoryModel}
-                    setIsOpenSubCategoryModel={setIsOpenSubCategoryModel}
-                    id={id}
-                    getCategories={getCategories}
-                />
-            }
+  return (
+    <div>
+      {/* #F2F4F7 */}
+      <div
+        onClick={handleClick}
+        className={`w-full flex items-center hover:bg-[#e6edfb] justify-between border-b-2 p-5 py-3 group cursor-pointer ${
+          categoryId === category?.id && "bg-[#e6edfb]"
+        }`}
+      >
+        <h3 className="text-[#000000] font-medium font-inter">
+          {name} ({itemCount})
+        </h3>
+        <div className="flex items-center gap-8">
+          <div className="hidden group-hover:flex gap-4">
+            <FiEdit2
+              onClick={handleCategoryEdit}
+              className="seven-color text-lg cursor-pointer"
+            />
+            <BiTrash
+              onClick={handleCategoryDelete}
+              className="text-[#E4626F] text-xl cursor-pointer"
+            />
+          </div>
+          <IoIosArrowDown
+            className={`seven-color text-xl cursor-pointer transform transition-transform duration-200 ${
+              isOpenb && "rotate-180 duration-200"
+            }`}
+          />
         </div>
-    )
-}
+      </div>
 
-export default ItemComp
+      {isOpenb && (
+        <div className="flex flex-col">
+          {subcategories?.map((subcategory) => {
+            return (
+              <SubCategory
+                key={subcategory.id}
+                categoryId={categoryId}
+                subcategory={subcategory}
+                handleSubcategoryClick={handleSubcategoryClick}
+                getCategories={getCategories}
+              />
+            );
+          })}
+
+          <button
+            className="flex w-full items-center gap-3 px-5 py-3 pl-10 border-b"
+            onClick={haddleSubCategory}
+          >
+            <FiPlusCircle className="primary-color text-lg" />
+            <span className="class-base1 primary-color">Add SubCategory</span>
+          </button>
+        </div>
+      )}
+
+      {isOpenCategoryModel && (
+        <CategoryEditModel
+          isOpenCategoryModel={isOpenCategoryModel}
+          setIsOpenCategoryModel={setIsOpenCategoryModel}
+          getCategories={getCategories}
+          category={category}
+        />
+      )}
+
+      {isOpenSubCategoryModel && (
+        <SubCategoryEditModel
+          id={id}
+          isOpenSubCategoryModel={isOpenSubCategoryModel}
+          setIsOpenSubCategoryModel={setIsOpenSubCategoryModel}
+          getCategories={getCategories}
+        />
+      )}
+
+      {isAlertModalOpen && (
+        <AlertModal
+          isAlertModalOpen={isAlertModalOpen}
+          setIsAlertModalOpen={setIsAlertModalOpen}
+          header="Delete Category"
+          description="Are you sure you want to delete this category?"
+          onConfirm={deleteCategoroy}
+          disabled={isLoading}
+        />
+      )}
+    </div>
+  );
+};
+
+export default ItemComp;

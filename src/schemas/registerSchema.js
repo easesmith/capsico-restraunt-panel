@@ -58,7 +58,7 @@ export const RegisterSchema1 = z.object({
 export const RegisterSchema2 =
     z.object({
         restaurantType: z.enum(["BOTH", "VEG", "NON_VEG"], {
-            required_error: "Please select an opening time",
+            required_error: "Please select a restaurant type.",
         }),
         priceForOne: z.string().min(1, "Price for one in required"),
         restaurantOptions: z.array(z.string()).min(1, "Please select at least one restaurant option"),

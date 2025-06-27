@@ -25,6 +25,7 @@ const OrderMenu = () => {
   const [allCategories, setAllCategories] = useState([]);
   const [categoryId, setCategoryId] = useState("");
   const [foodItemsInfo, setFoodItemsInfo] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const toggleOpena = () => {
     setIsOpena(!isOpena);
@@ -33,12 +34,12 @@ const OrderMenu = () => {
   const { res, fetchData, isLoading } = useGetApiReq();
 
   const getCategories = () => {
-    fetchData("/restaurant/get-categories");
+    fetchData(`/restaurant/get-categories?searchQuery=${searchQuery}`);
   };
 
   useEffect(() => {
     getCategories();
-  }, []);
+  }, [searchQuery]);
 
   useEffect(() => {
     if (res?.status === 200 || res?.status === 201) {
@@ -83,13 +84,21 @@ const OrderMenu = () => {
         <div className="flex justify-start items-center gap-5 mt-5">
           <button
             onClick={() => setIsActiveTab("editor")}
-            className={`${isActiveTab === "editor" ? "text-[#4A67FF] border-b-[#4A67FF]" : "text-[#000000] border-b-transparent"}  border-b-2 pb-4 px-5 text-xl font-semibold font-inter`}
+            className={`${
+              isActiveTab === "editor"
+                ? "text-[#4A67FF] border-b-[#4A67FF]"
+                : "text-[#000000] border-b-transparent"
+            }  border-b-2 pb-4 px-5 text-xl font-semibold font-inter`}
           >
             Menu editor
           </button>
           <button
             onClick={() => setIsActiveTab("inventory")}
-            className={`${isActiveTab === "inventory" ? "text-[#4A67FF] border-b-[#4A67FF]" : "text-[#000000] border-b-transparent"} border-b-2 pb-4 px-5 text-xl font-semibold font-inter`}
+            className={`${
+              isActiveTab === "inventory"
+                ? "text-[#4A67FF] border-b-[#4A67FF]"
+                : "text-[#000000] border-b-transparent"
+            } border-b-2 pb-4 px-5 text-xl font-semibold font-inter`}
           >
             Manage inventory
           </button>
@@ -100,6 +109,8 @@ const OrderMenu = () => {
               <IoSearchOutline className="absolute top-1/2 -translate-y-1/2 left-4 z-10 text-2xl text-[#8B8A8A]" />
               <Input
                 type="search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search"
                 className="px-4 pl-12 pt-1 w-full h-[52px] text-[#8B8A8A] placeholder:text-[#8B8A8A] text-xl border-[1.5px] border-[#B6B6B6]"
               />
@@ -125,11 +136,11 @@ const OrderMenu = () => {
                 </div> */}
                   {allCategories?.map((category) => (
                     <ItemComp
-                      setCategoryId={setCategoryId}
                       key={category?._id}
+                      setCategoryId={setCategoryId}
+                      categoryId={categoryId}
                       category={category}
                       getCategories={getCategories}
-                      show={true}
                     />
                   ))}
 
@@ -165,7 +176,7 @@ const OrderMenu = () => {
                     </span>
                   </button>
                   {foodItemsInfo?.itemsByCategory?.map((foodItem) => (
-                    <Product key={foodItem?._id} foodItem={foodItem} />
+                    <Product key={foodItem?._id} foodItem={foodItem} getFoodItems={getFoodItems} />
                   ))}
 
                   {foodItemsInfo?.totalItems === 0 && (
@@ -216,7 +227,11 @@ const OrderMenu = () => {
         )}
 
         {isActiveTab === "inventory" && (
-          <ManageInventory allCategories={allCategories} />
+          <ManageInventory
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            allCategories={allCategories}
+          />
         )}
       </div>
     </RestaurantWrapper>
