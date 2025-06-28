@@ -16,8 +16,8 @@ import { toast } from "sonner";
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Register = lazy(() => import("./Restaurant/pages/Register"));
 const ABC = lazy(() => import("./Restaurant/pages/ABC"));
-const RegisterAndLogin = lazy(
-  () => import("./Restaurant/pages/RegisterAndLogin"),
+const RegisterAndLogin = lazy(() =>
+  import("./Restaurant/pages/RegisterAndLogin")
 );
 const Reporting = lazy(() => import("./Restaurant/pages/reporting/Reporting"));
 const Order = lazy(() => import("./Restaurant/pages/Order"));
@@ -26,16 +26,16 @@ const OrderMenu = lazy(() => import("./Restaurant/pages/orderMenu/OrderMenu"));
 const Payout = lazy(() => import("./Restaurant/pages/payout/Payout"));
 const Offers = lazy(() => import("./Restaurant/pages/Offers"));
 const OutletInfo = lazy(() => import("./Restaurant/pages/OutletInfo"));
-const CustomerComplaints = lazy(
-  () => import("./Restaurant/pages/CustomerComplaints"),
+const CustomerComplaints = lazy(() =>
+  import("./Restaurant/pages/complaint/CustomerComplaints")
 );
 const Reviews = lazy(() => import("./Restaurant/pages/Reviews"));
 const Items = lazy(() => import("./Restaurant/pages/Items"));
 const GSTDeclaration = lazy(() => import("./Restaurant/pages/GSTDeclaration"));
 const Charges = lazy(() => import("./Restaurant/pages/Charges"));
 const HelpCenter = lazy(() => import("./Restaurant/pages/HelpCenter"));
-const OnlineOrdering = lazy(
-  () => import("./Restaurant/pages/online-ordering/OnlineOrdering"),
+const OnlineOrdering = lazy(() =>
+  import("./Restaurant/pages/online-ordering/OnlineOrdering")
 );
 
 function App() {
@@ -71,7 +71,7 @@ function App() {
     if (res?.status === 200 || res?.status === 201) {
       localStorage.setItem(
         "restaurant-status",
-        `${res?.data?.isAuthenticated}`,
+        `${res?.data?.isAuthenticated}`
       );
       console.log("status response", res);
       res?.data?.shouldLoggOut && logout();

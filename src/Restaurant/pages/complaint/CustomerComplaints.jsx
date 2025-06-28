@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import RestaurantWrapper from "../components/restaurantWrapper/RestaurantWrapper";
+import RestaurantWrapper from "../../components/restaurantWrapper/RestaurantWrapper";
 import { Button } from "@/components/ui/button";
-import CusmoterImg from "../../assets/Layer_1.png";
-import RupeesImg from "../../assets/Vector123.png";
-import CustomerComplaintModel from "../components/customerComplaint/CustomerComplaintModel";
+import CusmoterImg from "../../../assets/Layer_1.png";
+import RupeesImg from "../../../assets/Vector123.png";
 import useGetApiReq from "@/hooks/useGetApiReq";
-import { PaginationComp } from "../components/PaginationComp";
+import CustomerComplaintModel from "@/Restaurant/components/customerComplaint/CustomerComplaintModel";
+import { PaginationComp } from "@/Restaurant/components/PaginationComp";
+import SingleComplaint from "./SingleComplaint";
 
 const CustomerComplaints = () => {
   const data = [
@@ -55,8 +56,9 @@ const CustomerComplaints = () => {
   useEffect(() => {
     if (res?.status === 200 || res?.status === 201) {
       console.log("get complaints res", res);
-      setTotalPage(res?.data?.pagination?.totalPages);
-      setPage(res?.data?.pagination?.page);
+      setcomplaintsData(res?.data?.data?.complaints);
+      setTotalPage(res?.data?.data?.pagination?.totalPages);
+      // setPage(res?.data?.pagination?.page);
     }
   }, [res]);
 
@@ -83,28 +85,10 @@ const CustomerComplaints = () => {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col gap-5 px-6 pt-4 pb-40">
-            {complaintsData.map((e, i) => {
+          <div className="flex flex-col gap-5 px-6 py-4">
+            {complaintsData.map((complaint, i) => {
               return (
-                <div className="bg-[#FFFFFF] shadow-custom h-[169px] rounded-lg border-[1px] border-[#E9E9E9] flex flex-col gap-3 px-7 py-3">
-                  <div className="flex items-start justify-between">
-                    <div className="flex flex-col justify-start items-start gap-1">
-                      <p className="class-sm8 twelve-color">ID:{e.id}</p>
-                      <p className="class-sm8 sixteen-color">{e.date}</p>
-                    </div>
-                    <button className="class-sm8 text-[#FFFFFF] bg-[#ADCB42] hover:bg-[#b4d148] border-[1px] border-[#ADCB42] rounded-lg px-3 h-7">
-                      {e.btn1}
-                    </button>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <p className="class-sm8 sixteen-color">{e.description}</p>
-                    <p className="class-sm8 sixteen-color">₹{e.price}</p>
-                  </div>
-                  <button className="class-base8 twelve-color bg-[#FFFFFF] hover:bg-[#f9f8f8] border-[1px] border-[#D3D3D3] rounded-lg py-3 px-8 flex justify-center items-center gap-2">
-                    <img src={e.image} alt="" />
-                    {e.btn2}
-                  </button>
-                </div>
+                <SingleComplaint key={i} complaint={complaint} />
               );
             })}
           </div>

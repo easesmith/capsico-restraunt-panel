@@ -93,7 +93,7 @@ export function PaginationComp({
 
     return (
         <div className="flex flex-col md:flex-row items-center gap-3 w-full pagination">
-            <Pagination>
+           {pageCount > 0 && <Pagination>
                 <PaginationContent className="max-sm:gap-0">
                     <PaginationItem>
                         <PaginationPrevious onClick={handlePrevious} to="" />
@@ -103,7 +103,7 @@ export function PaginationComp({
                         <PaginationNext onClick={handleNext} to="" />
                     </PaginationItem>
                 </PaginationContent>
-            </Pagination>
+            </Pagination>}
         </div>
     );
 }
