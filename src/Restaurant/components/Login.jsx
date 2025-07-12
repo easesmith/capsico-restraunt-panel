@@ -1,6 +1,6 @@
 import googleIcon from '@/assets/google.png';
 import indiaIcon from '@/assets/pngegg 1.png';
-import emailIcon from '@/assets/vector (4).png';
+import emailIcon from "@/assets/email.png";
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
