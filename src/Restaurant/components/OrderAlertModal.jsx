@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { getSocket } from "@/socket";
-import Counter from "@/utils/counter";
+import Counter from "@/utils/Counter";
 import { format } from "date-fns";
 import { useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa6";
