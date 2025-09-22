@@ -58,7 +58,7 @@ const Register1 = ({ setStep, setRestaurant, restaurant }) => {
   });
 
   const { register, control, watch, setValue, getValues } = form;
-  const [isOtpModalOpen, setIsOtpModalOpen] = useState(true);
+  const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
   const [isPhoneNumberVerified, setIsPhoneNumberVerified] = useState(true);
   const [isPhoneNumber2Verified, setIsPhoneNumber2Verified] = useState(true);
   const [isPhone1, setIsPhone1] = useState(false);

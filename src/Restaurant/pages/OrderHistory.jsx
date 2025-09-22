@@ -71,13 +71,15 @@ const OrderHistory = () => {
 
   const getOrders = useCallback(() => {
     fetchData(
-      `/restaurant/get-order-history?page=${page || 1}&dateFilter=${dateFilter}&status=${activeTab}`
+      `/restaurant/get-order-history?page=${
+        page || 1
+      }&dateFilter=${dateFilter}&status=${activeTab}&searchQuery=${searchQuery}`
     );
-  }, [page, dateFilter, activeTab]);
+  }, [page, dateFilter, activeTab,searchQuery]);
 
   useEffect(() => {
     getOrders();
-  }, [page, dateFilter, activeTab]);
+  }, [page, dateFilter, activeTab,searchQuery]);
 
   useEffect(() => {
     if (res?.status === 200 || res?.status === 201) {
@@ -125,13 +127,13 @@ const OrderHistory = () => {
               </SelectContent>
             </Select>
 
-            <Button
+            {/* <Button
               variant="outline"
               className="flex justify-center items-center gap-2 third-color class-sm1"
             >
               <HiOutlineAdjustmentsHorizontal className="text-[22px]" />
               <span>Filter</span>
-            </Button>
+            </Button> */}
             <Button
               variant="outline"
               className="flex justify-center items-center gap-2 third-color class-sm1"

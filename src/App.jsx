@@ -12,6 +12,7 @@ import MainMenu from "./Restaurant/components/orderMenu/MainMenu";
 import { readCookie } from "./utils/readCookie";
 import { getSocket } from "./socket";
 import { toast } from "sonner";
+import PaymentPage from "./pages/PaymentPage";
 
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Register = lazy(() => import("./Restaurant/pages/Register"));
@@ -95,6 +96,20 @@ function App() {
     }
   }, [logoutRes]);
 
+  // on: 
+  // order_status_updated - 2 on
+  // order - ready - response; - 3 on
+  // new_order_received; 1 
+  // get - orders;
+
+  // emit: update_order_status - confirmed; 2
+  // update_order_status - rejected; 2
+  // update_order_status - not - confirmed; 2
+  // mark - order - ready; 3
+
+  // update_restaurant_status;
+
+
   // res?.data?.isAuthenticated
   return (
     <>
@@ -117,6 +132,7 @@ function App() {
 
             <Route path="/restaurant/outlet-info" element={<OutletInfo />} />
             <Route element={<ProtectedRoute />}>
+              <Route path="/payment" element={<PaymentPage />} />
               <Route path="/restaurant/reporting/*" element={<Reporting />} />
               <Route path="/restaurant/offers" element={<Offers />} />
               {/* <Route path='/restaurant/reporting' element={<Reporting />} /> */}

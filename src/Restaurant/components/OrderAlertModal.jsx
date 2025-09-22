@@ -1,4 +1,3 @@
-import restaurantCutlery from "@/assets/restaurant-cutlery 1.png";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -20,6 +19,7 @@ import EggIcon from "./customIcons/EggIcon";
 import NonVegIcon from "./customIcons/NonVegIcon";
 import VegIcon from "./customIcons/VegIcon";
 
+// eslint-disable-next-line react/prop-types
 const OrderAlertModal = ({ isOrderAlertModalOpen, setIsOrderAlertModalOpen, newOrder, getOrders }) => {
     // const newOrder = JSON.parse(localStorage.getItem("newOrder")).order;
     console.log("newOrder", newOrder);
@@ -38,10 +38,11 @@ const OrderAlertModal = ({ isOrderAlertModalOpen, setIsOrderAlertModalOpen, newO
 
     const handleAction = (e) => {
         e.preventDefault();
-        socket.emit('update_order_status', {
-            orderId: newOrder?.id,
-            status: 'confirmed',
-            reason: ''
+        socket.emit("update_order_status", {
+          orderId: newOrder?.id,
+          status: "confirmed",
+          time: minute,
+          reason: "",
         });
         setIsOrderAlertModalOpen(false);
     }

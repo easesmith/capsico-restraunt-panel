@@ -52,14 +52,21 @@ const Order = () => {
     }
   }, [res])
 
-  useEffect(() => {
-    socket.on('new_order_received', (response) => {
-      console.log('New order received:', response);
-      localStorage.setItem("newOrder", JSON.stringify(response));
-      setNewOrder(response?.order);
-      setIsOrderAlertModalOpen(true);
-    });
-  }, [])
+ useEffect(() => {
+   const handleNewOrder = (response) => {
+     console.log("New order received:", response);
+     localStorage.setItem("newOrder", JSON.stringify(response));
+     setNewOrder(response?.order);
+     setIsOrderAlertModalOpen(true);
+   };
+
+   socket.on("new_order_received", handleNewOrder);
+
+   return () => {
+     socket.off("new_order_received", handleNewOrder);
+   };
+ }, []);
+
 
 
   socket.on('get-orders', (response) => {
