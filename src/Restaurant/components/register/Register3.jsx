@@ -72,7 +72,12 @@ const Register3 = ({ restaurant, setStep }) => {
             });
         }
 
-        fetchData(`/admin/restraunt-registration-upload-images/${restaurant?._id || restaurant?.id}`, formData);
+        fetchData(
+          `/restaurant/restraunt-registration-upload-images/${
+            restaurant?._id || restaurant?.id
+          }`,
+          formData
+        );
     }
 
 

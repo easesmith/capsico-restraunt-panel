@@ -7,13 +7,13 @@ import BackdropLoader from "./components/BackdropLoader";
 import { Toaster } from "./components/ui/sonner";
 import useGetApiReq from "./hooks/useGetApiReq";
 import usePostApiReq from "./hooks/usePostApiReq";
+import PaymentPage from "./pages/PaymentPage";
 import ProtectedRoute from "./protected-route/ProtectedRoute";
 import MainMenu from "./Restaurant/components/orderMenu/MainMenu";
 import { readCookie } from "./utils/readCookie";
-import { getSocket } from "./socket";
-import { toast } from "sonner";
-import PaymentPage from "./pages/PaymentPage";
 
+const CreateOffer = lazy(() => import("./Restaurant/pages/offers/CreateOffer"));
+const UpdateOffer = lazy(() => import("./Restaurant/pages/offers/UpdateOffer"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Register = lazy(() => import("./Restaurant/pages/Register"));
 const ABC = lazy(() => import("./Restaurant/pages/ABC"));
@@ -25,7 +25,7 @@ const Order = lazy(() => import("./Restaurant/pages/Order"));
 const OrderHistory = lazy(() => import("./Restaurant/pages/OrderHistory"));
 const OrderMenu = lazy(() => import("./Restaurant/pages/orderMenu/OrderMenu"));
 const Payout = lazy(() => import("./Restaurant/pages/payout/Payout"));
-const Offers = lazy(() => import("./Restaurant/pages/Offers"));
+const Offers = lazy(() => import("./Restaurant/pages/offers/Offers"));
 const OutletInfo = lazy(() => import("./Restaurant/pages/OutletInfo"));
 const CustomerComplaints = lazy(() =>
   import("./Restaurant/pages/complaint/CustomerComplaints")
@@ -96,10 +96,10 @@ function App() {
     }
   }, [logoutRes]);
 
-  // on: 
+  // on:
   // order_status_updated - 2 on
   // order - ready - response; - 3 on
-  // new_order_received; 1 
+  // new_order_received; 1
   // get - orders;
 
   // emit: update_order_status - confirmed; 2
@@ -108,7 +108,6 @@ function App() {
   // mark - order - ready; 3
 
   // update_restaurant_status;
-
 
   // res?.data?.isAuthenticated
   return (
@@ -160,6 +159,14 @@ function App() {
               />
               <Route path="/restaurant/reviews" element={<Reviews />} />
               <Route path="/restaurant/help-center" element={<HelpCenter />} />
+              <Route
+                path="/restaurant/offers/create"
+                element={<CreateOffer />}
+              />
+              <Route
+                path="/restaurant/offers/:id/update"
+                element={<UpdateOffer />}
+              />
             </Route>
 
             <Route path="*" element={<NotFound />} />

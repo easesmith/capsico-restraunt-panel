@@ -74,7 +74,7 @@ const OfferDetails = ({ coupon }) => {
 
                 <p className="text-[#637D92] class-base1 mt-5">{coupon?.description}</p>
                 <p className="text-[#637D92] class-base1 mt-5">Offer Details:</p>
-                {coupon?.terms.length > 0 && <ul className="mt-3">
+                {coupon?.terms?.length > 0 && <ul className="mt-3">
                     {coupon?.terms.map((term, i) => (
                         <li key={i} className="ml-5 class-base1 text-[#637D92]">{term}</li>
                     ))}

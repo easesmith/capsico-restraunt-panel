@@ -78,7 +78,7 @@ const CreateOfferModal = ({ isCreateCouponModalOpen, setIsCreateCouponModalOpen 
     } = usePostApiReq();
 
     const getCuisines = () => {
-      fetchData("/admin/get-cuisines");
+      fetchData("/restaurant/get-cuisines");
     };
 
     useEffect(() => {
@@ -96,7 +96,7 @@ const CreateOfferModal = ({ isCreateCouponModalOpen, setIsCreateCouponModalOpen 
     }, [res]);
 
     const getCategory = () => {
-      categoryFetchData("/admin/get-categories");
+      categoryFetchData("/restaurant/get-categories");
     };
 
     useEffect(() => {
@@ -111,7 +111,9 @@ const CreateOfferModal = ({ isCreateCouponModalOpen, setIsCreateCouponModalOpen 
     }, [categoryRes]);
 
     const getItems = () => {
-      itemsFetchData(`/admin/get-items-by-category/${watch("categoryId")}`);
+      itemsFetchData(
+        `/restaurant/get-items-by-category/${watch("categoryId")}`
+      );
     };
 
     useEffect(() => {

@@ -10,7 +10,7 @@ import { readCookie } from '@/utils/readCookie';
 
 const Header = () => {
   const userInfo = readCookie("userInfo");
-  console.log("userInfo: ", userInfo);
+  // console.log("userInfo: ", userInfo);
 
   return (
     <header className='bg-[#E7EBEF] h-[105px] sticky top-0 z-20'>

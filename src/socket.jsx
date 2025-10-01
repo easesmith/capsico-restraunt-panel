@@ -36,7 +36,7 @@ const getSocket = () => useContext(SocketContext);
 const SocketProvider = ({ children }) => {
   const token = localStorage.getItem("accessToken");
   const userInfo = readCookie("userInfo");
-  console.log("userInfo",userInfo);
+  // console.log("userInfo",userInfo);
 
   const socket = useMemo(
     () =>

@@ -15,6 +15,7 @@ import usePostApiReq from "@/hooks/usePostApiReq";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const OtpModal = ({ isOtpModalOpen, setIsOtpModalOpen, phone, resendOtp, isEmail = false }) => {
     const [timeLeft, setTimeLeft] = useState(60);
@@ -52,6 +53,10 @@ const OtpModal = ({ isOtpModalOpen, setIsOtpModalOpen, phone, resendOtp, isEmail
             localStorage.setItem("accessToken",res?.data?.accessToken)
             navigate("/restaurant/orders")
             setIsOtpModalOpen(false)
+            Cookies.set(
+              "userInfo",
+              JSON.stringify(res?.data?.user)
+            );
         }
     }, [res])
 

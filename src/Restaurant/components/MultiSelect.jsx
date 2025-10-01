@@ -42,9 +42,7 @@ export default function MultiSelect({
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button variant="outline" className="w-full px-2.5 justify-between">
-            <p className="truncate">
-            {displayText}
-            </p>
+            <p className="truncate">{displayText}</p>
             <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
@@ -53,10 +51,11 @@ export default function MultiSelect({
             <CommandInput placeholder="Search..." />
             <CommandEmpty>No results found</CommandEmpty>
             <CommandList>
-              {options.map((opt) => (
+              {options.map((opt, index) => (
                 <CommandItem
-                  key={opt.value}
+                  key={index}
                   onSelect={() => toggleItem(opt.value)}
+                  value={opt.value}
                 >
                   <div className="flex items-center gap-2">
                     <div
