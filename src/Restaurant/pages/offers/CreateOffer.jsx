@@ -72,7 +72,7 @@ const CreateOffer = () => {
     },
   });
 
-  const { handleSubmit, control, watch, getValues, reset, setValue } = form;
+  const { handleSubmit, control, watch, getValues, reset, setValue,formState } = form;
   useEffect(() => {
     if (userInfo) {
       setValue("restaurantId", userInfo?.id);
@@ -350,7 +350,6 @@ const CreateOffer = () => {
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
-                      
                     >
                       <FormControl>
                         <SelectTrigger>
@@ -562,6 +561,13 @@ const CreateOffer = () => {
                         </Button>
                       </div>
                     ))}
+
+                    {formState?.errors?.offerDetails?.comboItems?.root
+                      ?.message && (
+                      <p className="text-destructive">
+                        {formState.errors.offerDetails.comboItems.root.message}
+                      </p>
+                    )}
 
                     <div className="flex justify-end">
                       {/* Add button */}

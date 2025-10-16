@@ -202,7 +202,7 @@ const OrderHistory = () => {
                 Cancelled
               </Button>
             </div>
-            {orders.map((order, i) => {
+            {orders?.map((order, i) => {
               if (order.status === "delivered") {
                 return <OrderDelivered key={i} order={order} />;
               } else {
@@ -210,9 +210,9 @@ const OrderHistory = () => {
               }
             })}
 
-            {orders.length === 0 && isLoading && <Spinner />}
+            {orders?.length === 0 && isLoading && <Spinner />}
 
-            {orders.length === 0 && !isLoading && (
+            {orders?.length === 0 && !isLoading && (
               <DataNotFound name="Orders" />
             )}
 

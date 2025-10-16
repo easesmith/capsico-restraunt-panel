@@ -54,7 +54,7 @@ const SocketProvider = ({ children }) => {
        socket.emit("join", { userId: ""});
     });
 
-    socket.on("connect_error", (err) => {
+    socket.on("error", (err) => {
       console.error("❌ Socket connection error:", err.message);
     });
 

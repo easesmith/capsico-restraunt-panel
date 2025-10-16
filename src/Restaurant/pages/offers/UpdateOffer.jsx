@@ -75,7 +75,7 @@ useEffect(() => {
     },
   });
 
-  const { handleSubmit, control, watch, getValues, reset, setValue } = form;
+  const { handleSubmit, control, watch, getValues, reset, setValue,formState } = form;
   useEffect(() => {
     if (userInfo) {
       setValue("restaurantId", userInfo?.id);
@@ -568,6 +568,13 @@ useEffect(() => {
                         </Button>
                       </div>
                     ))}
+
+                    {formState?.errors?.offerDetails?.comboItems?.root
+                      ?.message && (
+                      <p className="text-destructive">
+                        {formState.errors.offerDetails.comboItems.root.message}
+                      </p>
+                    )}
 
                     <div className="flex justify-end">
                       {/* Add button */}
