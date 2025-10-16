@@ -75,9 +75,11 @@ const Order = () => {
    socket.on("new_order_received", handleNewOrder);
    socket.on("order_picked_up", handleOrderPickedUp);
    socket.on("order-update", handleOrderUpdate);
-
+   
    return () => {
      socket.off("new_order_received", handleNewOrder);
+     socket.off("order_picked_up", handleOrderPickedUp);
+     socket.off("order-update", handleOrderUpdate);
    };
  }, []);
 

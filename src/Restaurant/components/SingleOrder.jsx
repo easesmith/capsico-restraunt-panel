@@ -87,7 +87,7 @@ const SingleOrder = ({ order, status = "", getOrders, setOrderStatus }) => {
   );
 
   return (
-    <div className="grid grid-cols-3 border border-[#C1C1C1] rounded-lg">
+    <div className="grid grid-cols-3 border border-[#C1C1C1] bg-white rounded-lg">
       <div className="p-5 border-r border-dashed border-r-[#C4C4C4]">
         <h2 className="text-[#515151] font-medium text-xl break-all font-dmSans">
           ID:{order?.orderNumber}
