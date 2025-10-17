@@ -4,6 +4,8 @@ import VegIcon from '../customIcons/VegIcon';
 import { Button } from '@/components/ui/button';
 import ProfileImg from "@/assets/Ellipse 1.png";
 import { format } from 'date-fns';
+import { Mail, Phone, User } from 'lucide-react';
+import { CgProfile } from 'react-icons/cg';
 
 const OrderDelivered = ({order}) => {
   return (
@@ -12,19 +14,25 @@ const OrderDelivered = ({order}) => {
         <div>
           <p className="class-xl8 twelve-color">ID:{order?.orderNumber}</p>
           <p className="class-sm8 sixteen-color">
-            {order?.createdAt &&
-              format(new Date(order.createdAt), "MMM dd, yyyy hh:mm aa")}
+            {order?.timing?.createdAt &&
+              format(
+                new Date(order?.timing?.createdAt),
+                "MMM dd, yyyy hh:mm aa"
+              )}
           </p>
         </div>
         <div className="fifteen-color flex items-center gap-2 mt-5">
           <IoIosCheckmarkCircle className="text-2xl" />
-          <p className="class-sm8 capitalize">{order?.status}</p>
+          <p className="class-sm8 capitalize">{order?.orderDetails?.status}</p>
         </div>
       </div>
-      <div className="w-1/3 flex flex-col gap-5 h-full justify-start items-center px-10 py-7 border-s-[1px] border-e-[1px] border-dashed border-[#C4C4C4]">
+      <div className="w-1/3 flex flex-col gap-5 h-full justify-start items-center px-5 py-7 border-s-[1px] border-e-[1px] border-dashed border-[#C4C4C4]">
         <div className="px-2 w-full">
           {order?.items?.map((item) => (
-            <div key={item?._id} className="flex items-center justify-between mb-3">
+            <div
+              key={item?._id}
+              className="flex items-center justify-between mb-3"
+            >
               <div className="flex items-center gap-2">
                 <VegIcon />
                 <p className="class-sm8 twelve-color">
@@ -37,14 +45,16 @@ const OrderDelivered = ({order}) => {
         </div>
         <div className="flex items-center justify-between px-2 w-full">
           <p className="class-sm8 twelve-color">Total amount</p>
-          <p className="class-sm8 twelve-color">₹{order?.amounts?.total}</p>
+          <p className="class-sm8 twelve-color">
+            ₹{order?.orderSummary?.total}
+          </p>
         </div>
-        <Button variant="gst3" size="lg" className="class-sm7 h-10 w-[320px]">
+        <Button variant="gst3" size="lg" className="class-sm7 h-10 w-full px-4">
           Order Completed
         </Button>
       </div>
       <div className=" w-1/3 py-5">
-        <div className="border-[1px] border-[#E9E9E9] rounded-lg p-3 h-[184px]">
+        {/* <div className="border-[1px] border-[#E9E9E9] rounded-lg p-3 h-[184px]">
           <p className="class-sm8 twelve-color mb-2">Delivered</p>
           <div className="flex items-center justify-between">
             <div className=" flex justify-start items-start gap-3">
@@ -58,6 +68,26 @@ const OrderDelivered = ({order}) => {
               </p>
             </div>
             <IoMdCall className="thirteen-color text-lg cursor-pointer" />
+          </div>
+        </div> */}
+        <div>
+          <p className="flex items-center gap-2">
+            <User />
+            Customer Details
+          </p>
+          <div className="border rounded-md mt-2 p-4">
+            <p className="flex items-center gap-2">
+              <CgProfile className='size-4' />
+              {order?.customer?.name}
+            </p>
+            <p className="flex items-center gap-2">
+              <Mail className='size-4' />
+              {order?.customer?.email}
+            </p>
+            <p className="flex items-center gap-2">
+              <Phone className='size-4' />
+              {order?.customer?.phone}
+            </p>
           </div>
         </div>
       </div>

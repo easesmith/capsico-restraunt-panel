@@ -104,9 +104,9 @@ const Order = () => {
           <div>
             <div className=" bg-[#D9F1FD66] flex justify-between items-center px-10 py-4 mb-4">
               <div>
-                <h6 className="five-color class-base1">Order</h6>
+                <h6 className="five-color class-base1">Orders</h6>
               </div>
-              <div className=" flex justify-center items-center gap-5">
+              {/* <div className=" flex justify-center items-center gap-5">
                 <div className="w-[324px] flex items-center">
                   <IoSearchOutline className="-mr-6 z-10 eleven-color" />
                   <Input
@@ -147,7 +147,7 @@ const Order = () => {
                   <LiaDownloadSolid className="text-[18px]" />
                   <span>Export CSV</span>
                 </Button>
-              </div>
+              </div> */}
             </div>
 
             {/* <Toast /> */}

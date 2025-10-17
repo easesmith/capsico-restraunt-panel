@@ -12,16 +12,19 @@ const OrderCancelled = ({order}) => {
         <div>
           <p className="class-xl8 twelve-color">ID:{order?.orderNumber}</p>
           <p className="class-sm8 sixteen-color">
-            {order?.createdAt &&
-              format(new Date(order.createdAt), "MMM dd, yyyy hh:mm aa")}
+            {order?.timing?.createdAt &&
+                          format(
+                            new Date(order?.timing?.createdAt),
+                            "MMM dd, yyyy hh:mm aa"
+                          )}
           </p>
         </div>
         <div className="seventeen-color flex items-center gap-2">
           <FaCircleXmark className="text-2xl" />
-          <p className="class-sm8 capitalize">{order?.status}</p>
+          <p className="class-sm8 capitalize">{order?.orderDetails?.status}</p>
         </div>
       </div>
-      <div className="w-1/2 flex flex-col gap-5 h-full justify-start items-end px-10 py-7 border-s-[1px] border-dashed border-[#C4C4C4]">
+      <div className="w-1/2 flex flex-col gap-5 h-full justify-start items-end px-5 py-7 border-s-[1px] border-dashed border-[#C4C4C4]">
         <div className="px-2 w-full">
           {order?.items?.map((item) => (
             <div
@@ -40,11 +43,13 @@ const OrderCancelled = ({order}) => {
         </div>
         <div className="flex items-center justify-between px-2 w-full">
           <p className="class-sm8 twelve-color">Total amount</p>
-          <p className="class-sm8 twelve-color">₹{order?.amounts?.total}</p>
+          <p className="class-sm8 twelve-color">
+            ₹{order?.orderSummary?.total}
+          </p>
         </div>
-        <Button variant="gst4" size="lg" className="class-sm7 h-10 w-[320px]">
+        {/* <Button variant="gst4" size="lg" className="class-sm7 h-10 w-full px-4">
           Order Cancelled
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

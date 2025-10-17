@@ -26,34 +26,9 @@ import DataNotFound from "../components/DataNotFound";
 import useGetApiReq from "@/hooks/useGetApiReq";
 import { PaginationComp } from "../components/PaginationComp";
 import OrderCancelled from "../components/Orderhistory/OrderCancelled";
+import { readCookie } from "@/utils/readCookie";
 
 const OrderHistory = () => {
-  const data = [
-    {
-      id: "37939 30930",
-      date: "",
-      time: "",
-    },
-    {
-      id: "839 30930",
-      date: "",
-      time: "",
-    },
-  ];
-
-  const data2 = [
-    {
-      id: "37939 30930",
-      date: "",
-      time: "",
-    },
-    {
-      id: "9839 30930",
-      date: "",
-      time: "",
-    },
-  ];
-
   const [selectedDateRange, setSelectedDateRange] = useState("");
   const [activeTab, setActiveTab] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -64,6 +39,8 @@ const OrderHistory = () => {
   const [dateFilter, setDateFilter] = useState("all");
   // const [dateFilter, setDateFilter] = useState("today");
   const [page, setPage] = useState(1);
+  const userInfo = readCookie("userInfo");
+  console.log("userInfo", userInfo);
 
   const handleSelectChange = (value) => {
     setSelectedDateRange(value);
@@ -73,13 +50,15 @@ const OrderHistory = () => {
     fetchData(
       `/restaurant/get-order-history?page=${
         page || 1
-      }&dateFilter=${dateFilter}&status=${activeTab}&searchQuery=${searchQuery}`
+      }&dateFilter=${dateFilter}&status=${activeTab}&searchQuery=${searchQuery}&restaurantId=${
+        userInfo.id
+      }`
     );
-  }, [page, dateFilter, activeTab,searchQuery]);
+  }, [page, dateFilter, activeTab, searchQuery]);
 
   useEffect(() => {
     getOrders();
-  }, [page, dateFilter, activeTab,searchQuery]);
+  }, [page, dateFilter, activeTab, searchQuery]);
 
   useEffect(() => {
     if (res?.status === 200 || res?.status === 201) {
@@ -87,9 +66,9 @@ const OrderHistory = () => {
       const { pagination } = res?.data || {};
       setOrders(res?.data?.data);
       if (pagination) {
-        setPage(pagination?.currentPage)
-        setPageCount(pagination?.totalPages)
-        setTotalCount(pagination?.totalReviews)
+        // setPage(pagination?.currentPage);
+        setPageCount(pagination?.totalPages);
+        setTotalCount(pagination?.totalReviews);
       }
     }
   }, [res]);
@@ -180,11 +159,11 @@ const OrderHistory = () => {
                 All
               </Button>
               <Button
-                onClick={() => setActiveTab("delivered")}
+                onClick={() => setActiveTab("completed")}
                 variant="gst2"
                 size="lg"
                 className={`h-[38px] ${
-                  activeTab != "delivered" &&
+                  activeTab != "completed" &&
                   "border-[#9C9C9C] text-[#8B8B8B] bg-[#FFFFFF] hover:bg-[#f0f0f0]"
                 }`}
               >
@@ -203,7 +182,10 @@ const OrderHistory = () => {
               </Button>
             </div>
             {orders?.map((order, i) => {
-              if (order.status === "delivered") {
+              if (
+                order?.orderDetails?.status === "completed" ||
+                order?.orderDetails?.status === "delivered"
+              ) {
                 return <OrderDelivered key={i} order={order} />;
               } else {
                 return <OrderCancelled key={i} order={order} />;
