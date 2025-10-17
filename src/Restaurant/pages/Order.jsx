@@ -1,24 +1,31 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import RestaurantWrapper from '../components/restaurantWrapper/RestaurantWrapper'
-import OutletImg from "../../assets/outlet.png"
-import CloseCartImg from '../../assets/Mask group.png'
-import { Input } from '@/components/ui/input'
-import { IoSearchOutline } from 'react-icons/io5'
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import React, { useCallback, useEffect, useState } from "react";
+import RestaurantWrapper from "../components/restaurantWrapper/RestaurantWrapper";
+import OutletImg from "../../assets/outlet.png";
+import CloseCartImg from "../../assets/Mask group.png";
+import { Input } from "@/components/ui/input";
+import { IoSearchOutline } from "react-icons/io5";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { LiaDownloadSolid } from "react-icons/lia";
 import { LuCalendar } from "react-icons/lu";
-import { Button } from '@/components/ui/button'
+import { Button } from "@/components/ui/button";
 import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
-import OrdersModel from '../components/orders/OrdersModel'
-import { useSelector, useDispatch } from 'react-redux';
-import { hideNotification, showNotification } from '../redux/notificationSlice';
-import SingleOrder from '../components/SingleOrder'
-import OrderAlertModal from '../components/OrderAlertModal'
-import { getSocket } from '@/socket'
-import useGetApiReq from '@/hooks/useGetApiReq'
-import Spinner from '../components/Spinner'
-import DataNotFound from '../components/DataNotFound'
-import { toast } from 'sonner'
+import OrdersModel from "../components/orders/OrdersModel";
+import { useSelector, useDispatch } from "react-redux";
+import { hideNotification, showNotification } from "../redux/notificationSlice";
+import SingleOrder from "../components/SingleOrder";
+import OrderAlertModal from "../components/OrderAlertModal";
+import { getSocket } from "@/socket";
+import useGetApiReq from "@/hooks/useGetApiReq";
+import Spinner from "../components/Spinner";
+import DataNotFound from "../components/DataNotFound";
+import { toast } from "sonner";
 
 const Order = () => {
   const { isOpen } = useSelector((state) => state.notification);
@@ -27,7 +34,7 @@ const Order = () => {
   const [dbOrders, setDbOrders] = useState([]);
   const { res, fetchData, isLoading } = useGetApiReq();
   const [selectedDateRange, setSelectedDateRange] = useState("");
-  const [orderStatus, setOrderStatus] = useState("INPROGRESS")
+  const [orderStatus, setOrderStatus] = useState("INPROGRESS");
   const [isOrderAlertModalOpen, setIsOrderAlertModalOpen] = useState(false);
   const [newOrder, setNewOrder] = useState("");
 
@@ -37,59 +44,58 @@ const Order = () => {
 
   const getOrders = useCallback(() => {
     fetchData(`/restaurant/get-order-bystatus?status=${orderStatus}`);
-  }, [orderStatus])
+  }, [orderStatus]);
 
   useEffect(() => {
     getOrders();
-  }, [orderStatus])
+  }, [orderStatus]);
 
   // console.log("orderStatus",orderStatus);
-
 
   useEffect(() => {
     if (res?.status === 200 || res?.status === 201) {
       console.log("orders response", res);
       setDbOrders(res?.data?.data);
     }
-  }, [res])
+  }, [res]);
 
- useEffect(() => {
-   const handleNewOrder = (response) => {
-     console.log("New order received:", response);
-     localStorage.setItem("newOrder", JSON.stringify(response));
-     setNewOrder(response?.order);
-     setIsOrderAlertModalOpen(true);
-   };
+  useEffect(() => {
+    const handleNewOrder = (response) => {
+      console.log("New order received:", response);
+      localStorage.setItem("newOrder", JSON.stringify(response));
+      setNewOrder(response?.order);
+      setIsOrderAlertModalOpen(true);
+    };
 
-   const handleOrderPickedUp = ()=>{
-    toast.success("Order Picked Up Successfully")
-    setOrderStatus("COLLECTED");
-   }
+    const handleOrderPickedUp = () => {
+      toast.success("Order Picked Up Successfully");
+      if (orderStatus === "COLLECTED") {
+        getOrders();
+      }
+      setOrderStatus("COLLECTED");
+    };
 
-   const handleOrderUpdate = (data) => {
-    console.log("data", data);
+    const handleOrderUpdate = (data) => {
+      console.log("data", data);
 
-     getOrders();
-   };
+      getOrders();
+    };
 
-   socket.on("new_order_received", handleNewOrder);
-   socket.on("order_picked_up", handleOrderPickedUp);
-   socket.on("order-update", handleOrderUpdate);
-   
-   return () => {
-     socket.off("new_order_received", handleNewOrder);
-     socket.off("order_picked_up", handleOrderPickedUp);
-     socket.off("order-update", handleOrderUpdate);
-   };
- }, []);
+    socket.on("new_order_received", handleNewOrder);
+    socket.on("order_picked_up", handleOrderPickedUp);
+    socket.on("order-update", handleOrderUpdate);
 
+    return () => {
+      socket.off("new_order_received", handleNewOrder);
+      socket.off("order_picked_up", handleOrderPickedUp);
+      socket.off("order-update", handleOrderUpdate);
+    };
+  }, []);
 
-
-  socket.on('get-orders', (response) => {
+  socket.on("get-orders", (response) => {
     console.log("orders received", response.orders);
     setOrders(response?.orders);
   });
-
 
   return (
     <RestaurantWrapper>
@@ -239,6 +245,6 @@ const Order = () => {
       </>
     </RestaurantWrapper>
   );
-}
+};
 
-export default Order
+export default Order;
