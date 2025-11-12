@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 import { FaCheck } from 'react-icons/fa6';
 
 const OnlineOrdering = () => {
-    const [step, setStep] = useState(1);
+    const [step, setStep] = useState(3);
     const [isRegisterSuccessModalOpen, setIsRegisterSuccessModalOpen] = useState(false);
     const [isCreateOrRegisterRestaurantModalOpen, setIsCreateOrRegisterRestaurantModalOpen] = useState(true);
     const [isChecked, setIsChecked] = useState(true);
@@ -109,7 +109,7 @@ const OnlineOrdering = () => {
                     </div>
                 </div>
             </div>
-            <div className='w-[50%] mt-5'>
+            <div className='w-[70%] mt-5'>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="w-full py-5">
                         {step === 1 &&

@@ -20,7 +20,7 @@ const OrderMenu = () => {
   const [isOpena, setIsOpena] = useState(true);
   const [isOpenCategoryModel, setIsOpenCategoryModel] = useState(false);
   const [isOpenSubCategoryModel, setIsOpenSubCategoryModel] = useState(false);
-  const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
+  const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(true);
   const [isAddonGroupsModalOpen, setIsAddonGroupsModalOpen] = useState(false);
   const [allCategories, setAllCategories] = useState([]);
   const [categoryId, setCategoryId] = useState("");

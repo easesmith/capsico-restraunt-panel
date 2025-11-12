@@ -17,6 +17,7 @@ export const subCategorySchema = z.object({
     .string()
     .min(3, "Mininum 3 char is required")
     .max(50, "SubCategory should be less than 50 characters"),
+  categoryId: z.string().min(1, "Selecte Category"),
   description: z
     .string()
     .min(3, "Mininum 3 char is required")

@@ -11,6 +11,9 @@ import PaymentPage from "./pages/PaymentPage";
 import ProtectedRoute from "./protected-route/ProtectedRoute";
 import MainMenu from "./Restaurant/components/orderMenu/MainMenu";
 import { readCookie } from "./utils/readCookie";
+import MenuPage from "./Restaurant/components/menu/Menu";
+import AddMenu from "./Restaurant/components/menu/AddMenu";
+import UpdateMenu from "./Restaurant/components/menu/UpdateMenu";
 
 const CreateOffer = lazy(() => import("./Restaurant/pages/offers/CreateOffer"));
 const UpdateOffer = lazy(() => import("./Restaurant/pages/offers/UpdateOffer"));
@@ -144,8 +147,20 @@ function App() {
               <Route path="/restaurant/order-menu" element={<MainMenu />} />
               <Route
                 path="/restaurant/order-menu/edit"
-                element={<OrderMenu />}
+                element={<MenuPage />}
               />
+              <Route
+                path="/restaurant/:restaurantId/addmenu"
+                element={<AddMenu />}
+              />
+              <Route
+                path="/restaurant/:restaurantId/updateMenu"
+                element={<UpdateMenu />}
+              />
+              {/* <Route
+                path="/restaurant/order-menu/edit"
+                element={<OrderMenu />}
+              /> */}
               <Route path="/restaurant/items" element={<Items />} />
               <Route
                 path="/restaurant/gst-declaration"
