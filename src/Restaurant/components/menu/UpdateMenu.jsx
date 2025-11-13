@@ -23,7 +23,7 @@ import useGetApiReq from "@/hooks/useGetApiReq";
 import usePatchApiReq from "@/hooks/usePatchApiReq";
 import { updateMultiplePreview } from "@/utils/updatePreview";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Edit } from "lucide-react";
+import { Edit, PlusIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaMinus, FaPlus, FaTimes } from "react-icons/fa";
@@ -43,6 +43,7 @@ import CreateVariantModel from "../orderMenu/CreateVariantModel";
 import MapAddOnModel from "../orderMenu/MapAddOnModel";
 import Spinner from "../Spinner";
 import { UpdateItemSchema } from "@/schemas/AddItemSchema";
+import SubCategoryEditModel from "../models/SubCategoryEditModel";
 
 const UpdateMenu = () => {
   const navigate = useNavigate();
@@ -83,6 +84,12 @@ const UpdateMenu = () => {
     isDefault: false,
     tags: [],
   });
+
+   const [isOpenSubCategoryModel, setIsOpenSubCategoryModel] = useState(false);
+
+   const handleSubcategoryAdd = () => {
+     setIsOpenSubCategoryModel((prev) => !prev);
+   };
 
   const params = useParams();
   const { state } = useLocation();
@@ -149,7 +156,7 @@ const UpdateMenu = () => {
       openingTime: "",
       closingTime: "",
       days: [],
-      variantGroupText: "",
+      variantGroupText: foodItem?.variantGroupText || "",
     },
   });
 
@@ -526,9 +533,9 @@ const UpdateMenu = () => {
     const customizations = getValues("customizations");
     const modifiedCustomizations = customizations?.[0]
       ? {
-          categoryname: customizations[0].categoryName,
-          customizationtype: customizations[0].customizationType,
-          addeddata: customizations[0].customizationOptions,
+          categoryname: customizations?.[0]?.categoryName,
+          customizationtype: customizations?.[0]?.customizationType,
+          addeddata: customizations?.[0]?.customizationOptions,
         }
       : {};
 
@@ -585,7 +592,7 @@ const UpdateMenu = () => {
     // Use subcategoryId for the new API structure
     formData.append("subcategoryId", subCategory);
     formData.append("categoryId", categoryId);
-    console.log("menuTags", menuTags);
+    formData.append("variantGroupText", data.variantGroupText);
 
     // formData.append("availableTimings", JSON.stringify(availableTimings));
     formData.append("menuTagIds", JSON.stringify(menuTags));
@@ -649,7 +656,7 @@ const UpdateMenu = () => {
                         Basic Details
                       </h3>
 
-                      <FormField
+                      {/* <FormField
                         control={control}
                         name="categoryId"
                         render={({ field }) => (
@@ -682,7 +689,7 @@ const UpdateMenu = () => {
                             <FormMessage />
                           </FormItem>
                         )}
-                      />
+                      /> */}
 
                       {categoryId && (
                         <FormField
@@ -690,7 +697,18 @@ const UpdateMenu = () => {
                           name="subCategory"
                           render={({ field }) => (
                             <FormItem className="mt-5">
-                              <FormLabel>Sub Category</FormLabel>
+                              <div className="flex justify-between items-center gap-5">
+                                <FormLabel>Sub Category</FormLabel>
+                                <Button
+                                  variant="capsico"
+                                  className="flex items-center gap-2 w-auto px-4"
+                                  onClick={handleSubcategoryAdd}
+                                  type="button"
+                                >
+                                  <PlusIcon size={18} />
+                                  Add Sub Category
+                                </Button>
+                              </div>
                               <Select
                                 onValueChange={field.onChange}
                                 value={field.value}
@@ -1759,6 +1777,15 @@ const UpdateMenu = () => {
               </form>
             </Form>
           </div>
+
+          {isOpenSubCategoryModel && (
+            <SubCategoryEditModel
+              isOpenSubCategoryModel={isOpenSubCategoryModel}
+              setIsOpenSubCategoryModel={setIsOpenSubCategoryModel}
+              category={foodItem.category}
+              getSubcategoriesFun={getSubcategoriesFun}
+            />
+          )}
 
           {/* Modal Components */}
           {isVariantModalOpen && (

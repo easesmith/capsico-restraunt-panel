@@ -207,7 +207,6 @@
 
 // export default SubCategoryEditModel;
 
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -244,13 +243,15 @@ import Spinner from "../Spinner";
 import useGetApiReq from "@/hooks/useGetApiReq";
 import { subCategorySchema } from "@/schemas/OrderMenuSchema";
 import { readCookie } from "@/utils/readCookie";
+import { PaginationComp } from "../PaginationComp";
 
 const SubCategoryEditModel = ({
   isOpenSubCategoryModel,
   setIsOpenSubCategoryModel,
-  categoryId, // This is the parent category ID
+  category, // This is the parent category ID
   subCategory,
   subcategoryId,
+  getSubcategoriesFun = () => {},
 }) => {
   const { res, isLoading, fetchData } = usePostApiReq();
   const {
@@ -259,6 +260,8 @@ const SubCategoryEditModel = ({
     fetchData: fetchData1,
   } = usePatchApiReq();
   const [allCategories, setAllCategories] = useState([]);
+  const [totalPage, setTotalPage] = useState(100);
+  const [page, setPage] = useState(1);
 
   const form = useForm({
     resolver: zodResolver(subCategorySchema),
@@ -266,6 +269,7 @@ const SubCategoryEditModel = ({
       subCategory: subCategory?.name || "",
       description: subCategory?.description || "",
       isActive: subCategory?.isActive || false,
+      categoryId: category ? category?.id : "",
     },
   });
 
@@ -279,13 +283,13 @@ const SubCategoryEditModel = ({
   } = useGetApiReq();
 
   const getCategories = () => {
-    const url = `/restaurant/get-categories?restaurantId=${userInfo?.id}`;
+    const url = `/restaurant/get-categories?restaurantId=${userInfo?.id}&page=${page}`;
     getData(url);
-  };
+  };  
 
   useEffect(() => {
     getCategories();
-  }, []);
+  }, [page]);
 
   // Enhanced debug logging
   useEffect(() => {
@@ -299,6 +303,7 @@ const SubCategoryEditModel = ({
         value: item?.id,
       }));
       setAllCategories(modifiedCategories || []);
+      setTotalPage(getRes?.data?.pagination?.totalPages || 1);
     }
   }, [getRes]);
 
@@ -351,7 +356,7 @@ const SubCategoryEditModel = ({
       open={isOpenSubCategoryModel}
       onOpenChange={setIsOpenSubCategoryModel}
     >
-      <DialogContent>
+      <DialogContent className="max-w-2xl">
         <DialogHeader>
           <DialogTitle>{subCategory ? "Edit" : "Add"} Sub Category</DialogTitle>
           <Form {...form}>
@@ -359,42 +364,58 @@ const SubCategoryEditModel = ({
               onSubmit={form.handleSubmit(onSubmit)}
               className="w-full py-3"
             >
-              <div className="w-full mt-5">
-                <FormField
-                  control={control}
-                  name="categoryId"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Category</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        value={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select Category" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {allCategories?.map((category) => (
-                            <SelectItem
-                              key={category?.value}
-                              value={category?.value}
-                            >
-                              {category?.label}
-                            </SelectItem>
-                          ))}
+              {category && (
+                <div className="">
+                  <h3>Category Name: {category?.name}</h3>
+                </div>
+              )}
+              {!category && (
+                <div className="w-full mt-5">
+                  <FormField
+                    control={control}
+                    name="categoryId"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="flex justify-between items-center gap-5">
+                          <FormLabel>Category</FormLabel>
+                          <div className="w-auto">
+                            <PaginationComp
+                              page={page || 1}
+                              pageCount={totalPage}
+                              setPage={setPage}
+                            />
+                          </div>
+                        </div>
+                        <Select
+                          onValueChange={field.onChange}
+                          value={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select Category" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {allCategories?.map((category) => (
+                              <SelectItem
+                                key={category?.value}
+                                value={category?.value}
+                              >
+                                {category?.label}
+                              </SelectItem>
+                            ))}
 
-                          {allCategories.length === 0 && (
-                            <p>No categories found</p>
-                          )}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+                            {allCategories.length === 0 && (
+                              <p>No categories found</p>
+                            )}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              )}
               <div className="w-full mt-5">
                 <FormField
                   control={control}
