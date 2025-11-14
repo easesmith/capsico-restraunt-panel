@@ -11,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { FaPlus } from "react-icons/fa6";
 import { z } from "zod";
@@ -20,6 +21,8 @@ const CreateVariantModel = ({
   getValues,
   isVariantModalOpen,
   setIsVariantModalOpen,
+  index,
+  isUpdate,
 }) => {
   const AddonSchema = z.object({
     name: z
@@ -46,10 +49,30 @@ const CreateVariantModel = ({
     control,
   } = form;
 
+  const variations = getValues("variations");
+  console.log("variations", variations);
+  console.log("variations-index", variations[index]);
+  console.log("index", index);
+
+  useEffect(() => {
+    reset({
+      name: variations?.[index]?.name || "",
+      price: variations?.[index]?.price || "",
+      isDefault: variations?.[index]?.isDefault || false,
+    });
+  }, [variations]);
+
   const onsubmit = (data) => {
     console.log("data ", data);
     const prev = getValues("variations");
-    setValue("variations", [...prev, data]);
+    if (isUpdate && typeof index === "number") {
+      // Update existing variant
+      const updated = [...prev];
+      updated[index] = { ...updated[index], ...data };
+      setValue("variations", updated);
+    } else {
+      setValue("variations", [...prev, data]);
+    }
     form.reset();
     setIsVariantModalOpen(false);
   };
@@ -64,7 +87,7 @@ const CreateVariantModel = ({
           >
             <div>
               <h2 className="text-[#000000] text-2xl font-semibold font-inter">
-                Create variants
+                {isUpdate ? "Update Variant" : "Create Variant"}
               </h2>
               <div className="grid gap-6 py-4">
                 <FormField
@@ -134,7 +157,7 @@ const CreateVariantModel = ({
                 variant="capsico"
                 className="w-full class-base2"
               >
-                Add Variant
+                {isUpdate ? "Update Variant" : "Add Variant"}
               </Button>
             </div>
           </form>
