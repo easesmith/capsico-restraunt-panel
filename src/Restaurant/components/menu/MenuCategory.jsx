@@ -5,7 +5,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { MoreHorizontalIcon, Plus } from "lucide-react";
 import { useState } from "react";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
@@ -14,10 +14,29 @@ import SubCategoryEditModel from "../models/SubCategoryEditModel";
 import Food from "./Food";
 import { readCookie } from "@/utils/readCookie";
 import Spinner from "../Spinner";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import EditCategoryModal from "./EditCategoryModal";
+import EditSubCategoryModal from "./EditSubCategoryModal";
+import DeleteCategoryModal from "./DeleteCategoryModal";
+import DeleteSubCategoryModal from "./DeleteSubCategoryModal";
 
-export default function MenuSection({ categories = [], getData, isLoading }) {
+export default function MenuSection({ categories = [], getData, isLoading, getCategories }) {
   const [isOpenCategoryModel, setIsOpenCategoryModel] = useState(false);
   const [isOpenSubCategoryModel, setIsOpenSubCategoryModel] = useState(false);
+  const [isEditCategoryModalOpen, setIsEditCategoryModalOpen] = useState(false);
+  const [isEditSubCategoryModalOpen, setIsEditSubCategoryModalOpen] =
+    useState(false);
+  const [isDeleteCategoryModalOpen, setIsDeleteCategoryModalOpen] =
+    useState(false);
+  const [isDeleteSubCategoryModalOpen, setIsDeleteSubCategoryModalOpen] =
+    useState(false);
 
   const navigate = useNavigate();
   const params = useParams();
@@ -83,6 +102,37 @@ export default function MenuSection({ categories = [], getData, isLoading }) {
             <Plus size={18} />
             Add Sub Category
           </Button>
+          <DropdownMenu modal={false}>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="size-10 p-0">
+                <MoreHorizontalIcon className="size-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" side="right">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => setIsEditCategoryModalOpen(true)}
+              >
+                Edit Category
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => setIsDeleteCategoryModalOpen(true)}
+              >
+                Delete Category
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => setIsEditSubCategoryModalOpen(true)}
+              >
+                Edit Subcategory
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => setIsDeleteSubCategoryModalOpen(true)}
+              >
+                Delete Subcategory
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </header>
 
@@ -126,7 +176,7 @@ export default function MenuSection({ categories = [], getData, isLoading }) {
           No menu found. Create menu by adding food items, category.
         </div>
       )}
-      
+
       {isLoading && (
         <div className="flex justify-center text-muted-foreground mt-40">
           <div>
@@ -180,7 +230,11 @@ export default function MenuSection({ categories = [], getData, isLoading }) {
               ) : (
                 <div className="flex flex-col divide-y divide-[#E5E7EB] dark:divide-gray-700">
                   {category?.foodItems?.map((item, index) => (
-                    <Food key={index} item={item} />
+                    <Food
+                      getCategories={getCategories}
+                      key={index}
+                      item={item}
+                    />
                   ))}
                 </div>
               )}
@@ -203,6 +257,38 @@ export default function MenuSection({ categories = [], getData, isLoading }) {
           setIsOpenSubCategoryModel={setIsOpenSubCategoryModel}
           // categoryId={categoryId}
           getCategories={getData}
+        />
+      )}
+
+      {isEditCategoryModalOpen && (
+        <EditCategoryModal
+          isOpenCategoryModel={isEditCategoryModalOpen}
+          setIsOpenCategoryModel={setIsEditCategoryModalOpen}
+          getDataFun={getData}
+        />
+      )}
+
+      {isEditSubCategoryModalOpen && (
+        <EditSubCategoryModal
+          isOpenCategoryModel={isEditSubCategoryModalOpen}
+          setIsOpenCategoryModel={setIsEditSubCategoryModalOpen}
+          getDataFun={getData}
+        />
+      )}
+
+      {isDeleteCategoryModalOpen && (
+        <DeleteCategoryModal
+          isOpenCategoryModel={isDeleteCategoryModalOpen}
+          setIsOpenCategoryModel={setIsDeleteCategoryModalOpen}
+          getDataFun={getData}
+        />
+      )}
+
+      {isDeleteSubCategoryModalOpen && (
+        <DeleteSubCategoryModal
+          isOpenCategoryModel={isDeleteSubCategoryModalOpen}
+          setIsOpenCategoryModel={setIsDeleteSubCategoryModalOpen}
+          getDataFun={getData}
         />
       )}
     </div>

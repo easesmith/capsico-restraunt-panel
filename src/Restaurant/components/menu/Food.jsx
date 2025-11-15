@@ -2,21 +2,32 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import usePostApiReq from "@/hooks/usePostApiReq";
 import { readCookie } from "@/utils/readCookie";
-import { EditIcon, ImageOffIcon, Star } from "lucide-react";
+import { EditIcon, ImageOffIcon, Star, TrashIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import NonVegIcon from "../customIcons/NonVegIcon";
 import VegIcon from "../customIcons/VegIcon";
+import useDeleteApiReq from "@/hooks/useDeleteApiReq";
+import AlertModal from "../AlertModal";
+import useGetApiReq from "@/hooks/useGetApiReq";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
-const Food = ({ item }) => {
+const Food = ({ item, getCategories }) => {
   const [isOn, setIsOn] = useState(item.isAvailable);
+  const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
+  const [isRecommended, setIsRecommended] = useState(item.isRecommended);
 
   const { res, fetchData, isLoading } = usePostApiReq();
   const navigate = useNavigate();
+  const params = useParams();
   const userInfo = readCookie("userInfo");
 
   const toggleFoodAvailability = (value) => {
-    console.log("value: ", value);
     setIsOn(value);
     fetchData(
       `/restaurant/food-availability/${item?.id}?restaurantId=${userInfo?.id}`
@@ -38,6 +49,44 @@ const Food = ({ item }) => {
       },
     });
   };
+
+  const {
+    res: deleteRes,
+    fetchData: deleteItem,
+    isLoading: isDeleteItemLoading,
+  } = useDeleteApiReq();
+
+  const deleteMenuItem = () => {
+    deleteItem(
+      `/restaurant/delete-menu-item?menuItemId=${item?.id}`
+    );
+  };
+
+  useEffect(() => {
+    if (deleteRes?.status === 200 || deleteRes?.status === 201) {
+      getCategories();
+      setIsAlertModalOpen(false);
+    }
+  }, [deleteRes]);
+
+  const {
+    res: recommendRes,
+    fetchData: recommend,
+    isLoading: isDeleteRecommendLoading,
+  } = useGetApiReq();
+
+  const handleRecommend = () => {
+    setIsRecommended((prev) => !prev);
+    recommend(
+      `/restaurant/toggle-recommend/${item?.id}?restaurantId=${params?.restaurantId}`
+    );
+  };
+
+  useEffect(() => {
+    if (recommendRes?.status === 200 || recommendRes?.status === 201) {
+      getCategories();
+    }
+  }, [recommendRes]);
 
   return (
     <div
@@ -68,23 +117,39 @@ const Food = ({ item }) => {
 
       {/* Actions */}
       <div className="flex items-center gap-4">
-        {item.isRecommended && (
-          <Button
-            variant="ghost"
-            size="sm"
-            className={`flex items-center gap-2 ${
-              item.isRecommended
-                ? "bg-primary/10 text-primary"
-                : "text-[#6B7280] hover:text-primary hover:bg-primary/10"
-            }`}
-          >
-            <Star
-              size={16}
-              className={item.isRecommended ? "fill-current" : ""}
-            />
-            {item.isRecommended ? "Recommended" : "Recommend"}
-          </Button>
-        )}
+        <Button
+          variant="ghost"
+          size="sm"
+          className={`flex items-center gap-2 ${
+            isRecommended
+              ? "bg-primary/10 text-primary"
+              : "text-[#6B7280] hover:text-primary hover:bg-primary/10"
+          }`}
+          onClick={handleRecommend}
+          disabled={isDeleteRecommendLoading}
+        >
+          <Star size={16} className={isRecommended ? "fill-current" : ""} />
+          {isRecommended ? "Recommended" : "Recommend"}
+        </Button>
+
+        <TooltipProvider delayDuration={100}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                size="icon"
+                variant="outline"
+                onClick={() => setIsAlertModalOpen(true)}
+                className="size-8"
+              >
+                <TrashIcon className="text-destructive size-4 cursor-pointer" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Delete menu item</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
         <Button
           variant="ghost"
           size="icon"
@@ -100,6 +165,17 @@ const Food = ({ item }) => {
           onCheckedChange={(value) => toggleFoodAvailability(value)}
         />
       </div>
+
+      {isAlertModalOpen && (
+        <AlertModal
+          isAlertModalOpen={isAlertModalOpen}
+          setIsAlertModalOpen={setIsAlertModalOpen}
+          header="Delete Menu Item"
+          description="Are you sure you want to delete this menu item?"
+          onConfirm={deleteMenuItem}
+          disabled={isDeleteItemLoading}
+        />
+      )}
     </div>
   );
 };

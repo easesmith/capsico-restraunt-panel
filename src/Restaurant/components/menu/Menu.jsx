@@ -34,6 +34,7 @@ const MenuPage = () => {
           categories={menuData}
           getData={getData}
           isLoading={isLoading}
+          getCategories={getData}
         />
       </div>
     </RestaurantWrapper>
