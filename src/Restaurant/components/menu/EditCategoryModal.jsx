@@ -29,13 +29,13 @@ import usePutApiReq from "@/hooks/usePutApiReq";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { PaginationComp } from "../PaginationComp";
 import Spinner from "../Spinner";
 import { Label } from "@/components/ui/label";
 import { categorySchema } from "@/schemas/OrderMenuSchema";
 import { readCookie } from "@/utils/readCookie";
+import { toast } from "sonner";
 
 const EditCategoryModal = ({
   isOpenCategoryModel,
@@ -115,6 +115,11 @@ const EditCategoryModal = ({
 
   const onSubmit = (data) => {
     console.log("data", data);
+      if (!categoryId) {
+        toast.error("Please select a category to update");
+        return;
+      }
+
 
     fetchData1(
       `/restaurant/restaurants/${userInfo?.id}/update-category/${categoryId}`,
@@ -129,7 +134,6 @@ const EditCategoryModal = ({
   useEffect(() => {
     if (res?.status === 200 || res?.status === 201) {
       console.log("Add category res", res);
-      toast.success(res?.data?.message);
       getData();
       reset();
       setIsOpenCategoryModel(false);
@@ -139,7 +143,6 @@ const EditCategoryModal = ({
   useEffect(() => {
     if (res1?.status === 200 || res1?.status === 201) {
       console.log("update category res", res1);
-      toast.success(res1?.data?.message);
       getDataFun();
       reset();
       setIsOpenCategoryModel(false);
@@ -183,67 +186,73 @@ const EditCategoryModal = ({
                   </SelectContent>
                 </Select>
               </div>
-              <div className="w-full mt-5">
-                <FormField
-                  control={control}
-                  name="category"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-[#969696]">
-                        Category Name
-                      </FormLabel>
-                      <FormControl>
-                        <Input type="text" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="w-full mt-5">
-                <FormField
-                  control={control}
-                  name="description"
-                  render={({ field }) => (
-                    <FormItem className="z-20">
-                      <FormLabel className="text-[#969696]">
-                        Description
-                      </FormLabel>
-                      <FormControl>
-                        <Textarea className="resize-none" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <div className="w-full mt-5">
-                <FormField
-                  control={control}
-                  name="isActive"
-                  render={({ field }) => (
-                    <FormItem className="z-20">
-                      <FormLabel className="text-[#969696]">isActive</FormLabel>
-                      <Select
-                        onValueChange={(val) => field.onChange(val === "true")}
-                        value={String(field.value)}
-                      >
+             {categoryId &&  <>
+                <div className="w-full mt-5">
+                  <FormField
+                    control={control}
+                    name="category"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-[#969696]">
+                          Category Name
+                        </FormLabel>
                         <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select Status" />
-                          </SelectTrigger>
+                          <Input type="text" {...field} />
                         </FormControl>
-                        <SelectContent>
-                          <SelectItem value="true">Yes</SelectItem>
-                          <SelectItem value="false">No</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="w-full mt-5">
+                  <FormField
+                    control={control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem className="z-20">
+                        <FormLabel className="text-[#969696]">
+                          Description
+                        </FormLabel>
+                        <FormControl>
+                          <Textarea className="resize-none" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div className="w-full mt-5">
+                  <FormField
+                    control={control}
+                    name="isActive"
+                    render={({ field }) => (
+                      <FormItem className="z-20">
+                        <FormLabel className="text-[#969696]">
+                          isActive
+                        </FormLabel>
+                        <Select
+                          onValueChange={(val) =>
+                            field.onChange(val === "true")
+                          }
+                          value={String(field.value)}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select Status" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="true">Yes</SelectItem>
+                            <SelectItem value="false">No</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </>}
 
               <Button
                 type="submit"

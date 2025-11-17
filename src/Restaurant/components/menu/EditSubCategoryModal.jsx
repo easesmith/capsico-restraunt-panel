@@ -57,7 +57,6 @@ const EditSubCategoryModal = ({
       isActive: category?.isActive || false,
     },
   });
- 
 
   const { register, control, watch, setValue, getValues, reset } = form;
   const [allCategories, setAllCategories] = useState([]);
@@ -122,9 +121,7 @@ const EditSubCategoryModal = ({
   }, [getRes]);
 
   const getSubcategoriesFun = () => {
-    getSubcategories(
-      `/restaurant/${userInfo.id}/getSubCatByCat/${categoryId}`
-    );
+    getSubcategories(`/restaurant/${userInfo.id}/getSubCatByCat/${categoryId}`);
   };
 
   useEffect(() => {
@@ -140,6 +137,11 @@ const EditSubCategoryModal = ({
 
   const onSubmit = (data) => {
     console.log("data", data);
+
+    if (!subcategoryId) {
+      toast.error("Please select a sub category to update");
+      return;
+    }
 
     fetchData1(
       `/restaurant/update-subcategory/?subCategoryId=${subcategoryId}`,
@@ -237,67 +239,76 @@ const EditSubCategoryModal = ({
                   </Select>
                 )}
               </div>
-              <div className="w-full mt-5">
-                <FormField
-                  control={control}
-                  name="category"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-[#969696]">
-                        Category Name
-                      </FormLabel>
-                      <FormControl>
-                        <Input type="text" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="w-full mt-5">
-                <FormField
-                  control={control}
-                  name="description"
-                  render={({ field }) => (
-                    <FormItem className="z-20">
-                      <FormLabel className="text-[#969696]">
-                        Description
-                      </FormLabel>
-                      <FormControl>
-                        <Textarea className="resize-none" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
 
-              <div className="w-full mt-5">
-                <FormField
-                  control={control}
-                  name="isActive"
-                  render={({ field }) => (
-                    <FormItem className="z-20">
-                      <FormLabel className="text-[#969696]">isActive</FormLabel>
-                      <Select
-                        onValueChange={(val) => field.onChange(val === "true")}
-                        value={String(field.value)}
-                      >
+              {subcategoryId && <>
+                <div className="w-full mt-5">
+                  <FormField
+                    control={control}
+                    name="category"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-[#969696]">
+                          Category Name
+                        </FormLabel>
                         <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select Status" />
-                          </SelectTrigger>
+                          <Input type="text" {...field} />
                         </FormControl>
-                        <SelectContent>
-                          <SelectItem value="true">Yes</SelectItem>
-                          <SelectItem value="false">No</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div className="w-full mt-5">
+                  <FormField
+                    control={control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem className="z-20">
+                        <FormLabel className="text-[#969696]">
+                          Description
+                        </FormLabel>
+                        <FormControl>
+                          <Textarea className="resize-none" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div className="w-full mt-5">
+                  <FormField
+                    control={control}
+                    name="isActive"
+                    render={({ field }) => (
+                      <FormItem className="z-20">
+                        <FormLabel className="text-[#969696]">
+                          isActive
+                        </FormLabel>
+                        <Select
+                          onValueChange={(val) =>
+                            field.onChange(val === "true")
+                          }
+                          value={String(field.value)}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select Status" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="true">Yes</SelectItem>
+                            <SelectItem value="false">No</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </>}
+
 
               <Button
                 type="submit"

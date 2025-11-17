@@ -70,7 +70,6 @@ const DeleteCategoryModal = ({
   const onSubmit = () => {
     
     if (!categoryId) {
-      console.log("called onSubmit", categoryId);
       toast.error("Please select a category to delete");
       return;
     }
