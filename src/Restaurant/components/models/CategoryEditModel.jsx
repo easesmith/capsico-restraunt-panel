@@ -231,8 +231,8 @@ import { readCookie } from "@/utils/readCookie";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
 import Spinner from "../Spinner";
+import { toast } from "sonner";
 
 const CategoryEditModel = ({
   isOpenCategoryModel,

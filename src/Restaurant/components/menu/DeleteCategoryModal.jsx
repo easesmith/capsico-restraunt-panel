@@ -1,9 +1,11 @@
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -13,13 +15,11 @@ import {
 } from "@/components/ui/select";
 import useDeleteApiReq from "@/hooks/useDeleteApiReq";
 import useGetApiReq from "@/hooks/useGetApiReq";
+import { readCookie } from "@/utils/readCookie";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import { useParams } from "react-router-dom";
-import Spinner from "../Spinner";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { PaginationComp } from "../PaginationComp";
+import Spinner from "../Spinner";
+import { toast } from "sonner";
 
 const DeleteCategoryModal = ({
   isOpenCategoryModel,
@@ -28,12 +28,11 @@ const DeleteCategoryModal = ({
 }) => {
   const { res, isLoading, fetchData } = useDeleteApiReq();
 
-  const params = useParams();
-
   const [allCategories, setAllCategories] = useState([]);
   const [categoryId, setCategoryId] = useState("");
   const [totalPage, setTotalPage] = useState(1);
   const [page, setPage] = useState(1);
+  const userInfo = readCookie("userInfo");
 
   const {
     res: getRes,
@@ -42,7 +41,7 @@ const DeleteCategoryModal = ({
   } = useGetApiReq();
 
   const getCategories = () => {
-    const url = `/restaurant/get-categories?restaurantId=${params?.restaurantId}&page=${page}`;
+    const url = `/restaurant/get-categories?restaurantId=${userInfo?.id}&page=${page}`;
     getData(url);
   };
 
@@ -69,13 +68,15 @@ const DeleteCategoryModal = ({
   }, [getRes]);
 
   const onSubmit = () => {
+    
     if (!categoryId) {
+      console.log("called onSubmit", categoryId);
       toast.error("Please select a category to delete");
       return;
     }
 
     fetchData(
-      `/restaurant/delete-category/${categoryId}?restaurantId=${params?.restaurantId}`
+      `/restaurant/delete-category/${categoryId}?restaurantId=${userInfo?.id}`
     );
   };
 
@@ -122,7 +123,7 @@ const DeleteCategoryModal = ({
             </div>
 
             <div className="grid grid-cols-2 gap-5 mt-10">
-              <Button size="lg" variant="outline" className="w-full">
+              <Button onClick={()=> setIsOpenCategoryModel(false)} size="lg" variant="outline" className="w-full">
                 Cancel
               </Button>
               <Button

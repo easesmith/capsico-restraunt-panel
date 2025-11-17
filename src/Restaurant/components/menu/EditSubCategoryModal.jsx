@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -26,15 +27,14 @@ import { Textarea } from "@/components/ui/textarea";
 import useGetApiReq from "@/hooks/useGetApiReq";
 import usePatchApiReq from "@/hooks/usePatchApiReq";
 import usePostApiReq from "@/hooks/usePostApiReq";
+import { categorySchema } from "@/schemas/OrderMenuSchema";
+import { readCookie } from "@/utils/readCookie";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
-import { useParams } from "react-router-dom";
+import { toast } from "sonner";
 import { PaginationComp } from "../PaginationComp";
 import Spinner from "../Spinner";
-import { Label } from "@/components/ui/label";
-import { categorySchema } from "@/schemas/OrderMenuSchema";
 
 const EditSubCategoryModal = ({
   isOpenCategoryModel,
@@ -57,7 +57,7 @@ const EditSubCategoryModal = ({
       isActive: category?.isActive || false,
     },
   });
-  const params = useParams();
+ 
 
   const { register, control, watch, setValue, getValues, reset } = form;
   const [allCategories, setAllCategories] = useState([]);
@@ -66,6 +66,7 @@ const EditSubCategoryModal = ({
   const [subCategories, setSubCategories] = useState([]);
   const [totalPage, setTotalPage] = useState(1);
   const [page, setPage] = useState(1);
+  const userInfo = readCookie("userInfo");
 
   useEffect(() => {
     if (subcategoryId) {
@@ -94,7 +95,7 @@ const EditSubCategoryModal = ({
   } = useGetApiReq();
 
   const getCategories = () => {
-    const url = `/restaurant/get-categories?restaurantId=${params?.restaurantId}&page=${page}`;
+    const url = `/restaurant/get-categories?restaurantId=${userInfo?.id}&page=${page}`;
     getData(url);
   };
 
@@ -122,7 +123,7 @@ const EditSubCategoryModal = ({
 
   const getSubcategoriesFun = () => {
     getSubcategories(
-      `/restaurant/${params?.restaurantId}/getSubCatByCat/${categoryId}`
+      `/restaurant/${userInfo.id}/getSubCatByCat/${categoryId}`
     );
   };
 
@@ -140,17 +141,8 @@ const EditSubCategoryModal = ({
   const onSubmit = (data) => {
     console.log("data", data);
 
-    // fetchData1(
-    //   `/restaurant/restaurants/${params?.restaurantId}/update-category/${categoryId}`,
-    //   {
-    //     name: data.category,
-    //     description: data.description,
-    //     isActive: data.isActive,
-    //   }
-    // );
-
     fetchData1(
-      `/admin/update-subcategory/${params.restaurantId}?subCategoryId=${subcategoryId}`,
+      `/restaurant/update-subcategory/?subCategoryId=${subcategoryId}`,
       {
         subcategoryId: subcategoryId,
         name: data.category,

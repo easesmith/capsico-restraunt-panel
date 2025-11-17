@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -15,11 +16,10 @@ import {
 import useDeleteApiReq from "@/hooks/useDeleteApiReq";
 import useGetApiReq from "@/hooks/useGetApiReq";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import { useParams } from "react-router-dom";
 import { PaginationComp } from "../PaginationComp";
 import Spinner from "../Spinner";
-import { Button } from "@/components/ui/button";
+import { readCookie } from "@/utils/readCookie";
+import { toast } from "sonner";
 
 const DeleteSubCategoryModal = ({
   isOpenCategoryModel,
@@ -28,14 +28,13 @@ const DeleteSubCategoryModal = ({
 }) => {
   const { res, isLoading, fetchData } = useDeleteApiReq();
 
-  const params = useParams();
-
   const [totalPage, setTotalPage] = useState(1);
   const [page, setPage] = useState(1);
   const [allCategories, setAllCategories] = useState([]);
   const [categoryId, setCategoryId] = useState("");
   const [subcategoryId, setSubcategoryId] = useState("");
   const [subCategories, setSubCategories] = useState([]);
+  const userInfo = readCookie("userInfo");
 
   const {
     res: getRes,
@@ -49,7 +48,7 @@ const DeleteSubCategoryModal = ({
   } = useGetApiReq();
 
   const getCategories = () => {
-    const url = `/restaurant/get-categories?restaurantId=${params?.restaurantId}&page=${page}`;
+    const url = `/restaurant/get-categories?restaurantId=${userInfo.id}&page=${page}`;
     getData(url);
   };
 
@@ -77,7 +76,7 @@ const DeleteSubCategoryModal = ({
 
   const getSubcategoriesFun = () => {
     getSubcategories(
-      `/restaurant/${params?.restaurantId}/getSubCatByCat/${categoryId}`
+      `/restaurant/${userInfo.id}/getSubCatByCat/${categoryId}`
     );
   };
 
@@ -99,7 +98,7 @@ const DeleteSubCategoryModal = ({
     }
 
     fetchData(
-      `/restaurant/delete-subcategory/${subcategoryId}?restaurantId=${params?.restaurantId}`
+      `/restaurant/delete-subcategory/${subcategoryId}?restaurantId=${userInfo.id}`
     );
   };
 

@@ -117,7 +117,7 @@ const EditCategoryModal = ({
     console.log("data", data);
 
     fetchData1(
-      `/restaurant/restaurants/${params?.restaurantId}/update-category/${categoryId}`,
+      `/restaurant/restaurants/${userInfo?.id}/update-category/${categoryId}`,
       {
         name: data.category,
         description: data.description,
