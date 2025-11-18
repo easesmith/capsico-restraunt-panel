@@ -16,21 +16,34 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import SoldOutDurationHoursModal from "./SoldOutDurationHoursModal";
 
 const Food = ({ item, getCategories }) => {
   const [isOn, setIsOn] = useState(item.isAvailable);
   const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
   const [isRecommended, setIsRecommended] = useState(item.isRecommended);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { res, fetchData, isLoading } = usePostApiReq();
   const navigate = useNavigate();
   const params = useParams();
   const userInfo = readCookie("userInfo");
 
+    useEffect(() => {
+      setIsOn(item?.isAvailable);
+    }, [item?.isAvailable]);
+
   const toggleFoodAvailability = (value) => {
+    
+    if (!value) {
+      setIsModalOpen(true);
+      return;
+    }
+    
     setIsOn(value);
     fetchData(
-      `/restaurant/food-availability/${item?.id}?restaurantId=${userInfo?.id}`
+      `/restaurant/food-availability/${item?.id}?restaurantId=${userInfo?.id}`,
+      { isAvailable: value }
     );
   };
 
@@ -38,6 +51,7 @@ const Food = ({ item, getCategories }) => {
     if (res?.status === 200 || res?.status === 201) {
       console.log("toggleFoodAvailability res", res);
       setIsOn(res?.data?.data?.isAvailable);
+      getCategories();
     }
   }, [res]);
 
@@ -117,6 +131,14 @@ const Food = ({ item, getCategories }) => {
 
       {/* Actions */}
       <div className="flex items-center gap-4">
+        {item.soldOutDurationHours ? (
+          <p className="text-sm">
+            Back in stock{" "}
+            {item.soldOutDurationHours === 1
+              ? "in 1 hour"
+              : `in ${item.soldOutDurationHours} hours`}
+          </p>
+        ) : null}
         <Button
           variant="ghost"
           size="sm"
@@ -174,6 +196,16 @@ const Food = ({ item, getCategories }) => {
           description="Are you sure you want to delete this menu item?"
           onConfirm={deleteMenuItem}
           disabled={isDeleteItemLoading}
+        />
+      )}
+
+      {isModalOpen && (
+        <SoldOutDurationHoursModal
+          isModal={isModalOpen}
+          setIsModal={setIsModalOpen}
+          isOn={isOn}
+          itemId={item?.id}
+          getCategories={getCategories}
         />
       )}
     </div>

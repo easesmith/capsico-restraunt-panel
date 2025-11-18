@@ -26,6 +26,7 @@ import EditCategoryModal from "./EditCategoryModal";
 import EditSubCategoryModal from "./EditSubCategoryModal";
 import DeleteCategoryModal from "./DeleteCategoryModal";
 import DeleteSubCategoryModal from "./DeleteSubCategoryModal";
+import Category from "./Category";
 
 export default function MenuSection({ categories = [], getData, isLoading, getCategories }) {
   const [isOpenCategoryModel, setIsOpenCategoryModel] = useState(false);
@@ -188,58 +189,11 @@ export default function MenuSection({ categories = [], getData, isLoading, getCa
       {/* Categories Accordion */}
       <Accordion type="multiple" className="flex flex-col gap-4">
         {categories?.map((category) => (
-          <AccordionItem
+          <Category
             key={category.id}
-            value={category.name}
-            className="border border-[#E5E7EB] dark:border-gray-700 rounded-xl bg-white dark:bg-background-dark/50"
-          >
-            <AccordionTrigger className="flex items-center justify-between px-4 w-full py-3">
-              <div className="flex items-center gap-4 flex-1">
-                <p className="text-lg font-bold text-[#333333] dark:text-white">
-                  {category.name}
-                </p>
-                <span className="text-sm text-[#6B7280] dark:text-gray-400">
-                  ({category?.foodItems?.length} items)
-                </span>
-              </div>
-              <div className="flex items-center gap-4 justify-end pr-3">
-                <div className="flex items-center">
-                  {/* <span className="text-sm font-medium text-[#6B7280] dark:text-gray-400 mr-2">
-                    In Stock (All)
-                  </span> */}
-                  {/* <Switch
-                    className="data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-orange-500"
-                    defaultChecked
-                  /> */}
-                </div>
-                {/* <ChevronDown
-                  size={20}
-                  className="text-[#6B7280] dark:text-gray-400 transition-transform data-[state=open]:rotate-180"
-                /> */}
-              </div>
-            </AccordionTrigger>
-
-            <AccordionContent>
-              {category?.foodItems?.length === 0 ? (
-                <div className="p-6 text-center border-t border-[#E5E7EB] dark:border-gray-700">
-                  <p className="text-[#6B7280] dark:text-gray-400 text-sm">
-                    No {category.name.toLowerCase()} items have been added yet.
-                    Click “Add Item” to get started.
-                  </p>
-                </div>
-              ) : (
-                <div className="flex flex-col divide-y divide-[#E5E7EB] dark:divide-gray-700">
-                  {category?.foodItems?.map((item, index) => (
-                    <Food
-                      getCategories={getCategories}
-                      key={index}
-                      item={item}
-                    />
-                  ))}
-                </div>
-              )}
-            </AccordionContent>
-          </AccordionItem>
+            category={category}
+            getCategories={getData}
+          />
         ))}
       </Accordion>
 
