@@ -44,6 +44,7 @@ import MapAddOnModel from "../orderMenu/MapAddOnModel";
 import Spinner from "../Spinner";
 import { UpdateItemSchema } from "@/schemas/AddItemSchema";
 import SubCategoryEditModel from "../models/SubCategoryEditModel";
+import VariantGroupsManager from "./variants/VariantGroupsManager";
 
 const UpdateMenu = () => {
   const navigate = useNavigate();
@@ -97,6 +98,9 @@ const UpdateMenu = () => {
   const foodItem = state.foodItem;
   const [groups, setGroups] = useState(
     foodItem?.addOns.map((item) => ({ ...item, adonsGroup: item.addons })) || []
+  );
+  const [variantGroups, setVariantGroups] = useState(
+    foodItem.variantGroups || []
   );
 
   const [menuTags, setMenuTags] = useState(
@@ -596,9 +600,10 @@ const UpdateMenu = () => {
 
     // formData.append("availableTimings", JSON.stringify(availableTimings));
     formData.append("menuTagIds", JSON.stringify(menuTags));
-    formData.append("variations", JSON.stringify(getValues("variations")));
+    // formData.append("variations", JSON.stringify(getValues("variations")));
     formData.append("addOns", JSON.stringify(groups));
-    formData.append("customizations", JSON.stringify(modifiedCustomizations));
+    formData.append("variantGroups", JSON.stringify(variantGroups));
+    // formData.append("customizations", JSON.stringify(modifiedCustomizations));
 
     // Add images with field name "images" (matching multer config)
     Array.from(data.itemImage).forEach((image) => {
@@ -1041,7 +1046,7 @@ const UpdateMenu = () => {
                           must choose at least one from the defined variants.
                         </p>
                       </div>
-                      {isVariant && (
+                      {/* {isVariant && (
                         <>
                           <FormField
                             control={control}
@@ -1117,7 +1122,11 @@ const UpdateMenu = () => {
                             </div>
                           )}
                         </>
-                      )}
+                      )} */}
+                      <VariantGroupsManager
+                        groups={variantGroups}
+                        setGroups={setVariantGroups}
+                      />
                     </div>
                   </div>
 

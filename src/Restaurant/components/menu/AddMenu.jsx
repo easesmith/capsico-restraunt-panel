@@ -45,6 +45,7 @@ import { addItemSchema } from "@/schemas/AddItemSchema";
 import DataNotFound from "../DataNotFound";
 import SubCategoryEditModel from "../models/SubCategoryEditModel";
 import { PaginationComp } from "../PaginationComp";
+import VariantGroupsManager from "./variants/VariantGroupsManager";
 
 const AddMenu = () => {
   const navigate = useNavigate();
@@ -82,8 +83,10 @@ const AddMenu = () => {
     isDefault: false,
     tags: [],
   });
-  const [groups, setGroups] = useState([]);
   const [isOpenSubCategoryModel, setIsOpenSubCategoryModel] = useState(false);
+
+  const [groups, setGroups] = useState([]);
+  const [variantGroups, setVariantGroups] = useState([]);
 
   const handleSubcategoryAdd = () => {
     setIsOpenSubCategoryModel((prev) => !prev);
@@ -538,8 +541,9 @@ const AddMenu = () => {
     // menuTagIds
     // addonTagIds
     formData.append("addOns", JSON.stringify(groups));
-    formData.append("variations", JSON.stringify(getValues("variations")));
-    formData.append("customizations", JSON.stringify(modifiedCustomizations));
+    formData.append("variantGroups", JSON.stringify(variantGroups));
+    // formData.append("variations", JSON.stringify(getValues("variations")));
+    // formData.append("customizations", JSON.stringify(modifiedCustomizations));
     formData.append("availableTimings", JSON.stringify(availableTimings));
 
     formData.append("menuTagIds", JSON.stringify(menuTags));
@@ -977,7 +981,7 @@ const AddMenu = () => {
                           must choose at least one from the defined variants.
                         </p>
                       </div>
-                      {isVariant && (
+                      {/* {isVariant && (
                         <>
                           <FormField
                             control={control}
@@ -1053,7 +1057,12 @@ const AddMenu = () => {
                             </div>
                           )}
                         </>
-                      )}
+                      )} */}
+
+                      <VariantGroupsManager
+                        groups={variantGroups}
+                        setGroups={setVariantGroups}
+                      />
                     </div>
                   </div>
 
@@ -1572,7 +1581,7 @@ const AddMenu = () => {
                   </div>
 
                   {/* Customization Section */}
-                  <div className="pb-5 border-b-2 border-dashed border-[#D3D3D3]">
+                  <div className="pb-5 hidden border-b-2 border-dashed border-[#D3D3D3]">
                     <div className="p-5 border-b border-[#C8C8C8]">
                       <div
                         onClick={() => setIsCustomization(!isCustomization)}
