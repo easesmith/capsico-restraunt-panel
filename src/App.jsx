@@ -41,6 +41,7 @@ const HelpCenter = lazy(() => import("./Restaurant/pages/HelpCenter"));
 const OnlineOrdering = lazy(() =>
   import("./Restaurant/pages/online-ordering/OnlineOrdering")
 );
+import Cookies from "js-cookie";
 
 function App() {
   const { isLoading } = useSelector((state) => state.loading);
@@ -73,10 +74,7 @@ function App() {
 
   useEffect(() => {
     if (res?.status === 200 || res?.status === 201) {
-      localStorage.setItem(
-        "restaurant-status",
-        `${res?.data?.isAuthenticated}`
-      );
+       Cookies.set("restaurant-status", `${res?.data?.isAuthenticated}`);
       console.log("status response", res);
       res?.data?.shouldLoggOut && logout();
       !res?.data?.isAuthenticated && refreshToken();
@@ -86,15 +84,15 @@ function App() {
   useEffect(() => {
     if (refreshRes?.status === 200 || refreshRes?.status === 201) {
       // console.log("refreshRes", refreshRes);
-      localStorage.setItem("restaurant-status", true);
-      localStorage.setItem("accessToken", refreshRes?.data?.accessToken);
+      Cookies.set("restaurant-status", true);
       window.location.reload();
     }
   }, [refreshRes]);
 
   useEffect(() => {
     if (logoutRes?.status === 200 || logoutRes?.status === 201) {
-      localStorage.setItem("restaurant-status", "false");
+      Cookies.set("restaurant-status", "false");
+      Cookies.remove("userInfo");
       // window.location.reload();
     }
   }, [logoutRes]);

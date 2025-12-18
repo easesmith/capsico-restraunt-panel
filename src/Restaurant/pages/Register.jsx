@@ -13,12 +13,6 @@ const Register = () => {
     const [isCreateOrRegisterRestaurantModalOpen, setIsCreateOrRegisterRestaurantModalOpen] = useState(true);
     const [isChecked, setIsChecked] = useState(true);
 
-    const navigate = useNavigate();
-    const isAuthenticated = localStorage.getItem("restaurant-status") === "true";
-    // if (isAuthenticated) {
-    //     navigate("/restaurant/orders")
-    // }
-
     return (
         <div className='max-w-7xl mx-auto p-6'>
             <h1 className='font-semibold text-4xl text-[#4A5E6D] text-center'>Create your restaurant page</h1>
