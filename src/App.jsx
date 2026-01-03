@@ -42,6 +42,8 @@ const OnlineOrdering = lazy(() =>
   import("./Restaurant/pages/online-ordering/OnlineOrdering")
 );
 import Cookies from "js-cookie";
+import PayoutSection from "./Restaurant/pages/payout-section/PayoutSection";
+import RestaurantEarningHistory from "./Restaurant/pages/payout-section/RestaurantEarningHistory";
 
 function App() {
   const { isLoading } = useSelector((state) => state.loading);
@@ -165,7 +167,7 @@ function App() {
                 element={<GSTDeclaration />}
               />
               <Route path="/restaurant/charges" element={<Charges />} />
-              <Route path="/restaurant/*" element={<Payout />} />
+              {/* <Route path="/restaurant/*" element={<Payout />} /> */}
               <Route
                 path="/restaurant/customer-complaint"
                 element={<CustomerComplaints />}
@@ -179,6 +181,11 @@ function App() {
               <Route
                 path="/restaurant/offers/:id/update"
                 element={<UpdateOffer />}
+              />
+              <Route path="/restaurant/payout" element={<PayoutSection />} />
+              <Route
+                path="/restaurant/payout/earnings-history"
+                element={<RestaurantEarningHistory />}
               />
             </Route>
 
