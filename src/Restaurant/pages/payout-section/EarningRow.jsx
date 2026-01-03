@@ -13,6 +13,8 @@ export const EarningRow = ({ row }) => {
         {row.type}
       </TableCell>
       <TableCell>₹{row.amount}</TableCell>
+      <TableCell>₹{row.breakup?.commissionAmount}</TableCell>
+      <TableCell>₹{row.breakup?.subtotal}</TableCell>
       <TableCell>{row.referenceType || "-"}</TableCell>
       <TableCell>{row.remark || "-"}</TableCell>
     </TableRow>

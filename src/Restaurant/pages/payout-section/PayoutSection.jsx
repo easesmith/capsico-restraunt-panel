@@ -42,10 +42,8 @@ const PayoutSection = () => {
             <ArrowLeftIcon className="text-2xl" /> */}
           <h1 className="text-2xl font-semibold text-left">Earning</h1>
           {/* </button> */}
-          <Button className="w-auto px-4" variant="capsico">
-            <Link
-              to={`/restaurant/payout/earnings-history`}
-            >
+          <Button asChild className="w-auto px-4" variant="capsico">
+            <Link to={`/restaurant/payout/earnings-history`}>
               Earnings History
             </Link>
           </Button>
