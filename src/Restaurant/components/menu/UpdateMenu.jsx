@@ -188,7 +188,10 @@ const UpdateMenu = () => {
 
   const getCategories = () => {
     const url = `/restaurant/get-categories?restaurantId=${params?.restaurantId}`;
-    getData(url);
+    getData(url, {
+      reportCrash: true,
+      screenName: "CATEGORY_GET",
+    });
   };
 
   useEffect(() => {
@@ -218,7 +221,11 @@ const UpdateMenu = () => {
 
   const getSubcategoriesFun = () => {
     getSubcategories(
-      `/restaurant/${params?.restaurantId}/getSubCatByCat/${categoryId}`
+      `/restaurant/${params?.restaurantId}/getSubCatByCat/${categoryId}`,
+      {
+        reportCrash: true,
+        screenName: "SUBCATEGORY_GET",
+      }
     );
   };
 
@@ -485,7 +492,10 @@ const UpdateMenu = () => {
   const { res, fetchData, isLoading } = useGetApiReq();
 
   const getCuisines = () => {
-    fetchData("/restaurant/get-cuisines");
+    fetchData("/restaurant/get-cuisines", {
+      reportCrash: true,
+      screenName: "CUISINE_GET",
+    });
   };
 
   useEffect(() => {
@@ -613,7 +623,10 @@ const UpdateMenu = () => {
     console.log("📦 FormData created, making API call...");
 
     // Use restaurant endpoint for adding menu items
-    fetchAddItemData(`/restaurant/update-menu-item/${foodItem.id}`, formData);
+    fetchAddItemData(`/restaurant/update-menu-item/${foodItem.id}`, formData, {
+      reportCrash: true,
+      screenName: "MENU_UPDATE",
+    });
   };
 
   useEffect(() => {

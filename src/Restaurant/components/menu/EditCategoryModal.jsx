@@ -88,7 +88,10 @@ const EditCategoryModal = ({
 
   const getCategories = () => {
     const url = `/restaurant/get-categories?restaurantId=${userInfo?.id}&page=${page}`;
-    getData(url);
+    getData(url, {
+      reportCrash: true,
+      screenName: "CATEGORY_GET",
+    });
   };
 
   useEffect(() => {
@@ -127,6 +130,10 @@ const EditCategoryModal = ({
         name: data.category,
         description: data.description,
         isActive: data.isActive,
+      },
+      {
+        reportCrash: true,
+        screenName: "CATEGORY_UPDATE",
       }
     );
   };

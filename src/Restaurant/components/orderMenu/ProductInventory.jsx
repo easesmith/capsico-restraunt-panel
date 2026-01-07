@@ -13,7 +13,10 @@ const ProductInventory = ({ foodItem }) => {
 
     const toggleFoodAvailability = (value) => {
         setIsOn(value)
-        fetchData(`/restaurant/food-availability/${foodItem?.id}`);
+        fetchData(`/restaurant/food-availability/${foodItem?.id}`, {
+          reportCrash: true,
+          screenName: "MENU_AVAILABILITY_UPDATE",
+        });
     }
 
     useEffect(() => {

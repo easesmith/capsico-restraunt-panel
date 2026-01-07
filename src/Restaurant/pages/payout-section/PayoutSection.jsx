@@ -1,11 +1,19 @@
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import useGetApiReq from "@/hooks/useGetApiReq";
 import RestaurantWrapper from "@/Restaurant/components/restaurantWrapper/RestaurantWrapper";
 import { readCookie } from "@/utils/readCookie";
+import { FileOutputIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import EarningTable from "./EarningTable";
 import { Metric } from "./Metric";
 import PayoutTable from "./PayoutTable";
+import ExportRestaurantPayout from "./ExportRestaurantPayout";
 
 const PayoutSection = () => {
   const userInfo = readCookie("userInfo");
@@ -13,6 +21,11 @@ const PayoutSection = () => {
   const restaurantId = userInfo?.id;
 
   const [earnings, setEarnings] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleExort = () => {
+    setIsModalOpen(true);
+  };
 
   const { res, fetchData, isLoading } = useGetApiReq();
 
@@ -42,11 +55,22 @@ const PayoutSection = () => {
             <ArrowLeftIcon className="text-2xl" /> */}
           <h1 className="text-2xl font-semibold text-left">Earning</h1>
           {/* </button> */}
-          <Button asChild className="w-auto px-4" variant="capsico">
-            <Link to={`/restaurant/payout/earnings-history`}>
-              Earnings History
-            </Link>
-          </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  className="w-auto px-4"
+                  variant="capsico"
+                  onClick={handleExort}
+                >
+                  <FileOutputIcon className="size-5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Export Data</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
         {isLoading ? (
           <div className="grid grid-cols-3 bg-white rounded-md gap-4 p-4 mt-6">
@@ -65,11 +89,20 @@ const PayoutSection = () => {
           </div>
         )}
 
+        <EarningTable />
+
         <PayoutTable
           getDeliveryPartnerEarnings={getDeliveryPartnerEarnings}
           recipientId={restaurantId}
           type="MERCHANT"
         />
+
+        {isModalOpen && (
+          <ExportRestaurantPayout
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+          />
+        )}
       </div>
     </RestaurantWrapper>
   );

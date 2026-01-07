@@ -16,9 +16,10 @@ const Product = ({ foodItem, getFoodItems }) => {
   const { res, fetchData, isLoading } = useDeleteApiReq();
 
   const deleteMenuItem = () => {
-    fetchData(
-      `/restaurant/delete-menu-item?menuItemId=${foodItem?.id}`
-    );
+    fetchData(`/restaurant/delete-menu-item?menuItemId=${foodItem?.id}`, {
+      reportCrash: true,
+      screenName: "MENU_DELETE",
+    });
   };
 
   useEffect(() => {

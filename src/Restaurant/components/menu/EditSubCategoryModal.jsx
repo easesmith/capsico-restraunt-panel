@@ -95,7 +95,10 @@ const EditSubCategoryModal = ({
 
   const getCategories = () => {
     const url = `/restaurant/get-categories?restaurantId=${userInfo?.id}&page=${page}`;
-    getData(url);
+    getData(url, {
+      reportCrash: true,
+      screenName: "CATEGORY_GET",
+    });
   };
 
   useEffect(() => {
@@ -121,7 +124,13 @@ const EditSubCategoryModal = ({
   }, [getRes]);
 
   const getSubcategoriesFun = () => {
-    getSubcategories(`/restaurant/${userInfo.id}/getSubCatByCat/${categoryId}`);
+    getSubcategories(
+      `/restaurant/${userInfo.id}/getSubCatByCat/${categoryId}`,
+      {
+        reportCrash: true,
+        screenName: "SUBCATEGORY_GET",
+      }
+    );
   };
 
   useEffect(() => {
@@ -150,6 +159,10 @@ const EditSubCategoryModal = ({
         name: data.category,
         description: data.description,
         isActive: data.isActive,
+      },
+      {
+        reportCrash: true,
+        screenName: "SUBCATEGORY_UPDATE",
       }
     );
   };

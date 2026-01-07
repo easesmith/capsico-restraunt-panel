@@ -284,7 +284,10 @@ const SubCategoryEditModel = ({
 
   const getCategories = () => {
     const url = `/restaurant/get-categories?restaurantId=${userInfo?.id}&page=${page}`;
-    getData(url);
+    getData(url, {
+      reportCrash: true,
+      screenName: "CATEGORY_GET",
+    });
   };  
 
   useEffect(() => {
@@ -319,6 +322,10 @@ const SubCategoryEditModel = ({
           name: data.subCategory,
           description: data.description,
           isActive: data.isActive,
+        },
+        {
+          reportCrash: true,
+          screenName: "SUBCATEGORY_CREATE",
         }
       );
     } else {

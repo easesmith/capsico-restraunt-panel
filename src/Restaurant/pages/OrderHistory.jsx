@@ -3,30 +3,22 @@ import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import useGetApiReq from "@/hooks/useGetApiReq";
+import { readCookie } from "@/utils/readCookie";
 import { useCallback, useEffect, useState } from "react";
-import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 import { IoSearchOutline } from "react-icons/io5";
 import { LiaDownloadSolid } from "react-icons/lia";
-import { LuCalendar } from "react-icons/lu";
 import BurgerImg from "../../assets/burger.png";
-import RestaurantWrapper from "../components/restaurantWrapper/RestaurantWrapper";
-import { IoIosCheckmarkCircle } from "react-icons/io";
-import { IoMdCall } from "react-icons/io";
-import ProfileImg from "@/assets/Ellipse 1.png";
-import { FaCircleXmark } from "react-icons/fa6";
-import vegicon from "@/assets/vegicon.png";
-import OrderDelivered from "../components/Orderhistory/OrderDelivered";
-import Spinner from "../components/Spinner";
 import DataNotFound from "../components/DataNotFound";
-import useGetApiReq from "@/hooks/useGetApiReq";
-import { PaginationComp } from "../components/PaginationComp";
 import OrderCancelled from "../components/Orderhistory/OrderCancelled";
-import { readCookie } from "@/utils/readCookie";
+import OrderDelivered from "../components/Orderhistory/OrderDelivered";
+import { PaginationComp } from "../components/PaginationComp";
+import RestaurantWrapper from "../components/restaurantWrapper/RestaurantWrapper";
+import Spinner from "../components/Spinner";
 
 const OrderHistory = () => {
   const [selectedDateRange, setSelectedDateRange] = useState("");
@@ -52,7 +44,11 @@ const OrderHistory = () => {
         page || 1
       }&dateFilter=${dateFilter}&status=${activeTab}&searchQuery=${searchQuery}&restaurantId=${
         userInfo.id
-      }`
+      }`,
+      {
+        reportCrash: true,
+        screenName: "ORDER_HISTORY",
+      }
     );
   }, [page, dateFilter, activeTab, searchQuery]);
 

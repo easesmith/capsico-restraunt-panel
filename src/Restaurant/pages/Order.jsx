@@ -1,31 +1,15 @@
-import React, { useCallback, useEffect, useState } from "react";
-import RestaurantWrapper from "../components/restaurantWrapper/RestaurantWrapper";
-import OutletImg from "../../assets/outlet.png";
-import CloseCartImg from "../../assets/Mask group.png";
-import { Input } from "@/components/ui/input";
-import { IoSearchOutline } from "react-icons/io5";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { LiaDownloadSolid } from "react-icons/lia";
-import { LuCalendar } from "react-icons/lu";
-import { Button } from "@/components/ui/button";
-import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
-import OrdersModel from "../components/orders/OrdersModel";
-import { useSelector, useDispatch } from "react-redux";
-import { hideNotification, showNotification } from "../redux/notificationSlice";
-import SingleOrder from "../components/SingleOrder";
-import OrderAlertModal from "../components/OrderAlertModal";
-import { getSocket } from "@/socket";
 import useGetApiReq from "@/hooks/useGetApiReq";
-import Spinner from "../components/Spinner";
-import DataNotFound from "../components/DataNotFound";
+import { getSocket } from "@/socket";
+import { useCallback, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { toast } from "sonner";
+import CloseCartImg from "../../assets/Mask group.png";
+import OutletImg from "../../assets/outlet.png";
+import DataNotFound from "../components/DataNotFound";
+import OrderAlertModal from "../components/OrderAlertModal";
+import RestaurantWrapper from "../components/restaurantWrapper/RestaurantWrapper";
+import SingleOrder from "../components/SingleOrder";
+import Spinner from "../components/Spinner";
 
 const Order = () => {
   const { isOpen } = useSelector((state) => state.notification);
@@ -43,7 +27,10 @@ const Order = () => {
   };
 
   const getOrders = useCallback(() => {
-    fetchData(`/restaurant/get-order-bystatus?status=${orderStatus}`);
+    fetchData(`/restaurant/get-order-bystatus?status=${orderStatus}`, {
+      reportCrash: true,
+      screenName: "ORDER_LIST_BY_STATUS",
+    });
   }, [orderStatus]);
 
   useEffect(() => {

@@ -34,7 +34,10 @@ const OrderMenu = () => {
   const { res, fetchData, isLoading } = useGetApiReq();
 
   const getCategories = () => {
-    fetchData(`/restaurant/get-categories?searchQuery=${searchQuery}`);
+    fetchData(`/restaurant/get-categories?searchQuery=${searchQuery}`, {
+      reportCrash: true,
+      screenName: "CATEGORY_GET",
+    });
   };
 
   useEffect(() => {

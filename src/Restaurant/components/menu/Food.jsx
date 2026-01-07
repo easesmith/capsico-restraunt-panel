@@ -43,7 +43,11 @@ const Food = ({ item, getCategories }) => {
     setIsOn(value);
     fetchData(
       `/restaurant/food-availability/${item?.id}?restaurantId=${userInfo?.id}`,
-      { isAvailable: value }
+      { isAvailable: value },
+      {
+        reportCrash: true,
+        screenName: "MENU_AVAILABILITY_UPDATE",
+      }
     );
   };
 
@@ -71,9 +75,10 @@ const Food = ({ item, getCategories }) => {
   } = useDeleteApiReq();
 
   const deleteMenuItem = () => {
-    deleteItem(
-      `/restaurant/delete-menu-item?menuItemId=${item?.id}`
-    );
+    deleteItem(`/restaurant/delete-menu-item?menuItemId=${item?.id}`, {
+      reportCrash: true,
+      screenName: "MENU_DELETE",
+    });
   };
 
   useEffect(() => {
@@ -92,7 +97,8 @@ const Food = ({ item, getCategories }) => {
   const handleRecommend = () => {
     setIsRecommended((prev) => !prev);
     recommend(
-      `/restaurant/toggle-recommend/${item?.id}?restaurantId=${params?.restaurantId}`
+      `/restaurant/toggle-recommend/${item?.id}?restaurantId=${params?.restaurantId}`,
+      { reportCrash: true, screenName: "MENU_RECOMMEND_TOGGLE" }
     );
   };
 

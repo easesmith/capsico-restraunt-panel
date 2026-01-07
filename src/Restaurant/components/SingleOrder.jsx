@@ -41,10 +41,17 @@ const SingleOrder = ({ order, status = "", getOrders, setOrderStatus }) => {
 
   const onSubmit = (data) => {
     console.log("data", data);
-    fetchData("/restaurant/verify-order-otp", {
-      orderId: order._id,
-      otp: data.otp,
-    });
+    fetchData(
+      "/restaurant/verify-order-otp",
+      {
+        orderId: order._id,
+        otp: data.otp,
+      },
+      {
+        reportCrash: true,
+        screenName: "ORDER_OTP_VERIFY",
+      }
+    );
   };
 
   useEffect(() => {

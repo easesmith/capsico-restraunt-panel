@@ -3,14 +3,26 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 import { axiosInstance } from "../utils/axiosInstance";
+import { readCookie } from "@/utils/readCookie";
+import useCrashReporter from "./useCrashReporter";
 
 const usePatchApiReq = () => {
     const [res, setRes] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
+    const userInfo = readCookie("userInfo");
+    const { reportCrash } = useCrashReporter();
+
     const dispatch = useDispatch();
 
     const fetchData = async (url, sendData, config = {}) => {
+         const {
+           reportCrash: shouldReportCrash = false,
+           screenName,
+           severity = "HIGH",
+           userType = "Restaurant",
+         } = config;
+
         try {
             setIsLoading(true);
             await dispatch(handleLoading(true));
@@ -23,12 +35,19 @@ const usePatchApiReq = () => {
         } catch (error) {
             console.log("patch api error =>", error);
             toast.error(error.response?.data?.message || "An error occurred.")
-            // if (error?.response.status === 403) {
-            //     await dispatch(handleUnautorizedModalOpen({ isUnautorizedModalOpen: true }));
-            // }
-            // else {
-            //     await dispatch(handleErrorModal({ isOpen: true, message: error.response?.data?.message || "An error occurred.",isLogoutBtn: true }));
-            // }
+           
+            if (shouldReportCrash) {
+              reportCrash({
+                error,
+                screenName,
+                severity,
+                request: {
+                  url,
+                },
+                userId: userInfo.id,
+                userType,
+              });
+            }
         } finally {
             setIsLoading(false);
             await dispatch(handleLoading(false));

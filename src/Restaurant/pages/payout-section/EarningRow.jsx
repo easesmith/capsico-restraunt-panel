@@ -1,8 +1,15 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { TableCell, TableRow } from "@/components/ui/table";
+import { readCookie } from "@/utils/readCookie";
 import { format } from "date-fns";
+import { EyeIcon } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const EarningRow = ({ row }) => {
+  const userInfo = readCookie("userInfo");
+  
+    const restaurantId = userInfo?.id;
+
   return (
     <TableRow key={row._id}>
       <TableCell>{format(new Date(row.createdAt), "dd MMM, yyyy")}</TableCell>
@@ -13,10 +20,20 @@ export const EarningRow = ({ row }) => {
         {row.type}
       </TableCell>
       <TableCell>₹{row.amount || 0}</TableCell>
-      <TableCell>₹{row.breakup?.commissionAmount || 0}</TableCell>
-      <TableCell>₹{row.breakup?.subtotal || 0}</TableCell>
+      {/* <TableCell>₹{row.breakup?.commissionAmount || 0}</TableCell>
+      <TableCell>₹{row.breakup?.subtotal || 0}</TableCell> */}
       <TableCell>{row.referenceType || "-"}</TableCell>
       <TableCell>{row.remark || "-"}</TableCell>
+      <TableCell>
+        <button title="View Details">
+          <Link
+            to={`/restaurant/payout/${row._id}`}
+            state={{ payout: row }}
+          >
+            <EyeIcon />
+          </Link>
+        </button>
+      </TableCell>
     </TableRow>
   );
 };

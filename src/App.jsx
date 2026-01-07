@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect } from "react";
 import "./App.css";
 
+import Cookies from "js-cookie";
 import { useSelector } from "react-redux";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import BackdropLoader from "./components/BackdropLoader";
@@ -9,11 +10,14 @@ import useGetApiReq from "./hooks/useGetApiReq";
 import usePostApiReq from "./hooks/usePostApiReq";
 import PaymentPage from "./pages/PaymentPage";
 import ProtectedRoute from "./protected-route/ProtectedRoute";
-import MainMenu from "./Restaurant/components/orderMenu/MainMenu";
-import { readCookie } from "./utils/readCookie";
-import MenuPage from "./Restaurant/components/menu/Menu";
 import AddMenu from "./Restaurant/components/menu/AddMenu";
+import MenuPage from "./Restaurant/components/menu/Menu";
 import UpdateMenu from "./Restaurant/components/menu/UpdateMenu";
+import MainMenu from "./Restaurant/components/orderMenu/MainMenu";
+import PayoutSection from "./Restaurant/pages/payout-section/PayoutSection";
+import RestaurantEarningHistory from "./Restaurant/pages/payout-section/RestaurantEarningHistory";
+import { readCookie } from "./utils/readCookie";
+import EarningDetails from "./Restaurant/pages/payout-section/EarningDetails";
 
 const CreateOffer = lazy(() => import("./Restaurant/pages/offers/CreateOffer"));
 const UpdateOffer = lazy(() => import("./Restaurant/pages/offers/UpdateOffer"));
@@ -41,9 +45,6 @@ const HelpCenter = lazy(() => import("./Restaurant/pages/HelpCenter"));
 const OnlineOrdering = lazy(() =>
   import("./Restaurant/pages/online-ordering/OnlineOrdering")
 );
-import Cookies from "js-cookie";
-import PayoutSection from "./Restaurant/pages/payout-section/PayoutSection";
-import RestaurantEarningHistory from "./Restaurant/pages/payout-section/RestaurantEarningHistory";
 
 function App() {
   const { isLoading } = useSelector((state) => state.loading);
@@ -183,6 +184,10 @@ function App() {
                 element={<UpdateOffer />}
               />
               <Route path="/restaurant/payout" element={<PayoutSection />} />
+              <Route
+                path="/restaurant/payout/:payoutId"
+                element={<EarningDetails />}
+              />
               <Route
                 path="/restaurant/payout/earnings-history"
                 element={<RestaurantEarningHistory />}

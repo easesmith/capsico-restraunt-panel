@@ -49,7 +49,10 @@ const DeleteSubCategoryModal = ({
 
   const getCategories = () => {
     const url = `/restaurant/get-categories?restaurantId=${userInfo.id}&page=${page}`;
-    getData(url);
+    getData(url, {
+      reportCrash: true,
+      screenName: "CATEGORY_GET",
+    });
   };
 
   useEffect(() => {
@@ -76,7 +79,11 @@ const DeleteSubCategoryModal = ({
 
   const getSubcategoriesFun = () => {
     getSubcategories(
-      `/restaurant/${userInfo.id}/getSubCatByCat/${categoryId}`
+      `/restaurant/${userInfo.id}/getSubCatByCat/${categoryId}`,
+      {
+        reportCrash: true,
+        screenName: "SUBCATEGORY_GET",
+      }
     );
   };
 
@@ -98,7 +105,11 @@ const DeleteSubCategoryModal = ({
     }
 
     fetchData(
-      `/restaurant/delete-subcategory/${subcategoryId}?restaurantId=${userInfo.id}`
+      `/restaurant/delete-subcategory/${subcategoryId}?restaurantId=${userInfo.id}`,
+      {
+        reportCrash: true,
+        screenName: "SUBCATEGORY_DELETE",
+      }
     );
   };
 

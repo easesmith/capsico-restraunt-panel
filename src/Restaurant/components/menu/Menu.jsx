@@ -13,7 +13,10 @@ const MenuPage = () => {
   const { res, fetchData, isLoading } = useGetApiReq();
 
   const getData = () => {
-    fetchData(`/restaurant/get-restraunt-menu/${userInfo?.id}`);
+    fetchData(`/restaurant/get-restraunt-menu/${userInfo?.id}`, {
+      reportCrash: true,
+      screenName: "MENU_GET",
+    });
   };
 
   useEffect(() => {
