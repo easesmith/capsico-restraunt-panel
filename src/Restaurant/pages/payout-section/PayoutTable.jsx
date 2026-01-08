@@ -117,6 +117,7 @@ export default function PayoutTable({
               <TableHead>Transaction</TableHead>
               <TableHead className="text-right">Amount</TableHead>
               <TableHead>Status</TableHead>
+              <TableHead>Payout Report</TableHead>
             </TableRow>
           </TableHeader>
 

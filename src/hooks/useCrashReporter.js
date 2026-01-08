@@ -12,7 +12,6 @@ const getOSInfo = () => {
   return { os: "Unknown" };
 };
 
-
 const useCrashReporter = () => {
   const reportCrash = async ({
     error,
@@ -43,7 +42,7 @@ const useCrashReporter = () => {
           device: {
             platform: "web",
             browser: navigator.userAgent,
-            os:osInfo.os,
+            os: osInfo.os,
             ...device,
           },
 

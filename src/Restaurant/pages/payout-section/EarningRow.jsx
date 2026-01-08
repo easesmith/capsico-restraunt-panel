@@ -1,5 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { TableCell, TableRow } from "@/components/ui/table";
+import { cn } from "@/lib/utils";
 import { readCookie } from "@/utils/readCookie";
 import { format } from "date-fns";
 import { EyeIcon } from "lucide-react";
@@ -11,7 +12,9 @@ export const EarningRow = ({ row }) => {
     const restaurantId = userInfo?.id;
 
   return (
-    <TableRow key={row._id}>
+    <TableRow
+      className={cn("", row.type === "CREDIT" ? "bg-green-100" : "bg-red-100")}
+    >
       <TableCell>{format(new Date(row.createdAt), "dd MMM, yyyy")}</TableCell>
       <TableCell>{row.ownerType}</TableCell>
       <TableCell
@@ -26,10 +29,7 @@ export const EarningRow = ({ row }) => {
       <TableCell>{row.remark || "-"}</TableCell>
       <TableCell>
         <button title="View Details">
-          <Link
-            to={`/restaurant/payout/${row._id}`}
-            state={{ payout: row }}
-          >
+          <Link to={`/restaurant/payout/${row._id}`} state={{ payout: row }}>
             <EyeIcon />
           </Link>
         </button>
