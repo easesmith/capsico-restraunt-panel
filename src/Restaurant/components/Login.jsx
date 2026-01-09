@@ -46,9 +46,16 @@ const Login = ({ isLoginModalOpen, setIsLoginModalOpen }) => {
 
     const onSubmit = (data) => {
         console.log("data", data);
-        fetchData("/restaurant/post-login", {
-            phone: data.phoneNumber
-        });
+        fetchData(
+          "/restaurant/post-login",
+          {
+            phone: data.phoneNumber,
+          },
+          {
+            reportCrash: true,
+            screenName: "RESTAURANT_LOGIN",
+          }
+        );
     }
 
     
@@ -62,7 +69,14 @@ const Login = ({ isLoginModalOpen, setIsLoginModalOpen }) => {
 
     const handleLoginSuccess = (response) => {
         console.log('Login Success:', response);
-        fetchData("/restaurant/google-sign-in", { email: "restaurant@example.com" });
+        fetchData(
+          "/restaurant/google-sign-in",
+          { email: "restaurant@example.com" },
+          {
+            reportCrash: true,
+            screenName: "RESTAURANT_GOOGLE_LOGIN",
+          }
+        );
     };
 
     const handleLoginFailure = (error) => {

@@ -73,7 +73,10 @@ const Register2 = ({ setStep, restaurant }) => {
     const [cuisines, setCuisines] = useState([])
 
     const getCuisines = () => {
-        fetchCuisinesData("/restaurant/get-cuisines",);
+        fetchCuisinesData("/restaurant/get-cuisines", {
+          reportCrash: true,
+          screenName: "CUISINES_GET",
+        });
     }
 
     useEffect(() => {
@@ -124,13 +127,22 @@ const Register2 = ({ setStep, restaurant }) => {
         console.log("restaurantTypes", restaurantTypes);
 
 
-        fetchData(`/restaurant/restraunt-registration2/${restaurant?._id || restaurant?.id}`, {
+        fetchData(
+          `/restaurant/restraunt-registration2/${
+            restaurant?._id || restaurant?.id
+          }`,
+          {
             priceForOne: data.priceForOne,
             vegType: data.restaurantType,
             restaurantTypes: restaurantTypes,
             selectedCuisineIds: data.cuisines,
             workingHours,
-        });
+          },
+          {
+            reportCrash: true,
+            screenName: "RESTAURANT_SIGNUP",
+          }
+        );
     }
 
 

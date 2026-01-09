@@ -20,7 +20,7 @@ import { MdKeyboardArrowLeft } from "react-icons/md";
 import { PiCameraPlus } from "react-icons/pi";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const OnlineOrdering1 = ({ restaurant,setStep }) => {
+const Register4 = ({ restaurant, setStep }) => {
   const form = useForm({
     resolver: zodResolver(EditProfileSchema4),
     defaultValues: {
@@ -499,4 +499,4 @@ const OnlineOrdering1 = ({ restaurant,setStep }) => {
   );
 };
 
-export default OnlineOrdering1;
+export default Register4;

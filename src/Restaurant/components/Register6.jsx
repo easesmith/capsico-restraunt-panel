@@ -25,12 +25,15 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { useLocation, useNavigate } from "react-router-dom";
-import DataNotFound from "../DataNotFound";
-import DatePicker from "../DatePicker";
 import SingleImageUpload from "@/components/SingleImageUpload";
-import { AddProfileSchema6, EditProfileSchema6 } from "@/schemas/OnlineOrderingSchema";
+import {
+  AddProfileSchema6,
+  EditProfileSchema6,
+} from "@/schemas/OnlineOrderingSchema";
+import DataNotFound from "./DataNotFound";
+import DatePicker from "./DatePicker";
 
-const OnlineOrdering3 = ({ setPage, restaurant }) => {
+const Register6 = ({ setStep, restaurant }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -210,7 +213,7 @@ const OnlineOrdering3 = ({ setPage, restaurant }) => {
         <div className="flex justify-between gap-2 mb-8">
           <button
             type="button"
-            onClick={() => setPage((page) => page - 1)}
+            onClick={() => setStep((page) => page - 1)}
             className="flex items-center"
           >
             <MdKeyboardArrowLeft className="text-[#000000] text-2xl" />
@@ -490,4 +493,4 @@ const OnlineOrdering3 = ({ setPage, restaurant }) => {
   );
 };
 
-export default OnlineOrdering3;
+export default Register6;

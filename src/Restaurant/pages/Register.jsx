@@ -1,22 +1,21 @@
 import { useState } from 'react';
-import { FaCheck } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
-import CreateOrRegisterRestaurantModal from '../components/CreateOrRegisterRestaurantModal';
 import Register1 from '../components/register/Register1';
 import Register2 from '../components/register/Register2';
 import Register3 from '../components/register/Register3';
+import Register4 from '../components/register/Register4';
+import Register5 from '../components/register/Register5';
+import Register6 from '../components/Register6';
 
 const Register = () => {
     const [step, setStep] = useState(1);
     const [restaurant, setRestaurant] = useState({ _id: "673c6c4737e46cc800e45e15" });
-    const [isRegisterSuccessModalOpen, setIsRegisterSuccessModalOpen] = useState(false);
-    const [isCreateOrRegisterRestaurantModalOpen, setIsCreateOrRegisterRestaurantModalOpen] = useState(true);
-    const [isChecked, setIsChecked] = useState(true);
 
     return (
-        <div className='max-w-7xl mx-auto p-6'>
-            <h1 className='font-semibold text-4xl text-[#4A5E6D] text-center'>Create your restaurant page</h1>
-            <div className='border border-[#C2CDD6] mt-12 rounded-md w-full py-8 px-36'>
+      <div className="max-w-7xl mx-auto p-6">
+        <h1 className="font-semibold text-4xl text-[#4A5E6D] text-center">
+          Create your restaurant page
+        </h1>
+        {/* <div className='border border-[#C2CDD6] mt-12 rounded-md w-full py-8 px-36'>
                 <div className='flex justify-between gap-10'>
                     <div className={`${step === 1 ? "border-t-4 border-[#1AA6F1]" : "border-t-4 border-transparent"} py-4 w-[240px] h-[170px] px-2 flex flex-col`}>
                         <h3 className='font-bold text-[19px] text-[#4A5E6D]'>Restaurant Information</h3>
@@ -46,44 +45,49 @@ const Register = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className='w-[70%] mt-5'>
-                {step === 1 &&
-                    <Register1
-                        restaurant={restaurant}
-                        setRestaurant={setRestaurant}
-                        setStep={setStep}
-                    />
-                }
+            </div> */}
+        <div className="w-[70%] mt-5">
+          {step === 1 && (
+            <Register1
+              restaurant={restaurant}
+              setRestaurant={setRestaurant}
+              setStep={setStep}
+            />
+          )}
 
-                {step === 2 &&
-                    <Register2
-                        restaurant={restaurant}
-                        setStep={setStep}
-                    />
-                }
+          {step === 2 && (
+            <Register2 restaurant={restaurant} setStep={setStep} />
+          )}
 
-                {step === 3 &&
-                    <Register3
-                        restaurant={restaurant}
-                        setStep={setStep}
-                    />
-                }
+          {step === 3 && (
+            <Register3 restaurant={restaurant} setStep={setStep} />
+          )}
 
-                {/* <div className="flex justify-end gap-2 mt-10">
+          {step === 4 && (
+            <Register4 restaurant={restaurant} setStep={setStep} />
+          )}
+
+          {step === 5 && (
+            <Register5 restaurant={restaurant} setStep={setStep} />
+          )}
+          {step === 6 && (
+            <Register6 restaurant={restaurant} setStep={setStep} />
+          )}
+
+          {/* <div className="flex justify-end gap-2 mt-10">
                             {step < 3 && <Button type="button" variant="capsico" className="w-20" onClick={handleNext}>Next</Button>}
                             {step === 3 && <Button variant="capsico" className="w-20" type="submit">Done</Button>}
                         </div> */}
-            </div>
+        </div>
 
-            {isCreateOrRegisterRestaurantModalOpen &&
+        {/* {isCreateOrRegisterRestaurantModalOpen &&
                 <CreateOrRegisterRestaurantModal
                     isCreateOrRegisterRestaurantModalOpen={isCreateOrRegisterRestaurantModalOpen}
                     setIsCreateOrRegisterRestaurantModalOpen={setIsCreateOrRegisterRestaurantModalOpen}
                 />
-            }
-        </div>
-    )
+            } */}
+      </div>
+    );
 }
 
 export default Register

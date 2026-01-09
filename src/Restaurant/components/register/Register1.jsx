@@ -170,34 +170,41 @@ const Register1 = ({ setStep, setRestaurant, restaurant }) => {
   const onSubmit = (data) => {
     // setIsRegisterSuccessModalOpen(true);
     console.log("data", data);
-    fetchData("/restaurant/restaurant-signup", {
-      restaurantName: data.restaurantName,
-      email: data.restaurantEmail,
-      password: "securepassword",
-      restaurantType: "Fine Dining",
-      coordinates: {
-        latitude: data.latitude,
-        longitude: data.longitude,
+    fetchData(
+      "/restaurant/restaurant-signup",
+      {
+        restaurantName: data.restaurantName,
+        email: data.restaurantEmail,
+        password: "securepassword",
+        restaurantType: "Fine Dining",
+        coordinates: {
+          latitude: data.latitude,
+          longitude: data.longitude,
+        },
+        address: {
+          addressLine: data.addressLine,
+          city: data.city,
+          state: data.state,
+          pinCode: data.pinCode,
+        },
+        contactDetails: {
+          phoneNumber: data.phoneNumber,
+          stdCode: data.STDCode,
+          landlineNumber: data.landlineNumber,
+        },
+        ownerDetails: {
+          ownerName: data.fullName,
+          ownerPhoneNumber: getValues("phoneNumber2"),
+          ownerEmail: data.email,
+          idProof: "path_to_id_proof",
+          sameAsRestaurantPhone: data.samePhoneNumber,
+        },
       },
-      address: {
-        addressLine: data.addressLine,
-        city: data.city,
-        state: data.state,
-        pinCode: data.pinCode,
-      },
-      contactDetails: {
-        phoneNumber: data.phoneNumber,
-        stdCode: data.STDCode,
-        landlineNumber: data.landlineNumber,
-      },
-      ownerDetails: {
-        ownerName: data.fullName,
-        ownerPhoneNumber: getValues("phoneNumber2"),
-        ownerEmail: data.email,
-        idProof: "path_to_id_proof",
-        sameAsRestaurantPhone: data.samePhoneNumber,
-      },
-    });
+      {
+        reportCrash: true,
+        screenName: "RESTAURANT_SIGNUP",
+      }
+    );
   };
 
   useEffect(() => {
@@ -214,6 +221,10 @@ const Register1 = ({ setStep, setRestaurant, restaurant }) => {
     setIsPhone1(true);
     fetchVerifyPhoneData(
       `/restaurant/get-otp?phone=${getValues("phoneNumber")}`,
+      {
+        reportCrash: true,
+        screenName: "RESTAURANT_OTP_GET",
+      }
     );
   };
 
@@ -221,6 +232,10 @@ const Register1 = ({ setStep, setRestaurant, restaurant }) => {
     setIsPhone1(false);
     fetchVerifyPhoneData(
       `/restaurant/get-otp?phone=${getValues("phoneNumber2")}`,
+      {
+        reportCrash: true,
+        screenName: "RESTAURANT_OTP_GET",
+      }
     );
   };
 
@@ -698,7 +713,14 @@ const Register1 = ({ setStep, setRestaurant, restaurant }) => {
             </div>
           </div>
           <div className="flex justify-end mt-5">
-            <Button disabled={isPhone1? !isPhoneNumberVerified : !isPhoneNumber2Verified} type="submit" variant="capsico" className="w-20">
+            <Button
+              // disabled={
+              //   isPhone1 ? !isPhoneNumberVerified : !isPhoneNumber2Verified
+              // }
+              type="submit"
+              variant="capsico"
+              className="w-20"
+            >
               Next
             </Button>
           </div>
