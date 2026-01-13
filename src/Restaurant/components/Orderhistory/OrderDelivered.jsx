@@ -77,17 +77,27 @@ const OrderDelivered = ({order}) => {
           </p>
           <div className="border rounded-md mt-2 p-4">
             <p className="flex items-center gap-2">
-              <CgProfile className='size-4' />
+              <CgProfile className="size-4" />
               {order?.customer?.name}
             </p>
             <p className="flex items-center gap-2">
-              <Mail className='size-4' />
+              <Mail className="size-4" />
               {order?.customer?.email}
             </p>
             <p className="flex items-center gap-2">
-              <Phone className='size-4' />
+              <Phone className="size-4" />
               {order?.customer?.phone}
             </p>
+          </div>
+
+          <h4>Commission</h4>
+          <div>
+            <span>Percent:</span>
+            <span>{order.orderSummary?.commission?.rate || 0}</span>
+          </div>
+          <div>
+            <span>Amount:</span>
+            <span>{order.orderSummary?.commission?.amount || 0}</span>
           </div>
         </div>
       </div>
