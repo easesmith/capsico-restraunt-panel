@@ -19,19 +19,22 @@ import useGetApiReq from "@/hooks/useGetApiReq";
 import DatePicker from "@/Restaurant/components/DatePicker";
 import { PaginationComp } from "@/Restaurant/components/PaginationComp";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { EarningRow } from "./EarningRow";
+import { readCookie } from "@/utils/readCookie";
 
 const EarningTable = () => {
   const navigate = useNavigate();
-  const params = useParams();
+  const userInfo = readCookie("userInfo");
+  
+    const restaurantId = userInfo?.id;
   const [data, setData] = useState([]);
 
   const [filters, setFilters] = useState({
     ownerType: "MERCHANT",
     type: "",
     referenceType: "",
-    ownerId: params.restaurantId,
+    ownerId: restaurantId,
     startDate: "",
     endDate: "",
   });
