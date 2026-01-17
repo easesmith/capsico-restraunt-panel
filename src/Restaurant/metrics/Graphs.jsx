@@ -58,13 +58,13 @@ const getXAxisLabel = (range) => {
 };
 
 const getYAxisLabel = (title) => {
+  if (title.includes("Average Order Value")) return "Amount (₹)";
   if (title.includes("Order")) return "Number of Orders";
   if (title.includes("Revenue")) return "Amount (₹)";
   if (title.includes("Earning")) return "Amount (₹)";
   if (title.includes("Average")) return "Amount (₹)";
   return "";
 };
-
 
 /* =======================
    REUSABLE SWITCH
@@ -258,7 +258,9 @@ const MetricCard = ({
               <YAxis
                 domain={yDomain}
                 tickFormatter={(v) =>
-                  title.includes("Revenue") || title.includes("Earning")
+                  title.includes("Revenue") ||
+                  title.includes("Earning") ||
+                  title.includes("Average Order Value")
                     ? `₹${v}`
                     : v
                 }
@@ -297,7 +299,9 @@ const MetricCard = ({
               <YAxis
                 domain={yDomain}
                 tickFormatter={(v) =>
-                  title.includes("Revenue") || title.includes("Earning")
+                  title.includes("Revenue") ||
+                  title.includes("Earning") ||
+                  title.includes("Average Order Value")
                     ? `₹${v}`
                     : v
                 }
