@@ -57,6 +57,7 @@ const SingleOrder = ({ order, status = "", getOrders, setOrderStatus }) => {
   useEffect(() => {
     if (res?.status === 200 || res?.status === 201) {
       console.log("verify-order-otp response", res);
+      getOrders()
     }
   }, [res]);
 

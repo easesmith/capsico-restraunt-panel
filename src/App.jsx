@@ -14,11 +14,11 @@ import AddMenu from "./Restaurant/components/menu/AddMenu";
 import MenuPage from "./Restaurant/components/menu/Menu";
 import UpdateMenu from "./Restaurant/components/menu/UpdateMenu";
 import MainMenu from "./Restaurant/components/orderMenu/MainMenu";
+import Metrics from "./Restaurant/metrics/Metrics";
 import EarningDetails from "./Restaurant/pages/payout-section/EarningDetails";
 import PayoutSection from "./Restaurant/pages/payout-section/PayoutSection";
 import RestaurantEarningHistory from "./Restaurant/pages/payout-section/RestaurantEarningHistory";
 import { readCookie } from "./utils/readCookie";
-import Metrics from "./Restaurant/metrics/Metrics";
 
 const CreateOffer = lazy(() => import("./Restaurant/pages/offers/CreateOffer"));
 const UpdateOffer = lazy(() => import("./Restaurant/pages/offers/UpdateOffer"));

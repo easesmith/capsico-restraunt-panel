@@ -43,7 +43,7 @@ const Sidebar = () => {
         title: "Orders",
       },
       {
-        url: "/restaurant/order-menu",
+        url: "/restaurant/order-menu/edit",
         clickBeforeImg: MenuImg,
         clickAfterImg: Menu2Img,
         title: "Menu",

@@ -63,17 +63,17 @@ export default function MenuSection({ categories = [], getData, isLoading, getCa
       {/* Header */}
       <header className="flex flex-wrap justify-between items-center gap-4 mb-6">
         <div className="flex flex-col gap-1">
-          <button
+          {/* <button
             type="button"
             onClick={() => navigate(-1)}
             className="flex justify-start items-center"
           >
             <MdKeyboardArrowLeft className="text-[#000000] text-3xl" />
 
+          </button> */}
             <h1 className="text-3xl font-black text-[#333333] dark:text-white leading-tight tracking-tight">
               Menu
             </h1>
-          </button>
           <p className="text-base font-normal text-[#6B7280] dark:text-gray-400">
             Manage your restaurant's menu items and categories.
           </p>
