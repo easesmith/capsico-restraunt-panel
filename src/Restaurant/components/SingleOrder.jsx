@@ -227,9 +227,10 @@ const SingleOrder = ({ order, status = "", getOrders, setOrderStatus }) => {
       </div>
       {!order.orderOtpverified && (
         <>
-          {order?.deliveryPartner?.partnerId?.personalInfo?.name &&
+          {order?.deliveryPartner?.partnerId &&
             (order.status === "ready_for_pickup" ||
-              order.status === "READY") && (
+              order.status === "READY" ||
+              order.status === "delivery_partner_at_restaurant") && (
               <div className="p-5">
                 <div className="border border-[#D7D7D7] rounded-md px-4 py-2">
                   <div className="flex justify-between items-center">

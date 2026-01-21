@@ -1,25 +1,33 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import RestaurantWrapper from '../components/restaurantWrapper/RestaurantWrapper'
-import ReviewImg from '../../assets/5410322-removebg-preview 1.png'
-import { IoSearchOutline } from 'react-icons/io5'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { HiOutlineAdjustmentsHorizontal } from 'react-icons/hi2'
+import React, { useCallback, useEffect, useState } from "react";
+import RestaurantWrapper from "../components/restaurantWrapper/RestaurantWrapper";
+import ReviewImg from "../../assets/5410322-removebg-preview 1.png";
+import { IoSearchOutline } from "react-icons/io5";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 import { RxQuestionMarkCircled } from "react-icons/rx";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { LuCalendar } from 'react-icons/lu'
-import ProfileImg from '../../assets/profile123.png'
-import ReactStars from 'react-stars'
-import useGetApiReq from '@/hooks/useGetApiReq'
-import { PaginationComp } from '../components/PaginationComp'
-import { format } from 'date-fns'
-import DataNotFound from '../components/DataNotFound'
-import Spinner from '../components/Spinner'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { LuCalendar } from "react-icons/lu";
+import ProfileImg from "../../assets/profile123.png";
+import ReactStars from "react-stars";
+import useGetApiReq from "@/hooks/useGetApiReq";
+import { PaginationComp } from "../components/PaginationComp";
+import { format } from "date-fns";
+import DataNotFound from "../components/DataNotFound";
+import Spinner from "../components/Spinner";
+import { readCookie } from "@/utils/readCookie";
 
 const Reviews = () => {
   const [selectedDateRange, setSelectedDateRange] = useState("");
-  const [reviewsData, setReviewsData] = useState([])
-  const [searchQurey, setSearchQurey] = useState('')
+  const [reviewsData, setReviewsData] = useState([]);
+  const [searchQurey, setSearchQurey] = useState("");
   const { res, fetchData, isLoading } = useGetApiReq();
   const [pageCount, setPageCount] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
@@ -27,35 +35,34 @@ const Reviews = () => {
   const [ratingSort, setRatingSort] = useState("latest");
   const [page, setPage] = useState(1);
 
+  const userInfo = readCookie("userInfo");
+
   const handleSelectChange = (value) => {
     setSelectedDateRange(value);
   };
 
-  const getReviews = useCallback(() => {
-    fetchData(
-      `/restaurant/get-reviews?page=${1}&dateFilter=${dateFilter}&sortBy=${ratingSort}`
-    );
-  }, [page,dateFilter,ratingSort]);
+  const getReviews = () => {
+    fetchData(`/restaurant/reviews/${userInfo.id}`);
+  };
 
   useEffect(() => {
     getReviews();
-  }, [page,dateFilter,ratingSort]);
+  }, [page, dateFilter, ratingSort, userInfo.id]);
 
   // console.log("orderStatus",orderStatus);
-
 
   useEffect(() => {
     if (res?.status === 200 || res?.status === 201) {
       console.log("reviews response", res);
-      const { pagination, reviews } = res?.data || {};
+      const { pagination, reviews } = res?.data?.data || {};
       setReviewsData(reviews);
       if (pagination) {
-        setPage(pagination?.currentPage)
-        setPageCount(pagination?.totalPages)
-        setTotalCount(pagination?.totalReviews)
+        setPage(pagination?.currentPage);
+        setPageCount(pagination?.totalPages);
+        setTotalCount(pagination?.totalReviews);
       }
     }
-  }, [res])
+  }, [res]);
 
   return (
     <RestaurantWrapper>
@@ -64,7 +71,7 @@ const Reviews = () => {
           <div>
             <h1 className="five-color class-base1">Customer Reviews</h1>
           </div>
-          <div className="flex justify-center items-center gap-3">
+          <div className="flex justify-center items-center gap-3 hidden">
             <Select
               value={ratingSort}
               onValueChange={(value) => setRatingSort(value)}
@@ -132,17 +139,17 @@ const Reviews = () => {
                     >
                       <div className="flex items-center gap-3">
                         <img
-                          src={review?.user?.image}
+                          src={review?.userId?.image}
                           alt=""
                           className="cursor-pointer w-10 h-10 rounded-full object-cover"
                         />
                         <div className="flex flex-col justify-center">
                           <h5 className="five-color class-base4 -mb-1">
-                            {review?.user?.name}
+                            {review?.userId?.name}
                           </h5>
                           <ReactStars
                             edit={false}
-                            value={review?.rating}
+                            value={review?.overallRating}
                             count={5}
                             color2={"#E0B936"}
                           />
@@ -184,6 +191,6 @@ const Reviews = () => {
       </div>
     </RestaurantWrapper>
   );
-}
+};
 
-export default Reviews
+export default Reviews;
